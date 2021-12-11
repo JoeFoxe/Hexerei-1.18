@@ -1,0 +1,20 @@
+
+{
+  "variants": {
+    "facing=east": {
+      "model": "hexerei:block/candle_dipper_base",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "hexerei:block/candle_dipper_base",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "hexerei:block/candle_dipper_base"
+    },
+    "facing=west": {
+      "model": "hexerei:block/candle_dipper_base",
+      "y": 90
+    }
+  }
+}

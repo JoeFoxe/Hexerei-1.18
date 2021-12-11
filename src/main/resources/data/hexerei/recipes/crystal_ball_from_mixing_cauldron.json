@@ -1,0 +1,35 @@
+{
+  "type": "hexerei:mixingcauldron",
+  "liquid": "lava",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "output": {
+    "item": "hexerei:crystal_ball"
+  },
+  "liquidOutput": "lava",
+  "fluidLevelsConsumed": 1
+}

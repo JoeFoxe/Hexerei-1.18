@@ -1,0 +1,40 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "hexerei:block/book_of_shadows",
+		"particle": "hexerei:block/book_of_shadows"
+	},
+	"elements": [
+		{
+			"name": "page",
+			"from": [0.1, 0, 0],
+			"to": [7.1, 0, 10],
+			"rotation": {"angle": 0, "axis": "z", "origin": [0, 1.5, 5]},
+			"faces": {
+				"north": {"uv": [6, 5.25, 7.75, 5.25], "texture": "#0"},
+				"east": {"uv": [3.5, 5.25, 6, 5.25], "texture": "#0"},
+				"south": {"uv": [10.25, 5.25, 12, 5.25], "texture": "#0"},
+				"west": {"uv": [7.75, 5.25, 10.25, 5.25], "texture": "#0"},
+				"up": {"uv": [7.75, 5.25, 6, 2.75], "texture": "#0"},
+				"down": {"uv": [9.5, 2.75, 7.75, 5.25], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"firstperson_righthand": {
+			"rotation": [0, 135, 0],
+			"scale": [0.4, 0.4, 0.4]
+		}
+	},
+	"groups": [
+		{
+			"name": "Book",
+			"origin": [8, 16.5, 11.5],
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

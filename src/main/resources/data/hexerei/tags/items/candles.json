@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "hexerei:candle",
+    "hexerei:candle_black",
+    "hexerei:candle_blue",
+    "hexerei:candle_lime",
+    "hexerei:candle_orange",
+    "hexerei:candle_pink",
+    "hexerei:candle_purple",
+    "hexerei:candle_red",
+    "hexerei:candle_cyan",
+    "hexerei:candle_yellow"
+  ]
+}

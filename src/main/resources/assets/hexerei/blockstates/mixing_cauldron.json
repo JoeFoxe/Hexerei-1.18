@@ -1,0 +1,61 @@
+{
+  "variants": {
+    "level=0,fluid=empty": {
+      "model": "hexerei:block/mixing_cauldron"
+    },
+    "level=1,fluid=water": {
+      "model": "hexerei:block/mixing_cauldron_level1"
+    },
+    "level=2,fluid=water": {
+      "model": "hexerei:block/mixing_cauldron_level2"
+    },
+    "level=3,fluid=water": {
+      "model": "hexerei:block/mixing_cauldron_level3"
+    },
+    "level=1,fluid=lava": {
+      "model": "hexerei:block/mixing_cauldron_level1_lava"
+    },
+    "level=2,fluid=lava": {
+      "model": "hexerei:block/mixing_cauldron_level2_lava"
+    },
+    "level=3,fluid=lava": {
+      "model": "hexerei:block/mixing_cauldron_level3_lava"
+    },
+    "level=1,fluid=milk": {
+      "model": "hexerei:block/mixing_cauldron_level1_milk"
+    },
+    "level=2,fluid=milk": {
+      "model": "hexerei:block/mixing_cauldron_level2_milk"
+    },
+    "level=3,fluid=milk": {
+      "model": "hexerei:block/mixing_cauldron_level3_milk"
+    },
+    "level=1,fluid=quicksilver": {
+      "model": "hexerei:block/mixing_cauldron_level1_quicksilver"
+    },
+    "level=2,fluid=quicksilver": {
+      "model": "hexerei:block/mixing_cauldron_level2_quicksilver"
+    },
+    "level=3,fluid=quicksilver": {
+      "model": "hexerei:block/mixing_cauldron_level3_quicksilver"
+    },
+    "level=1,fluid=blood": {
+      "model": "hexerei:block/mixing_cauldron_level1_blood"
+    },
+    "level=2,fluid=blood": {
+      "model": "hexerei:block/mixing_cauldron_level2_blood"
+    },
+    "level=3,fluid=blood": {
+      "model": "hexerei:block/mixing_cauldron_level3_blood"
+    },
+    "level=1,fluid=tallow": {
+      "model": "hexerei:block/mixing_cauldron_level1_tallow"
+    },
+    "level=2,fluid=tallow": {
+      "model": "hexerei:block/mixing_cauldron_level2_tallow"
+    },
+    "level=3,fluid=tallow": {
+      "model": "hexerei:block/mixing_cauldron_level3_tallow"
+    }
+  }
+}

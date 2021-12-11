@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "hexerei:block/mahogany_pressure_plate" },
+    "powered=true": { "model": "hexerei:block/mahogany_pressure_plate_down" }
+  }
+}

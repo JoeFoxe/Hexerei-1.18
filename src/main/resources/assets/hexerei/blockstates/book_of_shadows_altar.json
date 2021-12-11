@@ -1,0 +1,20 @@
+
+{
+  "variants": {
+    "facing=east": {
+      "model": "hexerei:block/book_of_shadows_altar",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "hexerei:block/book_of_shadows_altar",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "hexerei:block/book_of_shadows_altar"
+    },
+    "facing=west": {
+      "model": "hexerei:block/book_of_shadows_altar",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,14 @@
+
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hexerei:block/willow_slab"
+    },
+    "type=double": {
+      "model": "hexerei:block/willow_planks"
+    },
+    "type=top": {
+      "model": "hexerei:block/willow_slab_top"
+    }
+  }
+}

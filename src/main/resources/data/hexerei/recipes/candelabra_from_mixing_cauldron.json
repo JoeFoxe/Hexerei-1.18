@@ -1,0 +1,35 @@
+{
+  "type": "hexerei:mixingcauldron",
+  "liquid": "water",
+  "ingredients": [
+    {
+      "item": "minecraft:chain"
+    },
+    {
+      "tag": "hexerei:candles"
+    },
+    {
+      "tag": "hexerei:candles"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "tag": "hexerei:candles"
+    },
+    {
+      "tag": "hexerei:candles"
+    }
+  ],
+  "output": {
+    "item": "hexerei:candelabra"
+  },
+  "liquidOutput": "water",
+  "fluidLevelsConsumed": 0
+}

@@ -1,0 +1,38 @@
+
+{
+  "variants": {
+    "slot_one_type=0": {
+      "model": "hexerei:block/candle"
+    },
+    "slot_one_type=1": {
+      "model": "hexerei:block/candle"
+    },
+    "slot_one_type=2": {
+      "model": "hexerei:block/candle_blue"
+    },
+    "slot_one_type=3": {
+      "model": "hexerei:block/candle_black"
+    },
+    "slot_one_type=4": {
+      "model": "hexerei:block/candle_lime"
+    },
+    "slot_one_type=5": {
+      "model": "hexerei:block/candle_orange"
+    },
+    "slot_one_type=6": {
+      "model": "hexerei:block/candle_pink"
+    },
+    "slot_one_type=7": {
+      "model": "hexerei:block/candle_purple"
+    },
+    "slot_one_type=8": {
+      "model": "hexerei:block/candle_red"
+    },
+    "slot_one_type=9": {
+      "model": "hexerei:block/candle_cyan"
+    },
+    "slot_one_type=10": {
+      "model": "hexerei:block/candle_yellow"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "hexerei:mixingcauldron",
+  "liquid": "lava",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "hexerei:mahogany_planks"
+    },
+    {
+      "item": "hexerei:mahogany_planks"
+    },
+    {
+      "item": "hexerei:mahogany_planks"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "output": {
+    "item": "hexerei:warhammer"
+  },
+  "liquidOutput": "lava",
+  "fluidLevelsConsumed": 1
+}

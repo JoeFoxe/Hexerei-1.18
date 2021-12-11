@@ -1,0 +1,8 @@
+
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hexerei:block/scrap_block_top",
+    "side": "hexerei:block/scrap_block_side"
+  }
+}

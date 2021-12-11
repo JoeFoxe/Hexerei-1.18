@@ -1,0 +1,20 @@
+
+{
+  "variants": {
+    "facing=east": {
+      "model": "hexerei:block/herb_drying_rack_full",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "hexerei:block/herb_drying_rack_full",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "hexerei:block/herb_drying_rack_full"
+    },
+    "facing=west": {
+      "model": "hexerei:block/herb_drying_rack_full",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "name": "hexerei:coven/dark_coven/houses",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/jar_shop",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_house_1",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_house_2",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_house_3",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_house_4",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_house_5",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_house_6",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_house_7",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/witch_tower_1",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/garden_1",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/garden_2",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/gazebo_1",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/gazebo_2",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/flower_garden_1",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/tree_garden_1",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/tree_garden_2",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "hexerei:coven/dark_coven/houses/empty",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    }
+  ]
+}

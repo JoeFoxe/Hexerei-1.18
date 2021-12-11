@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "hexerei:block/mugwort_bush_bottom"
+  }
+}

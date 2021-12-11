@@ -1,0 +1,12 @@
+
+
+{
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/pig"
+    }
+  ],
+  "addition": "hexerei:animal_fat",
+  "type": "hexerei:animal_fat_from_pig"
+}

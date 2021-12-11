@@ -1,0 +1,204 @@
+{
+  "name": "hexerei:coven/dark_coven/streets",
+  "fallback": "hexerei:coven/dark_coven/terminators",
+  "elements": [
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/corner_01",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/corner_02",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/corner_03",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/corner_04",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_01",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_02",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_03",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_04",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_05",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_06",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_07",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/straight_08",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/crossroad_01",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/crossroad_02",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/crossroad_03",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/crossroad_04",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/crossroad_05",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/crossroad_06",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/turn_01",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/turn_02",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/turn_03",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "hexerei:coven/dark_coven/streets/turn_04",
+        "processors": "hexerei:coven/dark_coven/dark_coven_legs",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    }
+  ]
+}

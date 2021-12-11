@@ -1,0 +1,4 @@
+Build: 1.18-38.0.1 - Tue Nov 30 20:56:52 GMT 2021
+	gigaherz:
+		Fix mod resources not loading.
+		Add BreakingItemParticle.java.patch which I forgot to commit during the porting.

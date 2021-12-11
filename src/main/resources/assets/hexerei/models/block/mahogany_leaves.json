@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "hexerei:block/mahogany_leaves"
+  }
+}

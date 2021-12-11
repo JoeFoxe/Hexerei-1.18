@@ -1,0 +1,16 @@
+
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "hexerei:candles"
+    },
+    {
+      "item": "minecraft:orange_dye"
+    }
+  ],
+  "result": {
+    "item": "hexerei:candle_orange",
+    "count": 1
+  }
+}

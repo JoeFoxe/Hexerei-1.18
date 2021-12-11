@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "T T",
+    "#C#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    },
+    "T": {
+      "item": "minecraft:torch"
+    }
+  },
+  "result": {
+    "item": "hexerei:mixing_cauldron"
+  }
+}

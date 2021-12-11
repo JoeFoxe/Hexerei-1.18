@@ -1,0 +1,35 @@
+
+{
+  "variants": {
+    "facing=east,hanging=false": {
+      "model": "hexerei:block/candelabra",
+      "y": 270
+    },
+    "facing=north,hanging=false": {
+      "model": "hexerei:block/candelabra",
+      "y": 180
+    },
+    "facing=south,hanging=false": {
+      "model": "hexerei:block/candelabra"
+    },
+    "facing=west,hanging=false": {
+      "model": "hexerei:block/candelabra",
+      "y": 90
+    },
+    "facing=east,hanging=true": {
+      "model": "hexerei:block/candelabra_hanging",
+      "y": 270
+    },
+    "facing=north,hanging=true": {
+      "model": "hexerei:block/candelabra_hanging",
+      "y": 180
+    },
+    "facing=south,hanging=true": {
+      "model": "hexerei:block/candelabra_hanging"
+    },
+    "facing=west,hanging=true": {
+      "model": "hexerei:block/candelabra_hanging",
+      "y": 90
+    }
+  }
+}

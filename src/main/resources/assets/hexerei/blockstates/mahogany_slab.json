@@ -1,0 +1,14 @@
+
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hexerei:block/mahogany_slab"
+    },
+    "type=double": {
+      "model": "hexerei:block/mahogany_planks"
+    },
+    "type=top": {
+      "model": "hexerei:block/mahogany_slab_top"
+    }
+  }
+}

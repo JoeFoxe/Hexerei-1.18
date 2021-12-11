@@ -1,0 +1,16 @@
+
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "hexerei:candles"
+    },
+    {
+      "item": "minecraft:purple_dye"
+    }
+  ],
+  "result": {
+    "item": "hexerei:candle_purple",
+    "count": 1
+  }
+}

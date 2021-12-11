@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_rh",
+  "textures": {
+    "top": "hexerei:block/willow_door_top",
+    "bottom": "hexerei:block/willow_door_bottom"
+  }
+}

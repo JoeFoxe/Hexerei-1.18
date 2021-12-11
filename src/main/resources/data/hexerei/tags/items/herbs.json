@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "hexerei:sage",
+    "hexerei:mandrake_root",
+    "hexerei:belladonna_flower",
+    "hexerei:mandrake_flower",
+    "hexerei:mugwort_bush",
+    "hexerei:yellow_dock_bush",
+    "#minecraft:leaves",
+    "#minecraft:saplings",
+    "#minecraft:flowers",
+    "#forge:seeds",
+    "#forge:crops"
+  ]
+}

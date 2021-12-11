@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "hexerei:block/yellow_dock_bush_bottom"
+    },
+    "half=upper": {
+      "model": "hexerei:block/yellow_dock_bush_top"
+    }
+  }
+}

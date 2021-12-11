@@ -1,0 +1,35 @@
+{
+  "type": "hexerei:mixingcauldron",
+  "liquid": "water",
+  "ingredients": [
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:black_dye"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "output": {
+    "item": "hexerei:infused_fabric"
+  },
+  "liquidOutput": "water",
+  "fluidLevelsConsumed": 1
+}

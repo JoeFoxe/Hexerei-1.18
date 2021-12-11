@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage0"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage1"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage2"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage3"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage4"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage5"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage6"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage7"
+  }
+}
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "hexerei:block/sage_stage0"
+  }
+}

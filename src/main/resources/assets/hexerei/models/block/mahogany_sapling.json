@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "hexerei:block/mahogany_sapling"
+  }
+}

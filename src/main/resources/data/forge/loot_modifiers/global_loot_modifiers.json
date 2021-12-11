@@ -1,0 +1,9 @@
+
+{
+  "replace": false,
+  "entries": [
+    "hexerei:animal_fat_from_cow",
+    "hexerei:animal_fat_from_sheep",
+    "hexerei:animal_fat_from_pig"
+  ]
+}

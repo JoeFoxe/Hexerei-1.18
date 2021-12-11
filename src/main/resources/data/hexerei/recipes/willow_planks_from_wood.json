@@ -1,0 +1,13 @@
+
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "hexerei:willow_wood"
+    }
+  ],
+  "result": {
+    "item": "hexerei:willow_planks",
+    "count": 4
+  }
+}
