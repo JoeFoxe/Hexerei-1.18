@@ -49,11 +49,10 @@ public class Candle extends BaseEntityBlock implements ITileEntity<CandleTile>, 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty PLAYER_NEAR = BooleanProperty.create("player_near");
 
-    protected static final VoxelShape FLAT_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 0.0D, 14.0D);
-    protected static final VoxelShape ONE_SHAPE = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 6.0D, 10.0D);
-    protected static final VoxelShape TWO_SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
-    protected static final VoxelShape THREE_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
-    protected static final VoxelShape FOUR_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 7.0D, 14.0D);
+    protected static final VoxelShape ONE_SHAPE = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 9.0D, 10.0D);
+    protected static final VoxelShape TWO_SHAPE = Block.box(3.5D, 0.0D, 3.5D, 12.5D, 9.0D, 12.5D);
+    protected static final VoxelShape THREE_SHAPE = Block.box(3.5D, 0.0D, 3.5D, 12.5D, 9.0D, 12.5D);
+    protected static final VoxelShape FOUR_SHAPE = Block.box(3.5D, 0.0D, 3.5D, 12.5D, 9.0D, 12.5D);
     @SuppressWarnings("deprecation")
     @Override
     public RenderShape getRenderShape(BlockState iBlockState) {

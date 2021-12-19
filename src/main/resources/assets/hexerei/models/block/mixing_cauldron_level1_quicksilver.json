@@ -8,7 +8,7 @@
 	},
 	"layers": {
 		"cutout": {"textures": {
-			"0": "hexerei:block/mixing_cauldron",
+			"0": "hexerei:block/blank",
 			"1": "hexerei:block/mixing_cauldron_side",
 			"3": "hexerei:block/mixing_cauldron_fire",
 			"particle": "hexerei:particle/cauldron_particle"

@@ -6,9 +6,13 @@ import net.joefoxe.hexerei.block.ModBlocks;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.GeodeBlockSettings;
+import net.minecraft.world.level.levelgen.GeodeCrackSettings;
+import net.minecraft.world.level.levelgen.GeodeLayerSettings;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.ThreeLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
@@ -31,15 +35,34 @@ import java.util.OptionalInt;
 
 public class ModConfiguredFeatures {
 
+
+    public static final ConfiguredFeature<GeodeConfiguration, ?> SELENITE_GEODE =
+            register("selenite_geode", Feature.GEODE.configured(new GeodeConfiguration(
+                    new GeodeBlockSettings(BlockStateProvider.simple(Blocks.AIR),
+                    BlockStateProvider.simple(ModBlocks.SELENITE_BLOCK.get()),
+                    BlockStateProvider.simple(ModBlocks.BUDDING_SELENITE.get()),
+                    BlockStateProvider.simple(Blocks.CALCITE),
+                    BlockStateProvider.simple(Blocks.SMOOTH_BASALT),
+                    List.of(ModBlocks.SMALL_SELENITE_BUD.get().defaultBlockState(),
+                            ModBlocks.MEDIUM_SELENITE_BUD.get().defaultBlockState(),
+                            ModBlocks.LARGE_SELENITE_BUD.get().defaultBlockState(),
+                            ModBlocks.SELENITE_CLUSTER.get().defaultBlockState()),
+                    BlockTags.FEATURES_CANNOT_REPLACE.getName(),
+                    BlockTags.GEODE_INVALID_BLOCKS.getName()),
+                    new GeodeLayerSettings(1.7D, 2.2D, 3.2D, 4.2D),
+                    new GeodeCrackSettings(0.95D, 2.0D, 2), 0.35D, 0.083D, true,
+                    UniformInt.of(4, 6), UniformInt.of(3, 4), UniformInt.of(1, 2),
+                    -16, 16, 0.05D, 1)));
+
+
     public static final ConfiguredFeature<TreeConfiguration, ?> MAHOGANY =
             register("mahogany", Feature.TREE.configured((
                     new TreeConfiguration.TreeConfigurationBuilder(
-
-                            BlockStateProvider.simple(ModBlocks.MAHOGANY_LOG.get().defaultBlockState()),
-                            new FancyTrunkPlacer(6, 8, 1),
-                            BlockStateProvider.simple(ModBlocks.MAHOGANY_LEAVES.get().defaultBlockState()),
-                            new AcaciaFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2)),
-                            new ThreeLayersFeatureSize(2,2, 1, 1,1, OptionalInt.of(2)))).build()));
+                        BlockStateProvider.simple(ModBlocks.MAHOGANY_LOG.get().defaultBlockState()),
+                        new FancyTrunkPlacer(6, 8, 1),
+                        BlockStateProvider.simple(ModBlocks.MAHOGANY_LEAVES.get().defaultBlockState()),
+                        new AcaciaFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2)),
+                        new ThreeLayersFeatureSize(2,2, 1, 1,1, OptionalInt.of(2)))).build()));
 
 
 

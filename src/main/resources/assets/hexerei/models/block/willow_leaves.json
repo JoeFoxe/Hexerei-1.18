@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/leaves",
+  "parent": "minecraft:block/cube_all",
   "textures": {
     "all": "hexerei:block/willow_leaves"
   }

@@ -3,6 +3,7 @@ package net.joefoxe.hexerei.block.custom;
 import net.joefoxe.hexerei.block.ITileEntity;
 import net.joefoxe.hexerei.container.CofferContainer;
 import net.joefoxe.hexerei.container.HerbJarContainer;
+import net.joefoxe.hexerei.items.JarHandler;
 import net.joefoxe.hexerei.tileentity.CofferTile;
 import net.joefoxe.hexerei.tileentity.HerbJarTile;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -283,16 +285,24 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
     public ItemStack getCloneItemStack(BlockGetter worldIn, BlockPos pos, BlockState state) {
         ItemStack item = new ItemStack(this);
         Optional<HerbJarTile> tileEntityOptional = Optional.ofNullable(getBlockEntity(worldIn, pos));
-//        System.out.println(worldIn.getBlockEntity(pos));
+//        System.out.println(worldIn.getBlockEntity(pos));e
         CompoundTag tag = item.getOrCreateTag();
+        JarHandler empty = tileEntityOptional.map(herb_jar -> herb_jar.itemHandler)
+                .orElse(new JarHandler(1,1024));
         CompoundTag inv = tileEntityOptional.map(herb_jar -> herb_jar.itemHandler.serializeNBT())
                 .orElse(new CompoundTag());
-        tag.put("Inventory", inv);
 
-        Component customName = tileEntityOptional.map(HerbJarTile::getDisplayName)
+
+        if(!empty.getStackInSlot(0).isEmpty())
+            tag.put("Inventory", inv);
+
+
+        Component customName = tileEntityOptional.map(HerbJarTile::getCustomName)
                 .orElse(null);
+
         if (customName != null)
-            item.setHoverName(customName);
+            if(customName.getString().length() > 0)
+                item.setHoverName(customName);
         return item;
     }
 
@@ -333,7 +343,7 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         if(!stateIn.canSurvive(worldIn, currentPos))
         {
-            if(!worldIn.isClientSide()) {
+            if(!worldIn.isClientSide() && worldIn instanceof ServerLevel) {
                 ItemStack cloneItemStack = getCloneItemStack(worldIn, currentPos, stateIn);
                 worldIn.addFreshEntity(new ItemEntity(((ServerLevel) worldIn).getLevel(), currentPos.getX() + 0.5f, currentPos.getY() - 0.5f, currentPos.getZ() + 0.5f, cloneItemStack));
             }

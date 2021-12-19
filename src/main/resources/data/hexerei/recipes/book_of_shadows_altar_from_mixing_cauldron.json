@@ -1,6 +1,8 @@
 {
   "type": "hexerei:mixingcauldron",
-  "liquid": "water",
+  "liquid": {
+    "fluid": "minecraft:water"
+  },
   "ingredients": [
     {
       "item": "hexerei:mahogany_planks"
@@ -30,6 +32,8 @@
   "output": {
     "item": "hexerei:book_of_shadows_altar"
   },
-  "liquidOutput": "water",
-  "fluidLevelsConsumed": 3
+  "liquidOutput": {
+    "fluid": "minecraft:water"
+  },
+  "fluidLevelsConsumed": 500
 }

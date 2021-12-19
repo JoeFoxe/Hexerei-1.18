@@ -57,7 +57,7 @@ public class HexConfig {
         configData.load();
         Hexerei.LOGGER.debug("Loaded TOML config file {}", path.toString());
         spec.setConfig(configData);
-        System.out.println("config check");
+//        System.out.println("config check");
         HexConfig.JARS_ONLY_HOLD_HERBS.get();
     }
 

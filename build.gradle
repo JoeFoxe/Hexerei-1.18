@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "0.1.4"
+version = "0.1.7"
 group = 'net.joefoxe.hexerei' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'hexerei'
 
@@ -71,7 +71,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                hexerei {
                     source sourceSets.main
                 }
             }
@@ -93,7 +93,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                hexerei {
                     source sourceSets.main
                 }
             }
@@ -115,10 +115,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'hexerei', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                examplemod {
+                hexerei {
                     source sourceSets.main
                 }
             }

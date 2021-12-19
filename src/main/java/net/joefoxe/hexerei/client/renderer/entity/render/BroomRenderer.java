@@ -35,7 +35,6 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
         this.broomResources = Pair.of(TEXTURE, new BroomModel(context.bakeLayer(BroomModel.LAYER_LOCATION)));
     }
 
-
     @Override
     public ResourceLocation getTextureLocation(BroomEntity p_114482_) {
         return TEXTURE;

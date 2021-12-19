@@ -16,9 +16,15 @@ public class ModRecipeTypes {
 
     public static RecipeType<MixingCauldronRecipe> MIXING_CAULDRON_RECIPE = new MixingCauldronRecipe.MixingCauldronRecipeType();
 
+    public static final RegistryObject<DipperRecipe.Serializer> DIPPER_SERIALIZER = RECIPE_SERIALIZER.register("dipper", DipperRecipe.Serializer::new);
+
+    public static RecipeType<DipperRecipe> DIPPER_RECIPE = new DipperRecipe.DipperRecipeType();
+
     public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZER.register(eventBus);
 
         Registry.register(Registry.RECIPE_TYPE, MixingCauldronRecipe.TYPE_ID, MIXING_CAULDRON_RECIPE);
+
+        Registry.register(Registry.RECIPE_TYPE, DipperRecipe.TYPE_ID, DIPPER_RECIPE);
     }
 }

@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "hexerei:block/medium_selenite_bud",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "hexerei:block/medium_selenite_bud",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "hexerei:block/medium_selenite_bud",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "hexerei:block/medium_selenite_bud",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "hexerei:block/medium_selenite_bud"
+    },
+    "facing=west": {
+      "model": "hexerei:block/medium_selenite_bud",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

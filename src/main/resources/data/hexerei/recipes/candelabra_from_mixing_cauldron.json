@@ -1,6 +1,8 @@
 {
   "type": "hexerei:mixingcauldron",
-  "liquid": "water",
+  "liquid": {
+    "fluid": "minecraft:water"
+  },
   "ingredients": [
     {
       "item": "minecraft:chain"
@@ -30,6 +32,8 @@
   "output": {
     "item": "hexerei:candelabra"
   },
-  "liquidOutput": "water",
+  "liquidOutput": {
+    "fluid": "minecraft:water"
+  },
   "fluidLevelsConsumed": 0
 }

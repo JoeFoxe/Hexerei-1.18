@@ -6,15 +6,25 @@ import net.joefoxe.hexerei.block.custom.MixingCauldron;
 import net.joefoxe.hexerei.container.MixingCauldronContainer;
 import net.joefoxe.hexerei.data.recipes.MixingCauldronRecipe;
 import net.joefoxe.hexerei.data.recipes.ModRecipeTypes;
+import net.joefoxe.hexerei.fluid.ModFluids;
 import net.joefoxe.hexerei.item.ModItems;
+import net.joefoxe.hexerei.particle.ModParticleTypes;
 import net.joefoxe.hexerei.state.properties.LiquidType;
+import net.joefoxe.hexerei.tileentity.renderer.MixingCauldronRenderer;
+import net.joefoxe.hexerei.util.ClientProxy;
 import net.joefoxe.hexerei.util.HexereiPacketHandler;
 import net.joefoxe.hexerei.util.HexereiTags;
+import net.joefoxe.hexerei.util.message.EmitParticlesPacket;
+import net.joefoxe.hexerei.util.message.MessageCountUpdate;
 import net.joefoxe.hexerei.util.message.TESyncPacket;
 import net.minecraft.SharedConstants;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.Tickable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -24,6 +34,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -44,14 +55,21 @@ import net.minecraft.util.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -61,6 +79,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -69,12 +88,14 @@ import java.util.function.Supplier;
 
 import static net.joefoxe.hexerei.block.custom.MixingCauldron.LEVEL;
 
-public class MixingCauldronTile extends RandomizableContainerBlockEntity implements WorldlyContainer, Clearable, MenuProvider {
+public class MixingCauldronTile extends RandomizableContainerBlockEntity implements WorldlyContainer, Clearable, MenuProvider, IFluidHandler {
 
 //    private final ItemStackHandler itemHandler = createHandler();
 //    private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     public boolean crafting;
     public int craftDelay;
+    public int emitParticles = 0;
+    public boolean emitParticleSpout = false;
     public float degrees;
     private boolean crafted;
     private boolean extracted = false;
@@ -82,6 +103,7 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
     public static final int craftDelayMax = 100;
     private long tickedGameTime;
     private NonNullList<ItemStack> items = NonNullList.withSize(10, ItemStack.EMPTY);
+    private FluidStack fluidStack = FluidStack.EMPTY;
 
     private static final int[] SLOTS_INPUT = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
     private static final int[] SLOTS_OUTPUT = new int[]{8};
@@ -99,6 +121,10 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         this(ModTileEntities.MIXING_CAULDRON_TILE.get(),blockPos, blockState);
     }
 
+    public FluidStack getFluidStack(){
+        return this.fluidStack;
+    }
+
     @Override
     protected NonNullList<ItemStack> getItems() {
         return this.items;
@@ -112,7 +138,6 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
     @Override
     public void setChanged() {
         super.setChanged();
-
     }
 
     @Override
@@ -253,6 +278,7 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         super.load(compoundTag);
 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        this.fluidStack = FluidStack.loadFluidStackFromNBT(compoundTag.getCompound("fluid"));
 
         if (!this.tryLoadLootTable(compoundTag)) {
             ContainerHelper.loadAllItems(compoundTag, this.items);
@@ -261,12 +287,14 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
 
     public void saveAdditional(CompoundTag compound) {
         ContainerHelper.saveAllItems(compound, this.items);
+        compound.put("fluid", this.fluidStack.writeToNBT(new CompoundTag()));
     }
 
     @Override
     public CompoundTag save(CompoundTag tag) {
         super.saveAdditional(tag);
         ContainerHelper.saveAllItems(tag, this.items);
+        tag.put("fluid", this.fluidStack.writeToNBT(new CompoundTag()));
         return tag;
     }
 
@@ -329,61 +357,6 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         super.onLoad();
     }
 
-    /*
-     * This method is called to generate NBT for syncing a packet when a client
-     * loads a chunk that this tile entity is in. We want to tell the client as much
-     * data as it needs to know since it doesn't know any data at this current
-     * stage. We usually just need to put write() in here. If you ever have data
-     * that would be written to the disk but the client doesn't ever need to know,
-     * you can just sync the need-to-know data instead of calling write() there's an
-     * equivalent method for reading the update tag but it just defaults to read()
-     * anyway.
-     */
-//    @Override
-//    public CompoundTag getUpdateTag() {
-//        return this.save(new CompoundTag());
-//    }
-
-    private ItemStackHandler createHandler() {
-        return new ItemStackHandler(10) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                sync();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                if (slot == 8)
-                    return false;
-                if (slot == 9 && !stack.is(HexereiTags.Items.SIGILS))
-                    return false;
-                return true;
-            }
-
-            @Override
-            public int getSlotLimit(int slot) {
-                return 1;
-            }
-
-//            @Nonnull
-//            @Override
-//            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-//                if(slot != 8)
-//                    return ItemStack.EMPTY;
-//                return super.extractItem(slot, amount, simulate);
-//            }
-
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if(!isItemValid(slot, stack)) {
-                    return stack;
-                }
-
-                return super.insertItem(slot, stack, simulate);
-            }
-        };
-    }
 
     LazyOptional<? extends IItemHandler>[] handlers =
             SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
@@ -398,18 +371,19 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
             else
                 return handlers[2].cast();
         }
+        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.orEmpty(capability, LazyOptional.of(() -> this));
         return super.getCapability(capability, facing);
     }
+
 
     public Item getItemInSlot(int slot) {
         return this.items.get(slot).getItem();
     }
 
-
     public int getCraftMaxDelay() {
         return this.craftDelayMax;
     }
-
 
     public boolean getCrafted() {
         return this.crafted;
@@ -438,8 +412,9 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         BlockPos blockpos = this.getPos();
         if (entity instanceof ItemEntity) {
             if (Shapes.joinIsNotEmpty(Shapes.create(entity.getBoundingBox().move((double)(-blockpos.getX()), (double)(-blockpos.getY()), (double)(-blockpos.getZ()))), HOPPER_SHAPE, BooleanOp.AND)) {
-                if(captureItem((ItemEntity)entity))
-                    ((MixingCauldron)this.getBlockState().getBlock()).setEmitParticles(2);
+                if(captureItem((ItemEntity)entity) && !level.isClientSide) {
+                    HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(worldPosition)), new EmitParticlesPacket(worldPosition, 2, true));
+                }
             }
         }else
         {
@@ -449,10 +424,21 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
                     entity.hurt(DamageSource.MAGIC, 3.0f);
                     if(random.nextDouble() > 0.5f)
                     {
-                        if(this.getBlockState().getValue(MixingCauldron.FLUID) == LiquidType.EMPTY || (this.getBlockState().getValue(MixingCauldron.FLUID) == LiquidType.BLOOD && this.getBlockState().getValue(LEVEL) < 3)) {
-                            ((MixingCauldron) this.getBlockState().getBlock()).setFillLevel(level, worldPosition, this.getBlockState(), this.getBlockState().getValue(LEVEL) + 1, LiquidType.BLOOD);
-                            entity.playSound(SoundEvents.HONEY_DRINK,1.5f, 1.5f);
-                            ((MixingCauldron)this.getBlockState().getBlock()).setEmitParticles(2);
+
+                        if(fluidStack.isEmpty() || (fluidStack.containsFluid(new FluidStack(ModFluids.BLOOD_FLUID.get(), 1)) && this.getFluidStack().getAmount() < this.getTankCapacity(0))) {
+
+                            if(fluidStack.isEmpty())
+                                this.fill(new FluidStack(ModFluids.BLOOD_FLUID.get(),333), IFluidHandler.FluidAction.EXECUTE);
+                            else {
+                                this.getFluidStack().grow(333);
+                                if (this.getFluidStack().getAmount() % 10 == 1)
+                                    this.getFluidStack().shrink(1);
+                                if (this.getFluidStack().getAmount() % 10 == 9)
+                                    this.getFluidStack().grow(1);
+                            }
+                            entity.getLevel().playSound((Player)null, entity.blockPosition(), SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
+                            if(!level.isClientSide)
+                                HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(worldPosition)), new EmitParticlesPacket(worldPosition, 2, true));
 
                         }
                     }
@@ -513,20 +499,25 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         recipe.ifPresent(iRecipe -> {
             ItemStack output = iRecipe.getResultItem();
             //ask for delay
-            if(iRecipe.getLiquid() == (this.level.getBlockState(this.worldPosition).getValue(MixingCauldron.FLUID)) && (inv.getItem(8) == ItemStack.EMPTY || inv.getItem(8).getCount() == 0) && this.crafted == false && iRecipe.getFluidLevelsConsumed() <= (this.level.getBlockState(this.worldPosition).getValue(MixingCauldron.LEVEL))) {
-                this.crafting = true;
 
+            if(iRecipe.getLiquid().isFluidEqual(this.getFluidStack()) && (inv.getItem(8) == ItemStack.EMPTY || inv.getItem(8).getCount() == 0) && !this.crafted && iRecipe.getFluidLevelsConsumed() <= this.getFluidStack().getAmount()) {
+                this.crafting = true;
                 if(this.craftDelay >= this.craftDelayMax) {
                     Random rand = new Random();
                     craftTheItem(output);
                     sync();
-                    level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(MixingCauldron.FLUID, iRecipe.getLiquidOutput()), 3);
+                    int temp = this.getFluidStack().getAmount();
+                    this.getFluidStack().shrink(this.getTankCapacity(0));
+                    this.fill(new FluidStack(iRecipe.getLiquidOutput(), temp), FluidAction.EXECUTE);
 
                     //for setting a cooldown on crafting so the animations can take place
                     this.crafted = true;
-
-                    for(int i = 0; i < iRecipe.getFluidLevelsConsumed(); i++)
-                        ((MixingCauldron)this.level.getBlockState(this.worldPosition).getBlock()).subtractLevel(this.level, worldPosition);
+                    HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(worldPosition)), new EmitParticlesPacket(worldPosition, 10, true));
+                    this.getFluidStack().shrink(iRecipe.getFluidLevelsConsumed());
+                    if (this.getFluidStack().getAmount() % 10 == 1)
+                        this.getFluidStack().shrink(1);
+                    if (this.getFluidStack().getAmount() % 10 == 9)
+                        this.getFluidStack().grow(1);
 
                }
             }
@@ -538,7 +529,7 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         if(this.craftDelay >= 1)
             this.craftDelay--;
         this.crafting = false;
-        if(this.craftDelay > 0)
+        if(this.craftDelay > 0 && !level.isClientSide)
             this.level.setBlock(worldPosition, this.level.getBlockState(this.worldPosition).setValue(MixingCauldron.CRAFT_DELAY, Integer.valueOf(Mth.clamp(this.craftDelay - 1, 0, MixingCauldronTile.craftDelayMax))), 2);
         if(this.craftDelay < 10)
             this.crafted = false;
@@ -583,10 +574,15 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
 
     }
 
+
+
 //    @Override
     public void tick() {
-        if(level.isClientSide)
+        if(level.isClientSide) {
+            renderParticles();
             return;
+        }
+
         this.tickedGameTime = this.level.getGameTime();
         craft();
         if(extracted)
@@ -595,10 +591,50 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
             sync();
         }
         this.isColliding--;
+    }
+
+    private void renderParticles() {
+        float fillPercentage = 0;
+        FluidStack fluidStack = getFluidInTank(0);
+        if(!fluidStack.isEmpty())
+            fillPercentage = Math.min(1, (float) fluidStack.getAmount() / getTankCapacity(0));
+        float height = MixingCauldronRenderer.MIN_Y + (MixingCauldronRenderer.MAX_Y - MixingCauldronRenderer.MIN_Y) * fillPercentage;
+        Random rand = new Random();
+
+        if(this.emitParticles > 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if(this.emitParticleSpout){
+                    if (rand.nextInt(3) == 0)
+                        level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, level.getBlockState(worldPosition)), worldPosition.getX() + 0.5f, worldPosition.getY() + height, worldPosition.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
+                    if (rand.nextInt(3) == 0)
+                        level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, level.getBlockState(worldPosition)), worldPosition.getX() + 0.5f, worldPosition.getY() + height, worldPosition.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
+                    if (rand.nextInt(3) == 0)
+                        level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, level.getBlockState(worldPosition)), worldPosition.getX() + 0.5f, worldPosition.getY() + height, worldPosition.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
+                    if (rand.nextInt(3) == 0)
+                        level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + 0.5f, worldPosition.getY() + height, worldPosition.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.045d, (rand.nextDouble() - 0.5d) / 50d);
+                    if (rand.nextInt(3) == 0)
+                        level.addParticle(ParticleTypes.SMOKE, worldPosition.getX() + 0.5f, worldPosition.getY() + height, worldPosition.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.045d, (rand.nextDouble() - 0.5d) / 50d);
+                }
+                if(rand.nextInt(3) == 0)
+                    level.addParticle(ModParticleTypes.CAULDRON.get(), worldPosition.getX() + 0.2d + (0.6d * rand.nextDouble()), worldPosition.getY() + height, worldPosition.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
+                if(rand.nextInt(3) == 0)
+                    level.addParticle(ModParticleTypes.CAULDRON.get(), worldPosition.getX() + 0.2d + (0.6d * rand.nextDouble()), worldPosition.getY() + height, worldPosition.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
+                if(rand.nextInt(3) == 0)
+                    level.addParticle(ModParticleTypes.CAULDRON.get(), worldPosition.getX() + 0.2d + (0.6d * rand.nextDouble()), worldPosition.getY() + height, worldPosition.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
+                if(rand.nextInt(3) == 0)
+                    level.addParticle(ModParticleTypes.CAULDRON.get(), worldPosition.getX() + 0.2d + (0.6d * rand.nextDouble()), worldPosition.getY() + height, worldPosition.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
+                if(rand.nextInt(3) == 0)
+                    level.addParticle(ModParticleTypes.CAULDRON.get(), worldPosition.getX() + 0.2d + (0.6d * rand.nextDouble()), worldPosition.getY() + height, worldPosition.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
+            }
+            this.emitParticles--;
+        }
+
 
     }
 
-//    @Override
+    //    @Override
     public BlockPos getPos() {
         return worldPosition;
     }
@@ -621,5 +657,106 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
     @Override
     public boolean hasCustomName() {
         return super.hasCustomName();
+    }
+
+
+    @Override
+    public int getTanks() {
+        return 1;
+    }
+
+    @NotNull
+    @Override
+    public FluidStack getFluidInTank(int tank) {
+        return this.fluidStack.copy();
+    }
+
+    @Override
+    public int getTankCapacity(int tank) {
+        return 2000;
+    }
+
+    @Override
+    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+        return true;
+    }
+
+    @Override
+    public int fill(FluidStack resource, FluidAction action) {
+        if (resource.isEmpty() || !(this.fluidStack.isEmpty() || this.fluidStack.isFluidEqual(resource)))
+            return 0;
+        int amount = Math.min(resource.getAmount(), this.getTankCapacity(0) - this.fluidStack.getAmount());
+        if (action.execute()) {
+            FluidStack newStack = resource.copy();
+            newStack.setAmount(this.fluidStack.getAmount() + amount);
+            this.fluidStack = newStack;
+            this.sync();
+        }
+        return amount;
+    }
+
+
+    @Nonnull
+    @Override
+    public FluidStack drain(FluidStack resource, FluidAction action) {
+        if (resource.isEmpty() || this.fluidStack.isEmpty() || !this.fluidStack.getFluid().isSame(resource.getFluid()))
+            return FluidStack.EMPTY;
+        int amount = Math.min(resource.getAmount(), this.fluidStack.getAmount());
+        FluidStack returnStack = this.fluidStack.copy();
+        returnStack.setAmount(amount);
+        if (action.execute()) {
+            this.fluidStack.shrink(amount);
+            this.sync();
+        }
+        return returnStack;
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack drain(int maxDrain, FluidAction action) {
+        if (maxDrain <= 0 || this.fluidStack.isEmpty())
+            return FluidStack.EMPTY;
+        int amount = Math.min(maxDrain, this.fluidStack.getAmount());
+        FluidStack returnStack = this.fluidStack.copy();
+        returnStack.setAmount(amount);
+        if (action.execute()) {
+            this.fluidStack.shrink(amount);
+            this.sync();
+        }
+        return returnStack;
+    }
+
+    public boolean interactWithFluid(IFluidHandlerItem fluidHandler) {
+        if (fluidHandler.getTanks() == 0)
+            return false;
+        FluidStack cauldronFluid = fluidHandler.getFluidInTank(0);
+        Random random = new Random();
+        if (cauldronFluid.isEmpty()) {
+            if (!this.fluidStack.isEmpty() && fluidHandler.isFluidValid(0, this.fluidStack)) {
+                int amount = fluidHandler.fill(this.fluidStack.copy(), FluidAction.EXECUTE);
+                if (amount > 0) {
+                    if(getLevel() != null)
+                        getLevel().playSound((Player) null, getPos().getX() + 0.5f, getPos().getY() + 0.5f, getPos().getZ() + 0.5f, fluidHandler.getFluidInTank(1).getFluid().getPickupSound().isPresent() ? fluidHandler.getFluidInTank(1).getFluid().getPickupSound().get() : SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                    this.fluidStack.shrink(amount);
+                    this.sync();
+                    return true;
+                }
+
+            }
+        } else if (this.fluidStack.isEmpty() || this.fluidStack.isFluidEqual(cauldronFluid)) {
+            cauldronFluid = cauldronFluid.copy();
+            cauldronFluid.setAmount(this.getTankCapacity(0) - this.fluidStack.getAmount());
+            FluidStack amount = fluidHandler.drain(cauldronFluid, FluidAction.SIMULATE);
+            if (!amount.isEmpty() && (this.fluidStack.isEmpty() || this.fluidStack.isFluidEqual(amount))) {
+                amount = fluidHandler.drain(cauldronFluid, FluidAction.EXECUTE);
+                amount.grow(this.fluidStack.getAmount());
+                this.fluidStack = amount;
+                if(getLevel() != null)
+                    getLevel().playSound((Player) null, getPos().getX() + 0.5f, getPos().getY() + 0.5f, getPos().getZ() + 0.5f, amount.getFluid().getPickupSound().isPresent() ? amount.getFluid().getPickupSound().get() : SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                this.sync();
+                return true;
+            }
+        }
+        return false;
     }
 }

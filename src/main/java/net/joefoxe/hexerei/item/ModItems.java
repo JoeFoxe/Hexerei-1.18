@@ -72,6 +72,9 @@ public class ModItems {
     public static final RegistryObject<Item> MANDRAKE_ROOT = ITEMS.register("mandrake_root",
             () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
+    public static final RegistryObject<Item> SELENITE_SHARD = ITEMS.register("selenite_shard",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
     public static final RegistryObject<Item> SAGE = ITEMS.register("sage",
             () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
@@ -79,7 +82,6 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.SAGE.get(), new Item.Properties()
                     //.food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).fastToEat().build())
                     .tab(ModItemGroup.HEXEREI_GROUP)));
-
 
     public static final RegistryObject<Item> LILY_PAD_ITEM = ITEMS.register("flowering_lily_pad",
             () -> new FloweringLilyPadItem(ModBlocks.LILY_PAD_BLOCK.get(),(new Item.Properties()).tab(ModItemGroup.HEXEREI_GROUP))); // ModBlocks.LILY_PAD_BLOCK.get(),
@@ -128,21 +130,21 @@ public class ModItems {
 //            () -> new DruidArmorItem(ModArmorMaterial.ARMOR_SCRAP, EquipmentSlot.FEET,
 //                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
-//    public static final RegistryObject<Item> WITCH_HELMET = ITEMS.register("witch_helmet",
-//            () -> new WitchArmorItem(ModArmorMaterial.INFUSED_FABRIC, EquipmentSlot.HEAD,
+    public static final RegistryObject<Item> WITCH_HELMET = ITEMS.register("witch_helmet",
+            () -> new WitchArmorItem(ModArmorMaterial.INFUSED_FABRIC, EquipmentSlot.HEAD,
+                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> WITCH_CHESTPLATE = ITEMS.register("witch_chestplate",
+            () -> new WitchArmorItem(ModArmorMaterial.INFUSED_FABRIC, EquipmentSlot.CHEST,
+                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+//    public static final RegistryObject<Item> WITCH_LEGGINGS = ITEMS.register("witch_leggings",
+//            () -> new WitchArmorItem(ModArmorMaterial.ARMOR_SCRAP, EquipmentSlot.LEGS,
 //                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
-//
-//    public static final RegistryObject<Item> WITCH_CHESTPLATE = ITEMS.register("witch_chestplate",
-//            () -> new WitchArmorItem(ModArmorMaterial.INFUSED_FABRIC, EquipmentSlot.CHEST,
-//                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
-//
-////    public static final RegistryObject<Item> WITCH_LEGGINGS = ITEMS.register("witch_leggings",
-////            () -> new WitchArmorItem(ModArmorMaterial.ARMOR_SCRAP, EquipmentSlot.LEGS,
-////                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
-//
-//    public static final RegistryObject<Item> WITCH_BOOTS = ITEMS.register("witch_boots",
-//            () -> new WitchArmorItem(ModArmorMaterial.INFUSED_FABRIC, EquipmentSlot.FEET,
-//                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> WITCH_BOOTS = ITEMS.register("witch_boots",
+            () -> new WitchArmorItem(ModArmorMaterial.INFUSED_FABRIC, EquipmentSlot.FEET,
+                    new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
 
 

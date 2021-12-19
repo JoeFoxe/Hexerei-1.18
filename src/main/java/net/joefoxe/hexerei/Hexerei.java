@@ -3,6 +3,8 @@ package net.joefoxe.hexerei;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mojang.serialization.Codec;
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.ModEntityTypes;
@@ -84,6 +86,10 @@ public class Hexerei
     public static SidedProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public static final String MOD_ID = "hexerei";
+
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting()
+            .disableHtmlEscaping()
+            .create();
 
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
@@ -191,7 +197,7 @@ public class Hexerei
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAHOGANY_TRAPDOOR.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WILLOW_DOOR.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WILLOW_TRAPDOOR.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WILLOW_LEAVES.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MIXING_CAULDRON.get(), RenderType.cutoutMipped());
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRYSTAL_BALL.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRYSTAL_BALL_ORB.get(), RenderType.translucent());
@@ -208,6 +214,15 @@ public class Hexerei
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CANDELABRA.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.SAGE.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.LILY_PAD_BLOCK.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WILLOW_VINES.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.WILLOW_VINES_PLANT.get(), RenderType.cutout());
+
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.SELENITE_BLOCK.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.SELENITE_CLUSTER.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.BUDDING_SELENITE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.LARGE_SELENITE_BUD.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MEDIUM_SELENITE_BUD.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.SMALL_SELENITE_BUD.get(), RenderType.translucent());
 
             MenuScreens.register(ModContainers.MIXING_CAULDRON_CONTAINER.get(), MixingCauldronScreen::new);
             MenuScreens.register(ModContainers.COFFER_CONTAINER.get(), CofferScreen::new);

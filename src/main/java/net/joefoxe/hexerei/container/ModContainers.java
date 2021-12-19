@@ -38,6 +38,14 @@ public class ModContainers {
                 return new HerbJarContainer(windowId, world, pos, inv, inv.player);
             })));
 
+    public static final RegistryObject<MenuType<DipperContainer>> DIPPER_CONTAINER
+            = CONTAINERS.register("dipper_container",
+            () -> IForgeMenuType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                Level world = inv.player.getLevel();
+                return new DipperContainer(windowId, world, pos, inv, inv.player);
+            })));
+
     public static void register(IEventBus eventBus) {
         CONTAINERS.register(eventBus);
     }

@@ -3,6 +3,7 @@ package net.joefoxe.hexerei.block.custom;
 import net.joefoxe.hexerei.block.ITileEntity;
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.container.MixingCauldronContainer;
+import net.joefoxe.hexerei.fluid.ModFluids;
 import net.joefoxe.hexerei.item.ModItems;
 import net.joefoxe.hexerei.particle.ModParticleTypes;
 import net.joefoxe.hexerei.state.properties.LiquidType;
@@ -10,6 +11,8 @@ import net.joefoxe.hexerei.tileentity.CandleTile;
 import net.joefoxe.hexerei.tileentity.CrystalBallTile;
 import net.joefoxe.hexerei.tileentity.MixingCauldronTile;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;
+import net.joefoxe.hexerei.util.HexereiPacketHandler;
+import net.joefoxe.hexerei.util.message.EmitParticlesPacket;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -18,6 +21,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -50,6 +54,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -59,13 +64,23 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.extensions.IForgeBlock;
 import net.minecraftforge.common.extensions.IForgeBlockState;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Stream;
+
+import static net.joefoxe.hexerei.tileentity.renderer.MixingCauldronRenderer.MAX_Y;
+import static net.joefoxe.hexerei.tileentity.renderer.MixingCauldronRenderer.MIN_Y;
 
 public class MixingCauldron extends BaseEntityBlock implements ITileEntity<MixingCauldronTile> {
 
@@ -151,367 +166,677 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
         return SHAPE;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        ItemStack itemstack = player.getItemInHand(handIn);
-        if (itemstack.isEmpty()) {
-            if(!worldIn.isClientSide()) {
-                BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult) {
+        ItemStack stack = player.getItemInHand(hand).copy();
+        Random random = new Random();
+        ItemStack fillStack = stack.copy();
+        fillStack.setCount(1);
+        LazyOptional<IFluidHandlerItem> fluidHandlerOptional = fillStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+        if (fluidHandlerOptional.isPresent()) {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof MixingCauldronTile) {
+                IFluidHandlerItem fluidHandler = fluidHandlerOptional.resolve().get();
 
-                if(tileEntity instanceof MixingCauldronTile) {
-                    MenuProvider containerProvider = createContainerProvider(worldIn, pos);
+                if (((MixingCauldronTile) tileEntity).interactWithFluid(fluidHandler)) {
+                    stack.shrink(1);
+                    if(!tileEntity.getLevel().isClientSide)
+                        HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                    if (stack.isEmpty()) {
 
-                    NetworkHooks.openGui(((ServerPlayer)player), containerProvider, tileEntity.getBlockPos());
+                        player.setItemInHand(hand, fluidHandler.getContainer());
+                    }
+                    else {
+                        player.setItemInHand(hand, stack);
+                        if (!player.getInventory().add(fluidHandler.getContainer()))
+                            player.drop(fluidHandler.getContainer(), false);
+                    }
 
-                } else {
-                    throw new IllegalStateException("Our Container provider is missing!");
+                    return InteractionResult.sidedSuccess(world.isClientSide);
                 }
             }
-        } else {
-            int i = state.getValue(LEVEL);
-            Item item = itemstack.getItem();
-            if (item == Items.WATER_BUCKET && ((state.getValue(FLUID) == LiquidType.WATER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
-
-                    player.awardStat(Stats.FILL_CAULDRON);
-                    this.setFillLevel(worldIn, pos, state, 3, LiquidType.WATER);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
-                    } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
-                        player.drop(new ItemStack(Items.BUCKET), false);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == Items.LAVA_BUCKET && ((state.getValue(FLUID) == LiquidType.LAVA || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
-
-                    player.awardStat(Stats.FILL_CAULDRON);
-                    this.setFillLevel(worldIn, pos, state, 3, LiquidType.LAVA);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
-                    } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
-                        player.drop(new ItemStack(Items.BUCKET), false);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == Items.MILK_BUCKET && ((state.getValue(FLUID) == LiquidType.MILK || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
-
-                    player.awardStat(Stats.FILL_CAULDRON);
-                    this.setFillLevel(worldIn, pos, state, 3, LiquidType.MILK);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
-                    } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
-                        player.drop(new ItemStack(Items.BUCKET), false);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_FISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.QUICKSILVER_BUCKET.get() && ((state.getValue(FLUID) == LiquidType.QUICKSILVER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
-
-                player.awardStat(Stats.FILL_CAULDRON);
-                this.setFillLevel(worldIn, pos, state, 3, LiquidType.QUICKSILVER);
-                itemstack.shrink(1);
-                if (itemstack.isEmpty()) {
-                    player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
-                } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
-                    player.drop(new ItemStack(Items.BUCKET), false);
-                }
-                worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.BLOOD_BUCKET.get() && ((state.getValue(FLUID) == LiquidType.BLOOD || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
-
-                player.awardStat(Stats.FILL_CAULDRON);
-                this.setFillLevel(worldIn, pos, state, 3, LiquidType.BLOOD);
-                itemstack.shrink(1);
-                if (itemstack.isEmpty()) {
-                    player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
-                } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
-                    player.drop(new ItemStack(Items.BUCKET), false);
-                }
-                worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.TALLOW_BUCKET.get() && ((state.getValue(FLUID) == LiquidType.TALLOW || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
-
-                player.awardStat(Stats.FILL_CAULDRON);
-                this.setFillLevel(worldIn, pos, state, 3, LiquidType.TALLOW);
-                itemstack.shrink(1);
-                if (itemstack.isEmpty()) {
-                    player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
-                } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
-                    player.drop(new ItemStack(Items.BUCKET), false);
-                }
-                worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == Items.BUCKET && i == 3) {
-                if (!worldIn.isClientSide) {
-                    if(state.getValue(FLUID) == LiquidType.WATER) {
-                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        itemstack.shrink(1);
-                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, new ItemStack(Items.WATER_BUCKET));
-                        } else if (!player.getInventory().add(new ItemStack(Items.WATER_BUCKET))) {
-                            player.drop(new ItemStack(Items.WATER_BUCKET), false);
-                        }
-                    } else if(state.getValue(FLUID) == LiquidType.LAVA) {
-                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        itemstack.shrink(1);
-                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, new ItemStack(Items.LAVA_BUCKET));
-                        } else if (!player.getInventory().add(new ItemStack(Items.LAVA_BUCKET))) {
-                            player.drop(new ItemStack(Items.LAVA_BUCKET), false);
-                        }
-                    } else if(state.getValue(FLUID) == LiquidType.MILK) {
-                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_FISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        itemstack.shrink(1);
-                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, new ItemStack(Items.MILK_BUCKET));
-                        } else if (!player.getInventory().add(new ItemStack(Items.MILK_BUCKET))) {
-                            player.drop(new ItemStack(Items.MILK_BUCKET), false);
-                        }
-                    } else if(state.getValue(FLUID) == LiquidType.QUICKSILVER) {
-                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        itemstack.shrink(1);
-                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, new ItemStack(ModItems.QUICKSILVER_BUCKET.get()));
-                        } else if (!player.getInventory().add(new ItemStack(ModItems.QUICKSILVER_BUCKET.get()))) {
-                            player.drop(new ItemStack(ModItems.QUICKSILVER_BUCKET.get()), false);
-                        }
-                    } else if(state.getValue(FLUID) == LiquidType.BLOOD) {
-                        worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        itemstack.shrink(1);
-                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, new ItemStack(ModItems.BLOOD_BUCKET.get()));
-                        } else if (!player.getInventory().add(new ItemStack(ModItems.BLOOD_BUCKET.get()))) {
-                            player.drop(new ItemStack(ModItems.BLOOD_BUCKET.get()), false);
-                        }
-                    } else if(state.getValue(FLUID) == LiquidType.TALLOW) {
-                        worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        itemstack.shrink(1);
-                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, new ItemStack(ModItems.TALLOW_BUCKET.get()));
-                        } else if (!player.getInventory().add(new ItemStack(ModItems.TALLOW_BUCKET.get()))) {
-                            player.drop(new ItemStack(ModItems.TALLOW_BUCKET.get()), false);
-                        }
-                    }
-
-
-                    player.awardStat(Stats.USE_CAULDRON);
-                }
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (i > 0 && item == Items.GLASS_BOTTLE) {
-                if (!worldIn.isClientSide) {
-                    if(state.getValue(FLUID) == LiquidType.WATER) {
+            return InteractionResult.CONSUME;
+        }
+        else if(stack.getItem() == Items.GLASS_BOTTLE)
+        {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof MixingCauldronTile) {
+                if(((MixingCauldronTile) tileEntity).getFluidStack().getAmount() >= 333){
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(Fluids.WATER, 1))) {
                         ItemStack itemstack4 = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
                         player.awardStat(Stats.USE_CAULDRON);
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, itemstack4);
+                        player.getItemInHand(hand).shrink(1);
+                        if (player.getItemInHand(hand).isEmpty()) {
+                            player.setItemInHand(hand, itemstack4);
                         } else if (!player.getInventory().add(itemstack4)) {
                             player.drop(itemstack4, false);
-                        } else if (player instanceof ServerPlayer) {
-                            ((ServerPlayer) player).initMenu(player.containerMenu);
                         }
-                    } else if(state.getValue(FLUID) == LiquidType.LAVA) {
-                        ItemStack itemstack5 = new ItemStack(ModItems.LAVA_BOTTLE.get());
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(333);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                        if(!tileEntity.getLevel().isClientSide)
+                            HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                        if(tileEntity.getLevel() != null)
+                            tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                        return InteractionResult.CONSUME;
+                    } else if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(Fluids.LAVA, 1))) {
+                        ItemStack itemstack4 = new ItemStack(ModItems.LAVA_BOTTLE.get());
                         player.awardStat(Stats.USE_CAULDRON);
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, itemstack5);
-                        } else if (!player.getInventory().add(itemstack5)) {
-                            player.drop(itemstack5, false);
-                        } else if (player instanceof ServerPlayer) {
-                            ((ServerPlayer) player).initMenu(player.containerMenu);
+                        player.getItemInHand(hand).shrink(1);
+                        if (player.getItemInHand(hand).isEmpty()) {
+                            player.setItemInHand(hand, itemstack4);
+                        } else if (!player.getInventory().add(itemstack4)) {
+                            player.drop(itemstack4, false);
                         }
-                    } else if(state.getValue(FLUID) == LiquidType.MILK) {
-                        ItemStack itemstack6 = new ItemStack(ModItems.MILK_BOTTLE.get());
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(333);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                        if(!tileEntity.getLevel().isClientSide)
+                            HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                        if(tileEntity.getLevel() != null)
+                            tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                        return InteractionResult.CONSUME;
+                    } else if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(ModFluids.QUICKSILVER_FLUID.get(), 1))) {
+                        ItemStack itemstack4 = new ItemStack(ModItems.QUICKSILVER_BOTTLE.get());
                         player.awardStat(Stats.USE_CAULDRON);
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, itemstack6);
-                        } else if (!player.getInventory().add(itemstack6)) {
-                            player.drop(itemstack6, false);
-                        } else if (player instanceof ServerPlayer) {
-                            ((ServerPlayer) player).initMenu(player.containerMenu);
+                        player.getItemInHand(hand).shrink(1);
+                        if (player.getItemInHand(hand).isEmpty()) {
+                            player.setItemInHand(hand, itemstack4);
+                        } else if (!player.getInventory().add(itemstack4)) {
+                            player.drop(itemstack4, false);
                         }
-                    } else if(state.getValue(FLUID) == LiquidType.QUICKSILVER) {
-                        ItemStack itemstack7 = new ItemStack(ModItems.QUICKSILVER_BOTTLE.get());
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(333);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                        if(!tileEntity.getLevel().isClientSide)
+                            HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                        if(tileEntity.getLevel() != null)
+                            tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                        return InteractionResult.CONSUME;
+                    } else if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(ModFluids.TALLOW_FLUID.get(), 1))) {
+                        ItemStack itemstack4 = new ItemStack(ModItems.TALLOW_BOTTLE.get());
                         player.awardStat(Stats.USE_CAULDRON);
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, itemstack7);
-                        } else if (!player.getInventory().add(itemstack7)) {
-                            player.drop(itemstack7, false);
-                        } else if (player instanceof ServerPlayer) {
-                            ((ServerPlayer) player).initMenu(player.containerMenu);
+                        player.getItemInHand(hand).shrink(1);
+                        if (player.getItemInHand(hand).isEmpty()) {
+                            player.setItemInHand(hand, itemstack4);
+                        } else if (!player.getInventory().add(itemstack4)) {
+                            player.drop(itemstack4, false);
                         }
-                    } else if(state.getValue(FLUID) == LiquidType.BLOOD) {
-                        ItemStack itemstack8 = new ItemStack(ModItems.BLOOD_BOTTLE.get());
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(333);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                        if(!tileEntity.getLevel().isClientSide)
+                            HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                        if(tileEntity.getLevel() != null)
+                            tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                        return InteractionResult.CONSUME;
+                    } else if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(ModFluids.BLOOD_FLUID.get(), 1))) {
+                        ItemStack itemstack4 = new ItemStack(ModItems.BLOOD_BOTTLE.get());
                         player.awardStat(Stats.USE_CAULDRON);
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, itemstack8);
-                        } else if (!player.getInventory().add(itemstack8)) {
-                            player.drop(itemstack8, false);
-                        } else if (player instanceof ServerPlayer) {
-                            ((ServerPlayer) player).initMenu(player.containerMenu);
+                        player.getItemInHand(hand).shrink(1);
+                        if (player.getItemInHand(hand).isEmpty()) {
+                            player.setItemInHand(hand, itemstack4);
+                        } else if (!player.getInventory().add(itemstack4)) {
+                            player.drop(itemstack4, false);
                         }
-                    } else if(state.getValue(FLUID) == LiquidType.TALLOW) {
-                        ItemStack itemstack8 = new ItemStack(ModItems.TALLOW_BOTTLE.get());
-                        player.awardStat(Stats.USE_CAULDRON);
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            player.setItemInHand(handIn, itemstack8);
-                        } else if (!player.getInventory().add(itemstack8)) {
-                            player.drop(itemstack8, false);
-                        } else if (player instanceof ServerPlayer) {
-                            ((ServerPlayer) player).initMenu(player.containerMenu);
-                        }
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(333);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                        if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                            ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                        if(!tileEntity.getLevel().isClientSide)
+                            HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                        if(tileEntity.getLevel() != null)
+                            tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                        return InteractionResult.CONSUME;
                     }
-
-                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-                    this.setFillLevel(worldIn, pos, state, i - 1, i - 1 > 0 ? state.getValue(FLUID) : LiquidType.EMPTY);
-
-                }
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == Items.POTION && PotionUtils.getPotion(itemstack) == Potions.WATER && (state.getValue(FLUID) == LiquidType.WATER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
-                if (!worldIn.isClientSide) {
-
-                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
-                    player.awardStat(Stats.USE_CAULDRON);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, itemstack3);
-                    } else if (!player.getInventory().add(itemstack3)) {
-                        player.drop(itemstack3, false);
-                    } else if (player instanceof ServerPlayer) {
-                        ((ServerPlayer) player).initMenu(player.containerMenu);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.WATER);
-                }
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.LAVA_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.LAVA || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
-                if (!worldIn.isClientSide) {
-
-                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
-                    player.awardStat(Stats.USE_CAULDRON);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, itemstack3);
-                    } else if (!player.getInventory().add(itemstack3)) {
-                        player.drop(itemstack3, false);
-                    } else if (player instanceof ServerPlayer) {
-                        ((ServerPlayer) player).initMenu(player.containerMenu);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.LAVA);
-                }
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.MILK_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.MILK || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
-                if (!worldIn.isClientSide) {
-
-                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
-                    player.awardStat(Stats.USE_CAULDRON);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, itemstack3);
-                    } else if (!player.getInventory().add(itemstack3)) {
-                        player.drop(itemstack3, false);
-                    } else if (player instanceof ServerPlayer) {
-                        ((ServerPlayer) player).initMenu(player.containerMenu);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.MILK);
-                }
-
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.QUICKSILVER_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.QUICKSILVER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
-                if (!worldIn.isClientSide) {
-
-                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
-                    player.awardStat(Stats.USE_CAULDRON);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, itemstack3);
-                    } else if (!player.getInventory().add(itemstack3)) {
-                        player.drop(itemstack3, false);
-                    } else if (player instanceof ServerPlayer) {
-                        ((ServerPlayer) player).initMenu(player.containerMenu);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.QUICKSILVER);
-                }
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.BLOOD_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.BLOOD || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
-                if (!worldIn.isClientSide) {
-
-                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
-                    player.awardStat(Stats.USE_CAULDRON);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, itemstack3);
-                    } else if (!player.getInventory().add(itemstack3)) {
-                        player.drop(itemstack3, false);
-                    } else if (player instanceof ServerPlayer) {
-                        ((ServerPlayer) player).initMenu(player.containerMenu);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.BLOOD);
-                }
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if (item == ModItems.TALLOW_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.TALLOW || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
-                if (!worldIn.isClientSide) {
-
-                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
-                    player.awardStat(Stats.USE_CAULDRON);
-                    itemstack.shrink(1);
-                    if (itemstack.isEmpty()) {
-                        player.setItemInHand(handIn, itemstack3);
-                    } else if (!player.getInventory().add(itemstack3)) {
-                        player.drop(itemstack3, false);
-                    } else if (player instanceof ServerPlayer) {
-                        ((ServerPlayer) player).initMenu(player.containerMenu);
-                    }
-                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.TALLOW);
-                }
-                return InteractionResult.sidedSuccess(worldIn.isClientSide);
-            } else if(!worldIn.isClientSide()) { // If
-                BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-
-                if(tileEntity instanceof MixingCauldronTile) {
-                    MenuProvider containerProvider = createContainerProvider(worldIn, pos);
-
-                    NetworkHooks.openGui(((ServerPlayer)player), containerProvider, tileEntity.getBlockPos());
-
-                } else {
-                    throw new IllegalStateException("Our Container provider is missing!");
                 }
             }
+        }
+        else if(stack.getItem() == Items.POTION && PotionUtils.getPotion(stack) == Potions.WATER)
+        {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof MixingCauldronTile) {
+                if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(Fluids.WATER, 1)) || ((MixingCauldronTile) tileEntity).getFluidStack().isEmpty()) {
+                    ItemStack itemstack4 = new ItemStack(Items.GLASS_BOTTLE);
+                    player.awardStat(Stats.USE_CAULDRON);
+                    player.getItemInHand(hand).shrink(1);
+                    if (player.getItemInHand(hand).isEmpty()) {
+                        player.setItemInHand(hand, itemstack4);
+                    } else if (!player.getInventory().add(itemstack4)) {
+                        player.drop(itemstack4, false);
+                    }
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().isEmpty())
+                        ((MixingCauldronTile) tileEntity).fill(new FluidStack(Fluids.WATER,333), IFluidHandler.FluidAction.EXECUTE);
+                    else
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(333);
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().getAmount() > ((MixingCauldronTile) tileEntity).getTankCapacity(1))
+                        ((MixingCauldronTile) tileEntity).getFluidStack().setAmount(((MixingCauldronTile) tileEntity).getTankCapacity(1));
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                    if(!tileEntity.getLevel().isClientSide)
+                        HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                    if(tileEntity.getLevel() != null)
+                        tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                    return InteractionResult.CONSUME;
+                }
 
+            }
+        }
+        else if(stack.getItem() == ModItems.LAVA_BOTTLE.get())
+        {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof MixingCauldronTile) {
+                if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(Fluids.LAVA, 1)) || ((MixingCauldronTile) tileEntity).getFluidStack().isEmpty()) {
+                    ItemStack itemstack4 = new ItemStack(Items.GLASS_BOTTLE);
+                    player.awardStat(Stats.USE_CAULDRON);
+                    player.getItemInHand(hand).shrink(1);
+                    if (player.getItemInHand(hand).isEmpty()) {
+                        player.setItemInHand(hand, itemstack4);
+                    } else if (!player.getInventory().add(itemstack4)) {
+                        player.drop(itemstack4, false);
+                    }
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().isEmpty())
+                        ((MixingCauldronTile) tileEntity).fill(new FluidStack(Fluids.LAVA,333), IFluidHandler.FluidAction.EXECUTE);
+                    else
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(333);
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().getAmount() > ((MixingCauldronTile) tileEntity).getTankCapacity(1))
+                        ((MixingCauldronTile) tileEntity).getFluidStack().setAmount(((MixingCauldronTile) tileEntity).getTankCapacity(1));
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                    if(!tileEntity.getLevel().isClientSide)
+                        HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                    if(tileEntity.getLevel() != null)
+                        tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                    return InteractionResult.CONSUME;
+                }
+            }
+        }
+        else if(stack.getItem() == ModItems.QUICKSILVER_BOTTLE.get())
+        {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof MixingCauldronTile) {
+                if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(ModFluids.QUICKSILVER_FLUID.get(), 1)) || ((MixingCauldronTile) tileEntity).getFluidStack().isEmpty()) {
+                    ItemStack itemstack4 = new ItemStack(Items.GLASS_BOTTLE);
+                    player.awardStat(Stats.USE_CAULDRON);
+                    player.getItemInHand(hand).shrink(1);
+                    if (player.getItemInHand(hand).isEmpty()) {
+                        player.setItemInHand(hand, itemstack4);
+                    } else if (!player.getInventory().add(itemstack4)) {
+                        player.drop(itemstack4, false);
+                    }
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().isEmpty())
+                        ((MixingCauldronTile) tileEntity).fill(new FluidStack(ModFluids.QUICKSILVER_FLUID.get(),333), IFluidHandler.FluidAction.EXECUTE);
+                    else
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(333);
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().getAmount() > ((MixingCauldronTile) tileEntity).getTankCapacity(1))
+                        ((MixingCauldronTile) tileEntity).getFluidStack().setAmount(((MixingCauldronTile) tileEntity).getTankCapacity(1));
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                    if(!tileEntity.getLevel().isClientSide)
+                        HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                    if(tileEntity.getLevel() != null)
+                        tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                    return InteractionResult.CONSUME;
+                }
+            }
+        }
+        else if(stack.getItem() == ModItems.TALLOW_BOTTLE.get())
+        {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof MixingCauldronTile) {
+                if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(ModFluids.TALLOW_FLUID.get(), 1)) || ((MixingCauldronTile) tileEntity).getFluidStack().isEmpty()) {
+                    ItemStack itemstack4 = new ItemStack(Items.GLASS_BOTTLE);
+                    player.awardStat(Stats.USE_CAULDRON);
+                    player.getItemInHand(hand).shrink(1);
+                    if (player.getItemInHand(hand).isEmpty()) {
+                        player.setItemInHand(hand, itemstack4);
+                    } else if (!player.getInventory().add(itemstack4)) {
+                        player.drop(itemstack4, false);
+                    }
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().isEmpty())
+                        ((MixingCauldronTile) tileEntity).fill(new FluidStack(ModFluids.TALLOW_FLUID.get(),333), IFluidHandler.FluidAction.EXECUTE);
+                    else
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(333);
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().getAmount() > ((MixingCauldronTile) tileEntity).getTankCapacity(1))
+                        ((MixingCauldronTile) tileEntity).getFluidStack().setAmount(((MixingCauldronTile) tileEntity).getTankCapacity(1));
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                    if(!tileEntity.getLevel().isClientSide)
+                        HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
 
+                    if(tileEntity.getLevel() != null)
+                        tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                    return InteractionResult.CONSUME;
+                }
+            }
+        }
+        else if(stack.getItem() == ModItems.BLOOD_BOTTLE.get())
+        {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity instanceof MixingCauldronTile) {
+                if (((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(ModFluids.BLOOD_FLUID.get(), 1)) || ((MixingCauldronTile) tileEntity).getFluidStack().isEmpty()) {
+                    ItemStack itemstack4 = new ItemStack(Items.GLASS_BOTTLE);
+                    player.awardStat(Stats.USE_CAULDRON);
+                    player.getItemInHand(hand).shrink(1);
+                    if (player.getItemInHand(hand).isEmpty()) {
+                        player.setItemInHand(hand, itemstack4);
+                    } else if (!player.getInventory().add(itemstack4)) {
+                        player.drop(itemstack4, false);
+                    }
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().isEmpty())
+                        ((MixingCauldronTile) tileEntity).fill(new FluidStack(ModFluids.BLOOD_FLUID.get(),333), IFluidHandler.FluidAction.EXECUTE);
+                    else
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(333);
+                    if(((MixingCauldronTile) tileEntity).getFluidStack().getAmount() > ((MixingCauldronTile) tileEntity).getTankCapacity(1))
+                        ((MixingCauldronTile) tileEntity).getFluidStack().setAmount(((MixingCauldronTile) tileEntity).getTankCapacity(1));
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 1)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().shrink(1);
+                    if (((MixingCauldronTile) tileEntity).getFluidStack().getAmount() % 10 == 9)
+                        ((MixingCauldronTile) tileEntity).getFluidStack().grow(1);
+                    if(!tileEntity.getLevel().isClientSide)
+                        HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
+                    if(tileEntity.getLevel() != null)
+                        tileEntity.getLevel().playSound((Player) null, ((MixingCauldronTile) tileEntity).getPos().getX() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getY() + 0.5f, ((MixingCauldronTile) tileEntity).getPos().getZ() + 0.5f, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 0.8F + 0.4F * random.nextFloat());
+                    return InteractionResult.CONSUME;
+                }
+            }
+        }
+        if (!world.isClientSide()) {
+            BlockEntity tileEntity = world.getBlockEntity(pos);
+
+            if (tileEntity instanceof MixingCauldronTile) {
+                MenuProvider containerProvider = createContainerProvider(world, pos);
+
+                NetworkHooks.openGui(((ServerPlayer) player), containerProvider, tileEntity.getBlockPos());
+
+            } else {
+                throw new IllegalStateException("Our Container provider is missing!");
+            }
         }
 
-        return InteractionResult.SUCCESS;
+        return InteractionResult.CONSUME;
     }
+
+
+//item == Items.POTION && PotionUtils.getPotion(itemstack) == Potions.WATER
+//    @SuppressWarnings("deprecation")
+//    @Override
+//    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+//        ItemStack itemstack = player.getItemInHand(handIn);
+//        if (itemstack.isEmpty()) {
+//            if(!worldIn.isClientSide()) {
+//                BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+//
+//                if(tileEntity instanceof MixingCauldronTile) {
+//                    MenuProvider containerProvider = createContainerProvider(worldIn, pos);
+//
+//                    NetworkHooks.openGui(((ServerPlayer)player), containerProvider, tileEntity.getBlockPos());
+//
+//                } else {
+//                    throw new IllegalStateException("Our Container provider is missing!");
+//                }
+//            }
+//        } else {
+//            int i = state.getValue(LEVEL);
+//            Item item = itemstack.getItem();
+//            if (item == Items.WATER_BUCKET && ((state.getValue(FLUID) == LiquidType.WATER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
+//
+//                    player.awardStat(Stats.FILL_CAULDRON);
+//                    this.setFillLevel(worldIn, pos, state, 3, LiquidType.WATER);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
+//                    } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
+//                        player.drop(new ItemStack(Items.BUCKET), false);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == Items.LAVA_BUCKET && ((state.getValue(FLUID) == LiquidType.LAVA || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
+//
+//                    player.awardStat(Stats.FILL_CAULDRON);
+//                    this.setFillLevel(worldIn, pos, state, 3, LiquidType.LAVA);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
+//                    } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
+//                        player.drop(new ItemStack(Items.BUCKET), false);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == Items.MILK_BUCKET && ((state.getValue(FLUID) == LiquidType.MILK || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
+//
+//                    player.awardStat(Stats.FILL_CAULDRON);
+//                    this.setFillLevel(worldIn, pos, state, 3, LiquidType.MILK);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
+//                    } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
+//                        player.drop(new ItemStack(Items.BUCKET), false);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_FISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.QUICKSILVER_BUCKET.get() && ((state.getValue(FLUID) == LiquidType.QUICKSILVER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
+//
+//                player.awardStat(Stats.FILL_CAULDRON);
+//                this.setFillLevel(worldIn, pos, state, 3, LiquidType.QUICKSILVER);
+//                itemstack.shrink(1);
+//                if (itemstack.isEmpty()) {
+//                    player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
+//                } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
+//                    player.drop(new ItemStack(Items.BUCKET), false);
+//                }
+//                worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.BLOOD_BUCKET.get() && ((state.getValue(FLUID) == LiquidType.BLOOD || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
+//
+//                player.awardStat(Stats.FILL_CAULDRON);
+//                this.setFillLevel(worldIn, pos, state, 3, LiquidType.BLOOD);
+//                itemstack.shrink(1);
+//                if (itemstack.isEmpty()) {
+//                    player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
+//                } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
+//                    player.drop(new ItemStack(Items.BUCKET), false);
+//                }
+//                worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.TALLOW_BUCKET.get() && ((state.getValue(FLUID) == LiquidType.TALLOW || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3 && !worldIn.isClientSide)) {
+//
+//                player.awardStat(Stats.FILL_CAULDRON);
+//                this.setFillLevel(worldIn, pos, state, 3, LiquidType.TALLOW);
+//                itemstack.shrink(1);
+//                if (itemstack.isEmpty()) {
+//                    player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
+//                } else if (!player.getInventory().add(new ItemStack(Items.BUCKET))) {
+//                    player.drop(new ItemStack(Items.BUCKET), false);
+//                }
+//                worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == Items.BUCKET && i == 3) {
+//                if (!worldIn.isClientSide) {
+//                    if(state.getValue(FLUID) == LiquidType.WATER) {
+//                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                        itemstack.shrink(1);
+//                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, new ItemStack(Items.WATER_BUCKET));
+//                        } else if (!player.getInventory().add(new ItemStack(Items.WATER_BUCKET))) {
+//                            player.drop(new ItemStack(Items.WATER_BUCKET), false);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.LAVA) {
+//                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                        itemstack.shrink(1);
+//                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, new ItemStack(Items.LAVA_BUCKET));
+//                        } else if (!player.getInventory().add(new ItemStack(Items.LAVA_BUCKET))) {
+//                            player.drop(new ItemStack(Items.LAVA_BUCKET), false);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.MILK) {
+//                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_FISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                        itemstack.shrink(1);
+//                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, new ItemStack(Items.MILK_BUCKET));
+//                        } else if (!player.getInventory().add(new ItemStack(Items.MILK_BUCKET))) {
+//                            player.drop(new ItemStack(Items.MILK_BUCKET), false);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.QUICKSILVER) {
+//                        worldIn.playSound((Player)null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                        itemstack.shrink(1);
+//                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, new ItemStack(ModItems.QUICKSILVER_BUCKET.get()));
+//                        } else if (!player.getInventory().add(new ItemStack(ModItems.QUICKSILVER_BUCKET.get()))) {
+//                            player.drop(new ItemStack(ModItems.QUICKSILVER_BUCKET.get()), false);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.BLOOD) {
+//                        worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                        itemstack.shrink(1);
+//                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, new ItemStack(ModItems.BLOOD_BUCKET.get()));
+//                        } else if (!player.getInventory().add(new ItemStack(ModItems.BLOOD_BUCKET.get()))) {
+//                            player.drop(new ItemStack(ModItems.BLOOD_BUCKET.get()), false);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.TALLOW) {
+//                        worldIn.playSound((Player)null, pos, SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                        itemstack.shrink(1);
+//                        this.setFillLevel(worldIn, pos, state, 0, LiquidType.EMPTY);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, new ItemStack(ModItems.TALLOW_BUCKET.get()));
+//                        } else if (!player.getInventory().add(new ItemStack(ModItems.TALLOW_BUCKET.get()))) {
+//                            player.drop(new ItemStack(ModItems.TALLOW_BUCKET.get()), false);
+//                        }
+//                    }
+//
+//
+//                    player.awardStat(Stats.USE_CAULDRON);
+//                }
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (i > 0 && item == Items.GLASS_BOTTLE) {
+//                if (!worldIn.isClientSide) {
+//                    if(state.getValue(FLUID) == LiquidType.WATER) {
+//                        ItemStack itemstack4 = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+//                        player.awardStat(Stats.USE_CAULDRON);
+//                        itemstack.shrink(1);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, itemstack4);
+//                        } else if (!player.getInventory().add(itemstack4)) {
+//                            player.drop(itemstack4, false);
+//                        } else if (player instanceof ServerPlayer) {
+//                            ((ServerPlayer) player).initMenu(player.containerMenu);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.LAVA) {
+//                        ItemStack itemstack5 = new ItemStack(ModItems.LAVA_BOTTLE.get());
+//                        player.awardStat(Stats.USE_CAULDRON);
+//                        itemstack.shrink(1);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, itemstack5);
+//                        } else if (!player.getInventory().add(itemstack5)) {
+//                            player.drop(itemstack5, false);
+//                        } else if (player instanceof ServerPlayer) {
+//                            ((ServerPlayer) player).initMenu(player.containerMenu);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.MILK) {
+//                        ItemStack itemstack6 = new ItemStack(ModItems.MILK_BOTTLE.get());
+//                        player.awardStat(Stats.USE_CAULDRON);
+//                        itemstack.shrink(1);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, itemstack6);
+//                        } else if (!player.getInventory().add(itemstack6)) {
+//                            player.drop(itemstack6, false);
+//                        } else if (player instanceof ServerPlayer) {
+//                            ((ServerPlayer) player).initMenu(player.containerMenu);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.QUICKSILVER) {
+//                        ItemStack itemstack7 = new ItemStack(ModItems.QUICKSILVER_BOTTLE.get());
+//                        player.awardStat(Stats.USE_CAULDRON);
+//                        itemstack.shrink(1);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, itemstack7);
+//                        } else if (!player.getInventory().add(itemstack7)) {
+//                            player.drop(itemstack7, false);
+//                        } else if (player instanceof ServerPlayer) {
+//                            ((ServerPlayer) player).initMenu(player.containerMenu);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.BLOOD) {
+//                        ItemStack itemstack8 = new ItemStack(ModItems.BLOOD_BOTTLE.get());
+//                        player.awardStat(Stats.USE_CAULDRON);
+//                        itemstack.shrink(1);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, itemstack8);
+//                        } else if (!player.getInventory().add(itemstack8)) {
+//                            player.drop(itemstack8, false);
+//                        } else if (player instanceof ServerPlayer) {
+//                            ((ServerPlayer) player).initMenu(player.containerMenu);
+//                        }
+//                    } else if(state.getValue(FLUID) == LiquidType.TALLOW) {
+//                        ItemStack itemstack8 = new ItemStack(ModItems.TALLOW_BOTTLE.get());
+//                        player.awardStat(Stats.USE_CAULDRON);
+//                        itemstack.shrink(1);
+//                        if (itemstack.isEmpty()) {
+//                            player.setItemInHand(handIn, itemstack8);
+//                        } else if (!player.getInventory().add(itemstack8)) {
+//                            player.drop(itemstack8, false);
+//                        } else if (player instanceof ServerPlayer) {
+//                            ((ServerPlayer) player).initMenu(player.containerMenu);
+//                        }
+//                    }
+//
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+//
+//                    this.setFillLevel(worldIn, pos, state, i - 1, i - 1 > 0 ? state.getValue(FLUID) : LiquidType.EMPTY);
+//
+//                }
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == Items.POTION && PotionUtils.getPotion(itemstack) == Potions.WATER && (state.getValue(FLUID) == LiquidType.WATER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
+//                if (!worldIn.isClientSide) {
+//
+//                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
+//                    player.awardStat(Stats.USE_CAULDRON);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, itemstack3);
+//                    } else if (!player.getInventory().add(itemstack3)) {
+//                        player.drop(itemstack3, false);
+//                    } else if (player instanceof ServerPlayer) {
+//                        ((ServerPlayer) player).initMenu(player.containerMenu);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.WATER);
+//                }
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.LAVA_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.LAVA || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
+//                if (!worldIn.isClientSide) {
+//
+//                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
+//                    player.awardStat(Stats.USE_CAULDRON);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, itemstack3);
+//                    } else if (!player.getInventory().add(itemstack3)) {
+//                        player.drop(itemstack3, false);
+//                    } else if (player instanceof ServerPlayer) {
+//                        ((ServerPlayer) player).initMenu(player.containerMenu);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.LAVA);
+//                }
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.MILK_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.MILK || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
+//                if (!worldIn.isClientSide) {
+//
+//                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
+//                    player.awardStat(Stats.USE_CAULDRON);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, itemstack3);
+//                    } else if (!player.getInventory().add(itemstack3)) {
+//                        player.drop(itemstack3, false);
+//                    } else if (player instanceof ServerPlayer) {
+//                        ((ServerPlayer) player).initMenu(player.containerMenu);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.MILK);
+//                }
+//
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.QUICKSILVER_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.QUICKSILVER || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
+//                if (!worldIn.isClientSide) {
+//
+//                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
+//                    player.awardStat(Stats.USE_CAULDRON);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, itemstack3);
+//                    } else if (!player.getInventory().add(itemstack3)) {
+//                        player.drop(itemstack3, false);
+//                    } else if (player instanceof ServerPlayer) {
+//                        ((ServerPlayer) player).initMenu(player.containerMenu);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.QUICKSILVER);
+//                }
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.BLOOD_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.BLOOD || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
+//                if (!worldIn.isClientSide) {
+//
+//                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
+//                    player.awardStat(Stats.USE_CAULDRON);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, itemstack3);
+//                    } else if (!player.getInventory().add(itemstack3)) {
+//                        player.drop(itemstack3, false);
+//                    } else if (player instanceof ServerPlayer) {
+//                        ((ServerPlayer) player).initMenu(player.containerMenu);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.BLOOD);
+//                }
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if (item == ModItems.TALLOW_BOTTLE.get() && (state.getValue(FLUID) == LiquidType.TALLOW || state.getValue(FLUID) == LiquidType.EMPTY) && i < 3) {
+//                if (!worldIn.isClientSide) {
+//
+//                    ItemStack itemstack3 = new ItemStack(Items.GLASS_BOTTLE);
+//                    player.awardStat(Stats.USE_CAULDRON);
+//                    itemstack.shrink(1);
+//                    if (itemstack.isEmpty()) {
+//                        player.setItemInHand(handIn, itemstack3);
+//                    } else if (!player.getInventory().add(itemstack3)) {
+//                        player.drop(itemstack3, false);
+//                    } else if (player instanceof ServerPlayer) {
+//                        ((ServerPlayer) player).initMenu(player.containerMenu);
+//                    }
+//                    worldIn.playSound((Player)null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+//                    this.setFillLevel(worldIn, pos, state, i + 1, LiquidType.TALLOW);
+//                }
+//                return InteractionResult.sidedSuccess(worldIn.isClientSide);
+//            } else if(!worldIn.isClientSide()) { // If
+//                BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+//
+//                if(tileEntity instanceof MixingCauldronTile) {
+//                    MenuProvider containerProvider = createContainerProvider(worldIn, pos);
+//
+//                    NetworkHooks.openGui(((ServerPlayer)player), containerProvider, tileEntity.getBlockPos());
+//
+//                } else {
+//                    throw new IllegalStateException("Our Container provider is missing!");
+//                }
+//            }
+//
+//
+//        }
+//
+//        return InteractionResult.SUCCESS;
+//    }
 
     public void setFillLevel(Level worldIn, BlockPos pos, BlockState state, int level, LiquidType type) {
         worldIn.setBlock(pos, state.setValue(LEVEL, Integer.valueOf(Mth.clamp(level, 0, 3))).setValue(FLUID, type), 2);
@@ -566,65 +891,47 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
     public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
 
         // get slots and animate particles based off number of items in the cauldron and based off the level and fluid type
+        float height = MIN_Y;
+        BlockEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof MixingCauldronTile)
+            height = MIN_Y + (MAX_Y - MIN_Y) * Math.min(1, (float) ((MixingCauldronTile) tileEntity).getFluidStack().getAmount() / ((MixingCauldronTile) tileEntity).getTankCapacity(0)) + 1/16f;
+
         int num = ((MixingCauldronTile)world.getBlockEntity(pos)).getNumberOfItems();
 
         world.addParticle(ParticleTypes.FLAME, pos.getX() + Math.round(rand.nextDouble()), pos.getY() + 1.2d, pos.getZ() + Math.round(rand.nextDouble()) , (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.035d ,(rand.nextDouble() - 0.5d) / 50d);
         world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, state), pos.getX() + Math.round(rand.nextDouble()), pos.getY() + 1.2d, pos.getZ() + Math.round(rand.nextDouble()) , (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 2d ,(rand.nextDouble() - 0.5d) / 50d);
         world.addParticle(ParticleTypes.SMOKE, pos.getX() + Math.round(rand.nextDouble()), pos.getY() + 1.2d, pos.getZ() + Math.round(rand.nextDouble()) , (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.045d ,(rand.nextDouble() - 0.5d) / 50d);
 
-        if(state.getValue(LEVEL) > 0) {
-            for(int i = 0; i < state.getValue(LEVEL); i++) {
+
+        if(((MixingCauldronTile) Objects.requireNonNull(world.getBlockEntity(pos))).getFluidStack().getAmount() > 0) {
+            for(int i = 0; i < Mth.floor(((MixingCauldronTile)world.getBlockEntity(pos)).getFluidStack().getAmount() / 666f + 0.5f); i++) {
                 if(rand.nextDouble() > 0.5f)
-                    world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.004d, (rand.nextDouble() - 0.5d) / 50d);
+                    world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + height, pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.004d, (rand.nextDouble() - 0.5d) / 50d);
             }
             for(int i = 0; i < num; i++) {
                 if(rand.nextDouble() > 0.5f)
-                    world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.004d, (rand.nextDouble() - 0.5d) / 50d);
+                    world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + height, pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.004d, (rand.nextDouble() - 0.5d) / 50d);
             }
-            if(state.getValue(FLUID) == LiquidType.WATER || state.getValue(FLUID) == LiquidType.MILK || state.getValue(FLUID) == LiquidType.TALLOW)
-            {
-                world.addParticle(ParticleTypes.BUBBLE, pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.005d, (rand.nextDouble() - 0.5d) / 50d);
-            }else if(state.getValue(FLUID) == LiquidType.BLOOD)
-            {
-                if(rand.nextInt(20) == 0)
-                    world.addParticle(ModParticleTypes.BLOOD.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 75d, (rand.nextDouble() + 0.5d) * 0.0005d, (rand.nextDouble() - 0.5d) / 75d);
+            if (tileEntity instanceof MixingCauldronTile) {
+                if(((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(Fluids.WATER, 1)) || ((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(ModFluids.TALLOW_FLUID.get(), 1)))
+                {
+                    world.addParticle(ParticleTypes.BUBBLE, pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + height, pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.005d, (rand.nextDouble() - 0.5d) / 50d);
+                }
+                else if(((MixingCauldronTile) tileEntity).getFluidStack().isFluidEqual(new FluidStack(Fluids.WATER, 1)))
+                {
+                    if(rand.nextInt(20) == 0)
+                        world.addParticle(ModParticleTypes.BLOOD.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + height, pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 75d, (rand.nextDouble() + 0.5d) * 0.0005d, (rand.nextDouble() - 0.5d) / 75d);
+                }
             }
         }
         if(state.getValue(CRAFT_DELAY) >= MixingCauldronTile.craftDelayMax * 0.80)
         {
-            //ffs please clean this up
-            //maybe
-            //also maybe figure out a way to spawn the particles as the craft is completed and not on an animate tick as they are random it appears
-            for(int i = 0; i < 3; i++) {
-                world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, world.getBlockState(pos)), pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
-                world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, world.getBlockState(pos)), pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
-                world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, world.getBlockState(pos)), pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
-                world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.045d ,(rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.045d ,(rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
+
+            if (tileEntity instanceof MixingCauldronTile) {
+                if (!tileEntity.getLevel().isClientSide)
+                    HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> tileEntity.getLevel().getChunkAt(((MixingCauldronTile) tileEntity).getPos())), new EmitParticlesPacket(((MixingCauldronTile) tileEntity).getPos(), 3, false));
             }
 
-
-        }
-        if(this.emitParticles > 0)
-        {
-            for(int i = 0; i < 3; i++) {
-                world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, world.getBlockState(pos)), pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
-                world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, world.getBlockState(pos)), pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
-                world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, world.getBlockState(pos)), pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 20d, (rand.nextDouble() + 0.5d) * 2d, (rand.nextDouble() - 0.5d) / 20d);
-                world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.045d ,(rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 1.2d, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.045d ,(rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-                world.addParticle(ModParticleTypes.CAULDRON.get(), pos.getX() + 0.2d + (0.6d * rand.nextDouble()), pos.getY() + 0.95d + (0.05d * rand.nextDouble()) - ((3 - state.getValue(LEVEL)) * 0.15), pos.getZ() + 0.2d + (0.6d * rand.nextDouble()), (rand.nextDouble() - 0.5d) / 50d, (rand.nextDouble() + 0.5d) * 0.024d, (rand.nextDouble() - 0.5d) / 50d);
-            }
-            this.emitParticles--;
         }
 
         super.animateTick(state, world, pos, rand);
@@ -643,10 +950,6 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
                 return new TranslatableComponent("");
             }
         };
-    }
-
-    public void setEmitParticles(int emitParticles) {
-        this.emitParticles = emitParticles;
     }
 
 //    @Nullable

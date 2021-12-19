@@ -53,6 +53,7 @@ public class ModWorldEvents {
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.WILLOW_TREE);
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.FLOWERING_LILYPAD);
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.SWAMP_FLOWERS);
+            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacements.SELENITE_GEODE);
         }
 
     }

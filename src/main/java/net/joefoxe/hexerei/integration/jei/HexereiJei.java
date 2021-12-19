@@ -8,9 +8,12 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.block.ModBlocks;
+import net.joefoxe.hexerei.block.custom.CandleDipper;
+import net.joefoxe.hexerei.data.recipes.DipperRecipe;
 import net.joefoxe.hexerei.data.recipes.MixingCauldronRecipe;
 import net.joefoxe.hexerei.data.recipes.ModRecipeTypes;
 import net.joefoxe.hexerei.screen.MixingCauldronScreen;
+import net.joefoxe.hexerei.tileentity.CandleDipperTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -24,6 +27,7 @@ public class HexereiJei implements IModPlugin {
 
 
     public static final ResourceLocation MIXING_CAULDRON_UID = new ResourceLocation(Hexerei.MOD_ID, "mixing_cauldron");
+    public static final ResourceLocation DIPPER_UID = new ResourceLocation(Hexerei.MOD_ID, "dipper");
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -33,12 +37,14 @@ public class HexereiJei implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(
-                new MixingCauldronRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+                new MixingCauldronRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new DipperRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.MIXING_CAULDRON.get()), MIXING_CAULDRON_UID);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.CANDLE_DIPPER.get()), DIPPER_UID);
     }
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
@@ -51,5 +57,8 @@ public class HexereiJei implements IModPlugin {
         registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.MIXING_CAULDRON_RECIPE).stream()
                         .filter(r -> r instanceof MixingCauldronRecipe).collect(Collectors.toList()),
                 MixingCauldronRecipeCategory.UID);
+        registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.DIPPER_RECIPE).stream()
+                        .filter(r -> r instanceof DipperRecipe).collect(Collectors.toList()),
+                DipperRecipeCategory.UID);
     }
 }

@@ -1,13 +1,13 @@
 package net.joefoxe.hexerei.block.custom;
 
 import net.joefoxe.hexerei.block.ITileEntity;
-import net.joefoxe.hexerei.tileentity.CandleDipperTile;
-import net.joefoxe.hexerei.tileentity.CandleTile;
-import net.joefoxe.hexerei.tileentity.CrystalBallTile;
-import net.joefoxe.hexerei.tileentity.ModTileEntities;
+import net.joefoxe.hexerei.block.ModBlocks;
+import net.joefoxe.hexerei.tileentity.*;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.block.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -38,6 +38,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -66,7 +67,15 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
         return null;
     }
 
+    @Override
+    public void destroy(LevelAccessor worldIn, BlockPos pos, BlockState p_49862_) {
 
+
+        super.destroy(worldIn, pos, p_49862_);
+
+
+        System.out.println("Destroy Candle Dipper");
+    }
 
     // hitbox REMEMBER TO DO THIS
     public static final VoxelShape SHAPE = Stream.of(
@@ -176,10 +185,31 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
         }
     }
 
+//    MixingCauldronTile te = (MixingCauldronTile) worldIn.getBlockEntity(pos);
+//
+//        if(!worldIn.isClientSide()) {
+//        worldIn.addFreshEntity(new ItemEntity((Level) worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItem(0)));
+//        worldIn.addFreshEntity(new ItemEntity((Level) worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItem(1)));
+//        worldIn.addFreshEntity(new ItemEntity((Level) worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItem(2)));
+//    }
+
 
     @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+
+
+        if(!stateIn.canSurvive(worldIn, currentPos))
+        {
+            CandleDipperTile te = (CandleDipperTile) worldIn.getBlockEntity(currentPos);
+
+            if(!worldIn.isClientSide()) {
+                worldIn.addFreshEntity(new ItemEntity((Level) worldIn, currentPos.getX() + 0.5f, currentPos.getY() - 0.5f, currentPos.getZ() + 0.5f, te.getItem(0)));
+                worldIn.addFreshEntity(new ItemEntity((Level) worldIn, currentPos.getX() + 0.5f, currentPos.getY() - 0.5f, currentPos.getZ() + 0.5f, te.getItem(1)));
+                worldIn.addFreshEntity(new ItemEntity((Level) worldIn, currentPos.getX() + 0.5f, currentPos.getY() - 0.5f, currentPos.getZ() + 0.5f, te.getItem(2)));
+            }
+        }
+
         return !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 

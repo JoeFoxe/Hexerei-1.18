@@ -1,0 +1,18 @@
+{
+  "type": "hexerei:dipper",
+  "liquid": {
+    "fluid": "hexerei:tallow_fluid"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "output": {
+    "item": "hexerei:candle"
+  },
+  "fluidLevelsConsumed": 50,
+  "dippingTimeInTicks": 200,
+  "dryingTimeInTicks": 200,
+  "numberOfDips": 3
+}

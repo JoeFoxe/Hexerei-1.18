@@ -1,6 +1,7 @@
 package net.joefoxe.hexerei.util;
 
 import net.joefoxe.hexerei.Hexerei;
+import net.joefoxe.hexerei.util.message.EmitParticlesPacket;
 import net.joefoxe.hexerei.util.message.IMessage;
 import net.joefoxe.hexerei.util.message.MessageCountUpdate;
 import net.joefoxe.hexerei.util.message.TESyncPacket;
@@ -25,6 +26,8 @@ public class HexereiPacketHandler {
                 .simpleChannel();
 
         instance.registerMessage(++ id, MessageCountUpdate.class, MessageCountUpdate::encode, MessageCountUpdate::decode, MessageCountUpdate::handle);
+
+        instance.registerMessage(++ id, EmitParticlesPacket.class, EmitParticlesPacket::encode, EmitParticlesPacket::decode, EmitParticlesPacket::handle);
 
         instance.registerMessage(
                 ++ id,

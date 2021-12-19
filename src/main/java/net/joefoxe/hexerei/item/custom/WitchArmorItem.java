@@ -8,6 +8,7 @@ import net.joefoxe.hexerei.util.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.Model;
 import net.minecraft.core.Registry;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.TooltipFlag;
@@ -27,30 +28,14 @@ import net.minecraftforge.client.IItemRenderProperties;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.joefoxe.hexerei.util.ClientProxy.WITCH_ARMOR_LAYER;
+
 public class WitchArmorItem extends ArmorItem {
 
     public WitchArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builder) {
         super(materialIn, slot, builder);
     }
 
-//    @Override
-//    @OnlyIn(Dist.CLIENT)
-//    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlot armorSlot, A _default) {
-//
-//        ModModels.GearModel gearModel = ModModels.GearModel.REGISTRY.get(0);
-//
-//        if (gearModel == null) {
-//            return null;
-//        }
-//
-//        return (A) gearModel.forSlotType(armorSlot);
-//    }
-
-//    @Override TODO find what getArmorModel changed to
-//    @OnlyIn(Dist.CLIENT)
-//    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlot armorSlot, A _default) {
-//        return WitchArmorModel.getModel(armorSlot, entityLiving);
-//    }
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
@@ -73,20 +58,22 @@ public class WitchArmorItem extends ArmorItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
+
         consumer.accept(new IItemRenderProperties() {
+            static WitchArmorModel model;
+
             @Override
             public WitchArmorModel getArmorModel(LivingEntity entity, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel _default) {
+                if (model == null) model = new WitchArmorModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientProxy.WITCH_ARMOR_LAYER));
                 float pticks = Minecraft.getInstance().getFrameTime();
                 float f = Mth.rotLerp(pticks, entity.yBodyRotO, entity.yBodyRot);
                 float f1 = Mth.rotLerp(pticks, entity.yHeadRotO, entity.yHeadRot);
                 float netHeadYaw = f1 - f;
                 float netHeadPitch = Mth.lerp(pticks, entity.xRotO, entity.getXRot());
-//                if(ClientProxy.WITCH_ARMOR_MODEL == null)
-//                    ClientProxy.WITCH_ARMOR_MODEL = new WitchArmorModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientProxy.WITCH_ARMOR_LAYER));
-                ClientProxy.WITCH_ARMOR_MODEL.slot = slot;
-                ClientProxy.WITCH_ARMOR_MODEL.copyFromDefault(_default);
-                ClientProxy.WITCH_ARMOR_MODEL.setupAnim(entity, entity.animationPosition, entity.animationSpeed, entity.tickCount + pticks, netHeadYaw, netHeadPitch);
-                return ClientProxy.WITCH_ARMOR_MODEL;
+                model.slot = slot;
+                model.copyFromDefault(_default);
+                model.setupAnim(entity, entity.animationPosition, entity.animationSpeed, entity.tickCount + pticks, netHeadYaw, netHeadPitch);
+                return model;
             }
         });
     }

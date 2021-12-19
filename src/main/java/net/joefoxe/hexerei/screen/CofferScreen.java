@@ -51,7 +51,7 @@ public class CofferScreen extends AbstractContainerScreen<CofferContainer> {
 
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderComponentHoverEffect(matrixStack, Style.EMPTY, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override

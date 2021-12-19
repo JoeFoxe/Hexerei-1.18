@@ -78,7 +78,6 @@ public class AnimalFatAdditionModifier extends LootModifier {
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
         // generatedLoot is the loot that would be dropped, if we wouldn't add or replace
         // anything!
-        System.out.println("CowKilled");
         if(context.getRandom().nextDouble() / (double)Math.min(context.getLootingModifier() + 1, 4) < 0.45D)
             generatedLoot.add(new ItemStack(addition, context.getRandom().nextInt(Math.min(context.getLootingModifier() + 1, 4)) + 1));
 

@@ -1,6 +1,8 @@
 {
   "type": "hexerei:mixingcauldron",
-  "liquid": "lava",
+  "liquid": {
+    "fluid": "minecraft:lava"
+  },
   "ingredients": [
     {
       "item": "minecraft:quartz"
@@ -30,6 +32,8 @@
   "output": {
     "item": "hexerei:pestle_and_mortar"
   },
-  "liquidOutput": "lava",
-  "fluidLevelsConsumed": 1
+  "liquidOutput": {
+    "fluid": "minecraft:lava"
+  },
+  "fluidLevelsConsumed": 333
 }

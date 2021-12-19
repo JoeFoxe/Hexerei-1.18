@@ -61,14 +61,6 @@ public class ClientProxy implements SidedProxy {
     public static void layerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(BroomModel.LAYER_LOCATION, BroomModel::createBodyLayer);
         event.registerLayerDefinition(ClientProxy.WITCH_ARMOR_LAYER, WitchArmorModel::createBodyLayer);
-//        WITCH_ARMOR_MODEL = new WitchArmorModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientProxy.WITCH_ARMOR_LAYER));
-        System.out.println("TEST1");
-    }
-
-    @SubscribeEvent
-    public void onRegisterLayers(EntityRenderersEvent.AddLayers event) {
-        System.out.println("TEST2");
-        WITCH_ARMOR_MODEL = new WitchArmorModel(event.getEntityModels().bakeLayer(WITCH_ARMOR_LAYER));
 
     }
 

@@ -1,6 +1,8 @@
 {
   "type": "hexerei:mixingcauldron",
-  "liquid": "water",
+  "liquid": {
+    "fluid": "minecraft:water"
+  },
   "ingredients": [
     {
       "item": "minecraft:string"
@@ -30,6 +32,8 @@
   "output": {
     "item": "hexerei:herb_drying_rack_full"
   },
-  "liquidOutput": "water",
-  "fluidLevelsConsumed": 1
+  "liquidOutput": {
+    "fluid": "minecraft:water"
+  },
+  "fluidLevelsConsumed": 333
 }

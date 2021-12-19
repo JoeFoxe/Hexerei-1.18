@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,6 +27,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModBlocks {
+
 
     public static final DeferredRegister<Block> BLOCKS
             = DeferredRegister.create(ForgeRegistries.BLOCKS, Hexerei.MOD_ID);
@@ -38,6 +40,17 @@ public class ModBlocks {
     public static final RegistryObject<MixingCauldron> MIXING_CAULDRON = registerBlock("mixing_cauldron",
             () -> new MixingCauldron(BlockBehaviour.Properties.of(Material.METAL).explosionResistance(4f).requiresCorrectToolForDrops().strength(2).lightLevel(state -> 12)));
 
+    public static final RegistryObject<CandleDipper> CANDLE_DIPPER = registerBlock("candle_dipper",
+            () -> new CandleDipper(BlockBehaviour.Properties.of(Material.METAL).noCollission().noOcclusion().strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER = registerBlock("coffer",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Altar> BOOK_OF_SHADOWS_ALTAR = registerBlock("book_of_shadows_altar",
+            () -> new Altar(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).explosionResistance(2f)));
+
+    public static final RegistryObject<SageBlock> SAGE = BLOCKS.register("sage_crop",
+            () -> new SageBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT)));
 
     public static final RegistryObject<PestleAndMortar> PESTLE_AND_MORTAR = registerBlock("pestle_and_mortar",
             () -> new PestleAndMortar(BlockBehaviour.Properties.of(Material.STONE).strength(2).explosionResistance(2f)));
@@ -153,6 +166,12 @@ public class ModBlocks {
             () -> new StairBlock(() -> WILLOW_PLANKS.get().defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 
+    public static final RegistryObject<Block> WILLOW_VINES = registerBlock("willow_vines",
+            () -> new WillowVinesBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WEEPING_VINES)));
+
+    public static final RegistryObject<Block> WILLOW_VINES_PLANT = registerBlock("willow_vines_plant",
+            () -> new WillowVinesPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WEEPING_VINES)));
+
     public static final RegistryObject<FenceBlock> WILLOW_FENCE = registerBlock("willow_fence",
             () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 
@@ -175,7 +194,7 @@ public class ModBlocks {
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
 
     public static final RegistryObject<LeavesBlock> WILLOW_LEAVES = registerBlock("willow_leaves",
-            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).randomTicks().sound(SoundType.AZALEA_LEAVES).noOcclusion().isSuffocating(Properties::never).isViewBlocking(Properties::never)));
+            () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.2F).randomTicks().sound(SoundType.AZALEA_LEAVES).noOcclusion().isSuffocating(Properties::never).isViewBlocking(Properties::never)));
 
     public static final RegistryObject<SaplingBlock> WILLOW_SAPLING = registerBlock("willow_sapling",
             () -> new SaplingBlock(new WillowTree(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
@@ -196,20 +215,31 @@ public class ModBlocks {
             () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA)));
 
 
-    public static final RegistryObject<CandleDipper> CANDLE_DIPPER = registerBlock("candle_dipper",
-            () -> new CandleDipper(BlockBehaviour.Properties.of(Material.METAL).noCollission().noOcclusion().strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+    public static final RegistryObject<AmethystBlock> SELENITE_BLOCK = registerBlock("selenite_block",
+            () -> new AmethystBlock(BlockBehaviour.Properties.of(Material.AMETHYST, MaterialColor.TERRACOTTA_WHITE).strength(0.5F).sound(SoundType.AMETHYST).noOcclusion()));
 
+    public static final RegistryObject<AmethystBlock> BUDDING_SELENITE = registerBlock("budding_selenite",
+            () -> new BuddingSelenite(BlockBehaviour.Properties.of(Material.AMETHYST).randomTicks().strength(1.0F).sound(SoundType.AMETHYST).noOcclusion()));
 
+    public static final RegistryObject<AmethystBlock> SELENITE_CLUSTER = registerBlock("selenite_cluster",
+            () -> new AmethystClusterBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).noOcclusion().strength(0.5F).randomTicks().sound(SoundType.AMETHYST_CLUSTER).noOcclusion().lightLevel((p_152632_) -> {
+                return 5;
+            })));
 
+    public static final RegistryObject<AmethystBlock> LARGE_SELENITE_BUD = registerBlock("large_selenite_bud",
+            () -> new AmethystClusterBlock(5, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).sound(SoundType.MEDIUM_AMETHYST_BUD).noOcclusion().lightLevel((p_152629_) -> {
+                return 4;
+            })));
 
-    public static final RegistryObject<Coffer> COFFER = registerBlock("coffer",
-            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+    public static final RegistryObject<AmethystBlock> MEDIUM_SELENITE_BUD = registerBlock("medium_selenite_bud",
+            () -> new AmethystClusterBlock(4, 3, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).sound(SoundType.LARGE_AMETHYST_BUD).noOcclusion().lightLevel((p_152617_) -> {
+                return 2;
+            })));
 
-    public static final RegistryObject<Altar> BOOK_OF_SHADOWS_ALTAR = registerBlock("book_of_shadows_altar",
-            () -> new Altar(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).explosionResistance(2f)));
-
-    public static final RegistryObject<SageBlock> SAGE = BLOCKS.register("sage_crop",
-            () -> new SageBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT)));
+    public static final RegistryObject<AmethystBlock> SMALL_SELENITE_BUD = registerBlock("small_selenite_bud",
+            () -> new AmethystClusterBlock(3, 4, BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).sound(SoundType.SMALL_AMETHYST_BUD).noOcclusion().lightLevel((p_187409_) -> {
+                return 1;
+            })));
 
     // SIGILS
     public static final RegistryObject<Block> BLOOD_SIGIL = registerBlockNoItem("blood_sigil",

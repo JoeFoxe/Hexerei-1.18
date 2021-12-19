@@ -115,7 +115,6 @@ public class HexereiAbstractTreeFeature extends Feature<TreeConfiguration> {
 
         StructureManager templatemanager = reader.getLevel().getServer().getStructureManager();
         StructureTemplate template = templatemanager.getOrCreate(WILLOW_TREE[i]);
-        System.out.println(template);
 
         if (template == null) {
             Hexerei.LOGGER.error("Identifier to the specified nbt file was not found! : {}", WILLOW_TREE[i]);

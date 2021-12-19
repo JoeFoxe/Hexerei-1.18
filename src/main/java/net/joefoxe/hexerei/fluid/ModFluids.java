@@ -41,12 +41,10 @@ public class ModFluids {
     public static final RegistryObject<FlowingFluid> QUICKSILVER_FLOWING = FLUIDS.register("quicksilver_flowing", () -> new ForgeFlowingFluid.Flowing(ModFluids.QUICKSILVER_PROPERTIES));
 
     public static final ForgeFlowingFluid.Properties QUICKSILVER_PROPERTIES = new ForgeFlowingFluid.Properties(
-            () -> QUICKSILVER_FLUID.get(), () -> QUICKSILVER_FLOWING.get(), FluidAttributes.builder(QUICKSILVER_STILL_RL, QUICKSILVER_FLOWING_RL).density(15).luminosity(15).viscosity(15).sound(SoundEvents.BUCKET_EMPTY_LAVA).overlay(QUICKSILVER_OVERLAY_RL).color(0xF9FFFFFF).gaseous()).slopeFindDistance(2).levelDecreasePerBlock(2).block(() -> ModFluids.QUICKSILVER_BLOCK.get()).bucket(() -> ModItems.QUICKSILVER_BUCKET.get());
+            () -> QUICKSILVER_FLUID.get(), () -> QUICKSILVER_FLOWING.get(), FluidAttributes.builder(QUICKSILVER_STILL_RL, QUICKSILVER_FLOWING_RL).density(15).luminosity(15).viscosity(15).sound(SoundEvents.BUCKET_EMPTY_LAVA).overlay(QUICKSILVER_OVERLAY_RL).color(0xF9FFFFFF)).slopeFindDistance(2).levelDecreasePerBlock(2).block(() -> ModFluids.QUICKSILVER_BLOCK.get()).bucket(() -> ModItems.QUICKSILVER_BUCKET.get());
 
     public static final RegistryObject<LiquidBlock> QUICKSILVER_BLOCK = ModBlocks.BLOCKS.register("quicksilver", () -> new LiquidBlock(() -> ModFluids.QUICKSILVER_FLUID.get(),
             BlockBehaviour.Properties.of(Material.LAVA).noCollission().explosionResistance(100f).noDrops()));
-
-
 
     public static final RegistryObject<BloodFluid.Source> BLOOD_FLUID = FLUIDS.register("blood_fluid", () -> new BloodFluid.Source(ModFluids.BLOOD_PROPERTIES));
 
@@ -59,8 +57,7 @@ public class ModFluids {
             .viscosity(2000)
             .sound(SoundEvents.HONEY_DRINK)
             .overlay(BLOOD_OVERLAY_RL)
-            .color(0xF9FFFFFF)
-            .gaseous())
+            .color(0xF9FFFFFF))
             .slopeFindDistance(2)
             .levelDecreasePerBlock(2)
             .block(() -> ModFluids.BLOOD_BLOCK.get())
@@ -82,8 +79,7 @@ public class ModFluids {
             .viscosity(2000)
             .sound(SoundEvents.HONEY_DRINK)
             .overlay(TALLOW_OVERLAY_RL)
-            .color(0xF9FFFFFF)
-            .gaseous())
+            .color(0xF9FFFFFF))
             .slopeFindDistance(2)
             .levelDecreasePerBlock(3)
             .block(() -> ModFluids.TALLOW_BLOCK.get())

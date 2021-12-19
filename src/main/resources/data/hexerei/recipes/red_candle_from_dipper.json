@@ -1,0 +1,18 @@
+{
+  "type": "hexerei:dipper",
+  "liquid": {
+    "fluid": "hexerei:blood_fluid"
+  },
+  "ingredients": [
+    {
+      "item": "hexerei:candle"
+    }
+  ],
+  "output": {
+    "item": "hexerei:candle_red"
+  },
+  "fluidLevelsConsumed": 100,
+  "dippingTimeInTicks": 50,
+  "dryingTimeInTicks": 100,
+  "numberOfDips": 2
+}

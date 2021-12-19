@@ -39,7 +39,7 @@
   "block.hexerei.herb_drying_rack_full": "Herb Drying Rack Full",
   "block.hexerei.crystal_ball": "Crystal Ball",
   "block.hexerei.pestle_and_mortar": "Pestle and Mortar",
-  "block.hexerei.candle_dipper": "Candle Dipper",
+  "block.hexerei.candle_dipper": "Dipper",
   "block.hexerei.candle": "Candle",
   "block.hexerei.candle_blue": "Blue Candle",
   "block.hexerei.candle_black": "Black Candle",
@@ -89,6 +89,13 @@
   "item.hexerei.infused_fabric": "Infused Fabric",
   "item.hexerei.animal_fat": "Animal Fat",
   "block.hexerei.flowering_lily_pad": "Flowering Lily Pad",
+  "block.hexerei.budding_selenite": "Budding Selenite",
+  "block.hexerei.selenite_block": "Block of Selenite",
+  "block.hexerei.selenite_cluster": "Selenite Cluster",
+  "block.hexerei.large_selenite_bud": "Large Selenite Bud",
+  "block.hexerei.medium_selenite_bud": "Medium Selenite Bud",
+  "block.hexerei.small_selenite_bud": "Small Selenite Bud",
+  "item.hexerei.selenite_shard": "Selenite Shard",
   "screen.hexerei.mixing_cauldron": "Mixing Cauldron",
   "screen.hexerei.coffer": "Coffer",
   "screen.hexerei.herb_jar": "Herb Jar",
@@ -135,6 +142,15 @@
   "tooltip.hexerei.candelabra_shift": "You can place this either hanging from a block/chain or on top of a block. Can be lit and can be put out by water.",
   "tooltip.hexerei.altar": "Hold \u00A7eSHIFT\u00A7r for more Information",
   "tooltip.hexerei.altar_shift": "WIP, This is to hold the book of shadows once it becomes an item. Right now it just displays on top of the block.",
+
+  "gui.jei.category.dipper.times_dipped_1": "§lNumber§r",
+  "gui.jei.category.dipper.times_dipped_2": "§lof Dips§r",
+  "gui.jei.category.dipper.result": "§l: %s§r",
+  "gui.jei.category.dipper.dry_time_1": "§lDyring§r",
+  "gui.jei.category.dipper.dry_time_2": "§lTime§r",
+  "gui.jei.category.dipper.dip_time_1": "§lDipping§r",
+  "gui.jei.category.dipper.dip_time_2": "§lTime§r",
+
   "itemGroup.hexereiModTab": "Hexerei"
 
 

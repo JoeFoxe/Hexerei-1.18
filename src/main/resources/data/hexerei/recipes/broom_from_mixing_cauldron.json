@@ -1,6 +1,8 @@
 {
   "type": "hexerei:mixingcauldron",
-  "liquid": "water",
+  "liquid": {
+    "fluid": "minecraft:water"
+  },
   "ingredients": [
     {
       "item": "hexerei:blood_bottle"
@@ -30,6 +32,9 @@
   "output": {
     "item": "hexerei:broom"
   },
-  "liquidOutput": "blood",
-  "fluidLevelsConsumed": 1
+
+  "liquidOutput": {
+    "fluid": "hexerei:blood_fluid"
+  },
+  "fluidLevelsConsumed": 1000
 }

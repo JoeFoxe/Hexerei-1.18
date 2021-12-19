@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
@@ -167,7 +168,6 @@ public class Coffer extends BaseEntityBlock implements ITileEntity<CofferTile>, 
         }
     }
 
-
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -186,13 +186,17 @@ public class Coffer extends BaseEntityBlock implements ITileEntity<CofferTile>, 
         CompoundTag tag = item.getOrCreateTag();
         CompoundTag inv = tileEntityOptional.map(coffer -> coffer.itemHandler.serializeNBT())
                 .orElse(new CompoundTag());
-        tag.put("Inventory", inv);
+
+        if(!tileEntityOptional.map(RandomizableContainerBlockEntity::isEmpty).orElse(true))
+            tag.put("Inventory", inv);
+
 
         Component customName = tileEntityOptional.map(CofferTile::getCustomName)
                 .orElse(null);
 
         if (customName != null)
-            item.setHoverName(customName);
+            if(customName.getString().length() > 0)
+                item.setHoverName(customName);
         return item;
     }
 

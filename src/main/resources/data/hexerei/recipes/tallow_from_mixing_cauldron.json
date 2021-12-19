@@ -1,6 +1,8 @@
 {
   "type": "hexerei:mixingcauldron",
-  "liquid": "water",
+  "liquid": {
+    "fluid": "minecraft:water"
+  },
   "ingredients": [
     {
       "item": "hexerei:animal_fat"
@@ -30,6 +32,8 @@
   "output": {
     "item": "hexerei:tallow_impurity"
   },
-  "liquidOutput": "tallow",
+  "liquidOutput": {
+    "fluid": "hexerei:tallow_fluid"
+  },
   "fluidLevelsConsumed": 0
 }

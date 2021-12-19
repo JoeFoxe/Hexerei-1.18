@@ -47,7 +47,7 @@ public class HerbJarScreen extends AbstractContainerScreen<HerbJarContainer> {
 
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderComponentHoverEffect(matrixStack, Style.EMPTY, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override

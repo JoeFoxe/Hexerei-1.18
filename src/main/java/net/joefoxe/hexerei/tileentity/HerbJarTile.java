@@ -73,6 +73,7 @@ public class HerbJarTile extends RandomizableContainerBlockEntity implements Cle
     private UUID lastClickUUID;
 
 
+
     public HerbJarTile(BlockEntityType<?> tileEntityTypeIn, BlockPos blockPos, BlockState blockState) {
         super(tileEntityTypeIn, blockPos, blockState);
         this.itemHandler = createHandler();
@@ -93,7 +94,7 @@ public class HerbJarTile extends RandomizableContainerBlockEntity implements Cle
     }
 
     @Override
-    protected NonNullList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return this.items;
     }
 
