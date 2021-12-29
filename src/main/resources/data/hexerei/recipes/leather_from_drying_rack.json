@@ -1,0 +1,12 @@
+{
+  "type": "hexerei:drying_rack",
+  "ingredients": [
+    {
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
+  "output": {
+    "item": "minecraft:leather"
+  },
+  "dryingTimeInTicks": 2000
+}

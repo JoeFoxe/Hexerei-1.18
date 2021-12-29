@@ -1,0 +1,167 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"2": "hexerei:block/herb_drying_rack_hanging",
+		"particle": "hexerei:block/herb_drying_rack"
+	},
+	"elements": [
+		{
+			"from": [0, -0.16667, -0.75],
+			"to": [1, 1.83333, 0.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, -0.08333, -0.25]},
+			"faces": {
+				"north": {"uv": [3.5, 8.5, 4, 9.5], "texture": "#2"},
+				"east": {"uv": [3, 8.5, 3.5, 9.5], "texture": "#2"},
+				"south": {"uv": [4.5, 8.5, 5, 9.5], "texture": "#2"},
+				"west": {"uv": [4, 8.5, 4.5, 9.5], "texture": "#2"},
+				"up": {"uv": [4, 8.5, 3.5, 8], "texture": "#2"},
+				"down": {"uv": [4.5, 8, 4, 8.5], "texture": "#2"}
+			}
+		},
+		{
+			"from": [-0.5, -1.16667, -1.25],
+			"to": [1.5, -0.16667, 0.75],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, -0.08333, -0.25]},
+			"faces": {
+				"north": {"uv": [1, 4.5, 2, 5], "texture": "#2"},
+				"east": {"uv": [0, 4.5, 1, 5], "texture": "#2"},
+				"south": {"uv": [3, 4.5, 4, 5], "texture": "#2"},
+				"west": {"uv": [2, 4.5, 3, 5], "texture": "#2"},
+				"up": {"uv": [2, 4.5, 1, 3.5], "texture": "#2"},
+				"down": {"uv": [3, 3.5, 2, 4.5], "texture": "#2"}
+			}
+		},
+		{
+			"from": [1.25, -0.56667, -1.25],
+			"to": [2.25, 0.43333, 0.75],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, -0.08333, -0.25]},
+			"faces": {
+				"north": {"uv": [6, 1, 6.5, 1.5], "texture": "#2"},
+				"east": {"uv": [5, 1, 6, 1.5], "texture": "#2"},
+				"south": {"uv": [7.5, 1, 8, 1.5], "texture": "#2"},
+				"west": {"uv": [6.5, 1, 7.5, 1.5], "texture": "#2"},
+				"up": {"uv": [6.5, 1, 6, 0], "texture": "#2"},
+				"down": {"uv": [7, 0, 6.5, 1], "texture": "#2"}
+			}
+		},
+		{
+			"from": [-1.25, -0.56667, -1.25],
+			"to": [-0.25, 0.43333, 0.75],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, -0.08333, -0.25]},
+			"faces": {
+				"north": {"uv": [1, 6, 1.5, 6.5], "texture": "#2"},
+				"east": {"uv": [0, 6, 1, 6.5], "texture": "#2"},
+				"south": {"uv": [2.5, 6, 3, 6.5], "texture": "#2"},
+				"west": {"uv": [1.5, 6, 2.5, 6.5], "texture": "#2"},
+				"up": {"uv": [1.5, 6, 1, 5], "texture": "#2"},
+				"down": {"uv": [2, 5, 1.5, 6], "texture": "#2"}
+			}
+		},
+		{
+			"from": [-0.525, -0.66667, -2],
+			"to": [1.475, 0.33333, -1],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.475, -0.08333, -0.25]},
+			"faces": {
+				"north": {"uv": [7.5, 2.5, 8.5, 3], "texture": "#2"},
+				"east": {"uv": [7, 2.5, 7.5, 3], "texture": "#2"},
+				"south": {"uv": [9, 2.5, 10, 3], "texture": "#2"},
+				"west": {"uv": [8.5, 2.5, 9, 3], "texture": "#2"},
+				"up": {"uv": [8.5, 2.5, 7.5, 2], "texture": "#2"},
+				"down": {"uv": [9.5, 2, 8.5, 2.5], "texture": "#2"}
+			}
+		},
+		{
+			"from": [-0.475, -0.66667, 0.5],
+			"to": [1.525, 0.33333, 1.5],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.525, -0.08333, -0.25]},
+			"faces": {
+				"north": {"uv": [6.5, 4.5, 7.5, 5], "texture": "#2"},
+				"east": {"uv": [6, 4.5, 6.5, 5], "texture": "#2"},
+				"south": {"uv": [8, 4.5, 9, 5], "texture": "#2"},
+				"west": {"uv": [7.5, 4.5, 8, 5], "texture": "#2"},
+				"up": {"uv": [7.5, 4.5, 6.5, 4], "texture": "#2"},
+				"down": {"uv": [8.5, 4, 7.5, 4.5], "texture": "#2"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [70.5, 0, 0],
+			"translation": [0, -2, -2],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [70.5, 0, 0],
+			"translation": [0, -2, -2],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [-180, 76.25, -180],
+			"translation": [2.25, 2.25, 0.25],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-180, 76.25, -180],
+			"translation": [2.25, 2.25, 0.25],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"rotation": [32, 0, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [-164.5, 22.75, -180],
+			"translation": [0, 0.25, 0],
+			"scale": [0.9, 0.9, 0.9]
+		},
+		"head": {
+			"rotation": [-0.25, 0, 0],
+			"translation": [0, -0.75, -7]
+		},
+		"fixed": {
+			"translation": [0, 0, -0.75]
+		}
+	},
+	"groups": [
+		{
+			"name": "herb_drying_rack_full",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "group",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [
+						{
+							"name": "mushroom",
+							"origin": [0, 0, 0],
+							"color": 0,
+							"children": [0, 1, 2, 3, 4, 5]
+						},
+						{
+							"name": "mushroom",
+							"origin": [0, 0, 0],
+							"color": 0,
+							"children": []
+						}
+					]
+				},
+				{
+					"name": "herb",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": []
+				},
+				{
+					"name": "herb2",
+					"origin": [1.5, 5.75, 7.25],
+					"color": 0,
+					"children": []
+				}
+			]
+		}
+	]
+}

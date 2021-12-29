@@ -186,8 +186,7 @@ public class MixingCauldronRecipe implements IMixingCauldronRecipe{
                 inputs.set(i, Ingredient.fromNetwork(buffer));
             }
 
-            ItemStack output = buffer.readItem();
-            return new MixingCauldronRecipe(recipeId, output,
+            return new MixingCauldronRecipe(recipeId, buffer.readItem(),
                     inputs, buffer.readFluidStack(), buffer.readFluidStack(), buffer.readInt());
         }
 
@@ -197,7 +196,7 @@ public class MixingCauldronRecipe implements IMixingCauldronRecipe{
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buffer);
             }
-            buffer.writeItemStack(recipe.getResultItem(), false);
+            buffer.writeItem(recipe.getResultItem());
             buffer.writeFluidStack(recipe.getLiquid());
             buffer.writeFluidStack(recipe.getLiquidOutput());
             buffer.writeInt(recipe.getFluidLevelsConsumed());

@@ -327,7 +327,7 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
 
     }
 
-    public boolean receiveFluid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
+    public boolean placeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
         if (!state.getValue(BlockStateProperties.WATERLOGGED) && fluidStateIn.getType() == Fluids.WATER) {
 
             worldIn.setBlock(pos, state.setValue(WATERLOGGED, Boolean.valueOf(true)), 3);

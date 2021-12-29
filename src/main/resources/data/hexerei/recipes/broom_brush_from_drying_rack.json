@@ -1,0 +1,12 @@
+{
+  "type": "hexerei:drying_rack",
+  "ingredients": [
+    {
+      "item": "hexerei:wet_broom_brush"
+    }
+  ],
+  "output": {
+    "item": "hexerei:broom_brush"
+  },
+  "dryingTimeInTicks": 1000
+}

@@ -8,12 +8,12 @@ import com.google.gson.GsonBuilder;
 import com.mojang.serialization.Codec;
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.ModEntityTypes;
-import net.joefoxe.hexerei.client.renderer.entity.model.WitchArmorModel;
 import net.joefoxe.hexerei.config.HexConfig;
+import net.joefoxe.hexerei.config.ModKeyBindings;
+import net.joefoxe.hexerei.events.SageBundleEvent;
+import net.joefoxe.hexerei.screen.BroomScreen;
 import net.joefoxe.hexerei.world.gen.*;
 import net.joefoxe.hexerei.world.structure.structures.WitchHutStructure;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -51,9 +51,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -124,6 +121,8 @@ public class Hexerei
 
         ModEntityTypes.register(eventBus);
 
+        eventBus.addListener(this::loadComplete);
+
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
         eventBus.addListener(this::enqueueIMC);
@@ -180,6 +179,8 @@ public class Hexerei
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
+
+        ModKeyBindings.init();
         event.enqueueWork(() -> {
 
             ItemBlockRenderTypes.setRenderLayer(ModFluids.QUICKSILVER_FLUID.get(), RenderType.translucent());
@@ -205,6 +206,7 @@ public class Hexerei
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRYSTAL_BALL_SMALL_RING.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.HERB_JAR.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.HERB_DRYING_RACK_FULL.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.HERB_DRYING_RACK.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAHOGANY_SAPLING.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.WILLOW_SAPLING.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.MANDRAKE_FLOWER.get(), RenderType.cutout());
@@ -227,6 +229,7 @@ public class Hexerei
             MenuScreens.register(ModContainers.MIXING_CAULDRON_CONTAINER.get(), MixingCauldronScreen::new);
             MenuScreens.register(ModContainers.COFFER_CONTAINER.get(), CofferScreen::new);
             MenuScreens.register(ModContainers.HERB_JAR_CONTAINER.get(), HerbJarScreen::new);
+            MenuScreens.register(ModContainers.BROOM_CONTAINER.get(), BroomScreen::new);
 
         });
 
@@ -347,6 +350,10 @@ public class Hexerei
         else{
             configuredStructureToBiomeMultiMap.put(configuredStructureFeature, biomeRegistryKey);
         }
+    }
+
+    private void loadComplete(final FMLLoadCompleteEvent event) {
+        MinecraftForge.EVENT_BUS.register(new SageBundleEvent());
     }
 
 }

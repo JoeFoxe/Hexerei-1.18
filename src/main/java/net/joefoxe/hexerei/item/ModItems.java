@@ -2,6 +2,7 @@ package net.joefoxe.hexerei.item;
 
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.block.ModBlocks;
+import net.joefoxe.hexerei.client.renderer.entity.custom.BroomEntity;
 import net.joefoxe.hexerei.fluid.ModFluids;
 import net.joefoxe.hexerei.item.custom.*;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,11 +20,32 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Hexerei.MOD_ID);
 
-    public static final RegistryObject<Item> BROOM = ITEMS.register("broom",
-            () -> new BroomItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+    public static final RegistryObject<Item> MAHOGANY_BROOM = ITEMS.register("mahogany_broom",
+            () -> new BroomItem(BroomEntity.Type.MAHOGANY, new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).fireResistant()));
+
+    public static final RegistryObject<Item> WILLOW_BROOM = ITEMS.register("willow_broom",
+            () -> new BroomItem(BroomEntity.Type.WILLOW, new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
     public static final RegistryObject<Item> FIRE_TABLET = ITEMS.register("fire_tablet",
             () -> new FireTabletItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> SMALL_SATCHEL = ITEMS.register("small_satchel",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> MEDIUM_SATCHEL = ITEMS.register("medium_satchel",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> LARGE_SATCHEL = ITEMS.register("large_satchel",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> GOLD_RINGS = ITEMS.register("gold_rings",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> WET_BROOM_BRUSH = ITEMS.register("wet_broom_brush",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> BROOM_BRUSH = ITEMS.register("broom_brush",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).durability(100)));
 
     public static final RegistryObject<Item> WARHAMMER = ITEMS.register("warhammer",
             () -> new SwordItem(ModItemTier.ARMOR_SCRAP, 3, -2.4F,
@@ -82,6 +104,9 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.SAGE.get(), new Item.Properties()
                     //.food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).fastToEat().build())
                     .tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> SAGE_BUNDLE = ITEMS.register("sage_bundle",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
     public static final RegistryObject<Item> LILY_PAD_ITEM = ITEMS.register("flowering_lily_pad",
             () -> new FloweringLilyPadItem(ModBlocks.LILY_PAD_BLOCK.get(),(new Item.Properties()).tab(ModItemGroup.HEXEREI_GROUP))); // ModBlocks.LILY_PAD_BLOCK.get(),

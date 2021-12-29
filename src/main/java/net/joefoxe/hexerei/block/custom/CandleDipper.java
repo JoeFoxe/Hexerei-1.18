@@ -72,9 +72,6 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
 
 
         super.destroy(worldIn, pos, p_49862_);
-
-
-        System.out.println("Destroy Candle Dipper");
     }
 
     // hitbox REMEMBER TO DO THIS
@@ -104,38 +101,11 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
     }
 
 
-
-
     @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         ItemStack itemstack = player.getItemInHand(handIn);
         Random random = new Random();
-//        if(itemstack.getItem() == Items.STRING)
-//        {
-//
-//            if(worldIn.getBlockEntity(pos) instanceof CandleDipperTile) {
-//                CandleDipperTile candleDipperTile = (CandleDipperTile) worldIn.getBlockEntity(pos);
-//                if(candleDipperTile.candlePos1Slot == 0)
-//                    candleDipperTile.candlePos1Slot = 1;
-//                else if(candleDipperTile.candlePos2Slot == 0)
-//                    candleDipperTile.candlePos2Slot = 1;
-//                else if(candleDipperTile.candlePos3Slot == 0)
-//                    candleDipperTile.candlePos3Slot = 1;
-//                else
-//                    return InteractionResult.PASS;
-//
-////                worldIn.setBlock(pos, state.setValue(BlockStateProperties.LIT, Boolean.valueOf(true)), 11);
-//                worldIn.playSound((Player) null, pos, SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, SoundSource.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 1.0F);
-//
-////                itemstack.damageItem(1, player, player1 -> player1.broadcastBreakEvent(handIn));
-//
-//                return InteractionResult.sidedSuccess(worldIn.isClientSide());
-//            }
-//
-//
-//        }
-
         BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 
         if (tileEntity instanceof CandleDipperTile) {
@@ -147,7 +117,6 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
 
         return InteractionResult.PASS;
     }
-
 
     @Override
     public PushReaction getPistonPushReaction(BlockState state) {
@@ -165,16 +134,7 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
         builder.add(HorizontalDirectionalBlock.FACING, WATERLOGGED);
     }
 
-//    @Override
-//    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-//        if (!entityIn.isImmuneToFire() && state.getValue(LIT) && entityIn instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entityIn)) {
-//            entityIn.hurt(DamageSource.IN_FIRE, 0.25f);
-//        }
-//
-//        super.entityInside(state, worldIn, pos, entityIn);
-//    }
-
-    public boolean receiveFluid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
+    public boolean placeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
         if (!state.getValue(BlockStateProperties.WATERLOGGED) && fluidStateIn.getType() == Fluids.WATER) {
 
             worldIn.setBlock(pos, state.setValue(WATERLOGGED, Boolean.valueOf(true)), 3);
@@ -184,14 +144,6 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
             return false;
         }
     }
-
-//    MixingCauldronTile te = (MixingCauldronTile) worldIn.getBlockEntity(pos);
-//
-//        if(!worldIn.isClientSide()) {
-//        worldIn.addFreshEntity(new ItemEntity((Level) worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItem(0)));
-//        worldIn.addFreshEntity(new ItemEntity((Level) worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItem(1)));
-//        worldIn.addFreshEntity(new ItemEntity((Level) worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItem(2)));
-//    }
 
 
     @SuppressWarnings("deprecation")
@@ -217,10 +169,6 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
     @Override
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         return (worldIn.getBlockState(pos.below()).getBlock() instanceof MixingCauldron);
-    }
-
-    protected static Direction getBlockConnected(BlockState state) {
-        return Direction.DOWN;
     }
 
     @Override
@@ -260,95 +208,7 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
-//        if (state.getValue(LIT)) {
-//            if (rand.nextInt(10) == 0) {
-//                world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 0.5F + rand.nextFloat()/2, rand.nextFloat() * 0.7F + 0.6F, false);
-//            }
-//
-//            if(!state.getValue(HANGING)) {
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 17f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 17f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//            }
-//
-//            if(state.getValue(HorizontalDirectionalBlock.FACING) == Direction.EAST || state.getValue(HorizontalDirectionalBlock.FACING) == Direction.WEST) {
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f + 6f / 16f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f + 6f / 16f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f - 6f / 16f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f - 6f / 16f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f + 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f + 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f - 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f - 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//            }
-//            if(state.getValue(HorizontalDirectionalBlock.FACING) == Direction.NORTH || state.getValue(HorizontalDirectionalBlock.FACING) == Direction.SOUTH) {
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f + 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f + 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f - 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f, pos.getY() + 16f / 16f, pos.getZ() + 0.5f - 6f / 16f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f + 6f / 16f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f + 6f / 16f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f - 6f / 16f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.01d, (rand.nextDouble() - 0.5d) / 100d);
-//                if (rand.nextInt(3) == 0)
-//                    world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5f - 6f / 16f, pos.getY() + 14f / 16f, pos.getZ() + 0.5f, (rand.nextDouble() - 0.5d) / 100d, (rand.nextDouble() + 0.5d) * 0.035d, (rand.nextDouble() - 0.5d) / 100d);
-//            }
-//
-//
-//        }
     }
-//
-//    private MenuProvider createContainerProvider(Level worldIn, BlockPos pos) {
-//        return new MenuProvider() {
-//            @Override
-//            public Component getDisplayName() {
-//                if(((CofferTile)worldIn.getBlockEntity(pos)).customName != null)
-//                    return new TranslatableComponent(((CofferTile)worldIn.getBlockEntity(pos)).customName.getString());
-//                return new TranslatableComponent("screen.hexerei.coffer");
-//            }
-//
-//            @Nullable
-//            @Override
-//            public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
-//                return new CofferContainer(i, worldIn, pos, playerInventory, playerEntity);
-//            }
-//        };
-//    }
-//
-//    @Nullable
-//    @Override
-//    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-//        BlockEntity te = ModTileEntities.CANDLE_DIPPER_TILE.get().create();
-//        return te;
-//    }
-//
-//    @Override
-//    public boolean hasBlockEntity(BlockState state) {
-//        return true;
-//    }
 
     @Override
     public Class<CandleDipperTile> getTileEntityClass() {

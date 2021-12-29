@@ -24,7 +24,7 @@ public class DipperContainer extends AbstractContainerMenu {
     private final IItemHandler playerInventory;
 
     public DipperContainer(int windowId, Level world, BlockPos pos, Inventory playerInventory, Player player) {
-        super(ModContainers.MIXING_CAULDRON_CONTAINER.get(), windowId);
+        super(ModContainers.DIPPER_CONTAINER.get(), windowId);
         this.tileEntity = world.getBlockEntity(pos);
         playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);

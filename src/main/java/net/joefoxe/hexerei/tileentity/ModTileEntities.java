@@ -35,6 +35,9 @@ public class ModTileEntities {
     public static final RegistryObject<BlockEntityType<CandleDipperTile>> CANDLE_DIPPER_TILE = TILE_ENTITIES.register(
             "candle_dipper_entity", () -> BlockEntityType.Builder.of(CandleDipperTile::new, ModBlocks.CANDLE_DIPPER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<DryingRackTile>> DRYING_RACK_TILE = TILE_ENTITIES.register(
+            "drying_rack_entity", () -> BlockEntityType.Builder.of(DryingRackTile::new, ModBlocks.HERB_DRYING_RACK.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);

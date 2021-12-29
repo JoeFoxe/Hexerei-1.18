@@ -227,7 +227,7 @@ public class Candelabra extends Block implements SimpleWaterloggedBlock {
         }
     }
 
-    public boolean receiveFluid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
+    public boolean placeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
         if (!state.getValue(BlockStateProperties.WATERLOGGED) && fluidStateIn.getType() == Fluids.WATER) {
             boolean flag = state.getValue(LIT);
             if (flag) {

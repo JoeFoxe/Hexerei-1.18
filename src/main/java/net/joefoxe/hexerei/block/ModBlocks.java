@@ -12,7 +12,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,7 +22,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModBlocks {
@@ -49,6 +47,9 @@ public class ModBlocks {
     public static final RegistryObject<Altar> BOOK_OF_SHADOWS_ALTAR = registerBlock("book_of_shadows_altar",
             () -> new Altar(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).explosionResistance(2f)));
 
+//    public static final RegistryObject<Block> SAGE_BUNDLE_PLATE = registerBlock("sage_bundle_plate",
+//            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).explosionResistance(2f)));
+
     public static final RegistryObject<SageBlock> SAGE = BLOCKS.register("sage_crop",
             () -> new SageBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT)));
 
@@ -61,7 +62,10 @@ public class ModBlocks {
     public static final RegistryObject<HerbJar> HERB_JAR = registerBlock("herb_jar",
             () -> new HerbJar(BlockBehaviour.Properties.of(Material.GLASS).strength(1).explosionResistance(0.5f)));
 
-    public static final RegistryObject<HerbDryingRack> HERB_DRYING_RACK_FULL = registerBlock("herb_drying_rack_full",
+    public static final RegistryObject<HerbDryingRackFull> HERB_DRYING_RACK_FULL = registerBlock("herb_drying_rack_full",
+            () -> new HerbDryingRackFull(BlockBehaviour.Properties.of(Material.WOOD).strength(1).explosionResistance(2f)));
+
+    public static final RegistryObject<HerbDryingRack> HERB_DRYING_RACK = registerBlock("herb_drying_rack",
             () -> new HerbDryingRack(BlockBehaviour.Properties.of(Material.WOOD).strength(1).explosionResistance(2f)));
 
     public static final RegistryObject<Candelabra> CANDELABRA = registerBlock("candelabra",
@@ -169,7 +173,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> WILLOW_VINES = registerBlock("willow_vines",
             () -> new WillowVinesBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WEEPING_VINES)));
 
-    public static final RegistryObject<Block> WILLOW_VINES_PLANT = registerBlock("willow_vines_plant",
+    public static final RegistryObject<Block> WILLOW_VINES_PLANT = registerBlockNoItem("willow_vines_plant",
             () -> new WillowVinesPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WEEPING_VINES)));
 
     public static final RegistryObject<FenceBlock> WILLOW_FENCE = registerBlock("willow_fence",
@@ -311,31 +315,43 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(0).explosionResistance(2f)));
 
     public static final RegistryObject<Block> COFFER_LID = registerBlockNoItem("coffer_lid",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> COFFER_CONTAINER = registerBlockNoItem("coffer_container",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
     public static final RegistryObject<Block> COFFER_HINGE = registerBlockNoItem("coffer_hinge",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
     public static final RegistryObject<Block> HERB_JAR_GENERIC = registerBlockNoItem("herb_jar_generic",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
     public static final RegistryObject<Block> HERB_JAR_BELLADONNA = registerBlockNoItem("herb_jar_belladonna",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
     public static final RegistryObject<Block> HERB_JAR_MANDRAKE_FLOWER = registerBlockNoItem("herb_jar_mandrake_flower",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
     public static final RegistryObject<Block> HERB_JAR_MANDRAKE_ROOT = registerBlockNoItem("herb_jar_mandrake_root",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
     public static final RegistryObject<Block> HERB_JAR_MUGWORT = registerBlockNoItem("herb_jar_mugwort",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
     public static final RegistryObject<Block> HERB_JAR_YELLOW_DOCK = registerBlockNoItem("herb_jar_yellow_dock",
-            () -> new Coffer(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+
+    public static final RegistryObject<Block> HERB_DRYING_RACK_BROWN_MUSHROOM_1 = registerBlockNoItem("herb_drying_rack_brown_mushroom_1",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+
+    public static final RegistryObject<Block> HERB_DRYING_RACK_BROWN_MUSHROOM_2 = registerBlockNoItem("herb_drying_rack_brown_mushroom_2",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+
+    public static final RegistryObject<Block> HERB_DRYING_RACK_RED_MUSHROOM_1 = registerBlockNoItem("herb_drying_rack_red_mushroom_1",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+
+    public static final RegistryObject<Block> HERB_DRYING_RACK_RED_MUSHROOM_2 = registerBlockNoItem("herb_drying_rack_red_mushroom_2",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block) {

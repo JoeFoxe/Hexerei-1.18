@@ -104,22 +104,26 @@ public class DipperRecipeCategory implements IRecipeCategory<DipperRecipe> {
         minecraft.font.draw(matrixStack, times_dipped_2, 42*1.666f, 19*1.666f, 0xFF808080);
         minecraft.font.draw(matrixStack, times_dipped_3, 70*1.666f, 17*1.666f, 0xFF808080);
 //
-        String dippingTimeString = dippingTime < Integer.MAX_VALUE ? Integer.toString(dippingTime) : "?";
+        String dippingTimeString = dippingTime < Integer.MAX_VALUE ? dippingTime / 20 + (dippingTime % 20 == 0 ? "" : ("." + Integer.toString(dippingTime % 20))) : "?";
+        if(dippingTimeString.charAt(dippingTimeString.length()-1) == '0' && dippingTime != 0 && dippingTime % 20 != 0)
+            dippingTimeString = dippingTimeString.substring(0, dippingTimeString.length()-1);
 //        TranslatableComponent dip_time = new TranslatableComponent("gui.jei.category.dipper.dip_time_1", dippingTimeString);
 //        minecraft.font.draw(matrixStack, dip_time, 42*1.666f, 27*1.666f, 0xFF808080);
         TranslatableComponent dip_time_1 = new TranslatableComponent("gui.jei.category.dipper.dip_time_1");
         TranslatableComponent dip_time_2 = new TranslatableComponent("gui.jei.category.dipper.dip_time_2");
-        TranslatableComponent dip_time_3 = new TranslatableComponent("gui.jei.category.dipper.result", dippingTimeString);
+        TranslatableComponent dip_time_3 = new TranslatableComponent("gui.jei.category.dipper.resultSeconds", dippingTimeString);
         minecraft.font.draw(matrixStack, dip_time_1, 42*1.666f, 27*1.666f, 0xFF808080);
         minecraft.font.draw(matrixStack, dip_time_2, 42*1.666f, 32*1.666f, 0xFF808080);
         minecraft.font.draw(matrixStack, dip_time_3, 70*1.666f, 30*1.666f, 0xFF808080);
 
-        String dryingTimeString = dryingTime < Integer.MAX_VALUE ? Integer.toString(dryingTime) : "?";
+        String dryingTimeString = dryingTime < Integer.MAX_VALUE ? dryingTime / 20 + (dryingTime % 20 == 0 ? "" : ("." + Integer.toString(dryingTime % 20))) : "?";
+        if(dryingTimeString.charAt(dryingTimeString.length()-1) == '0' && dryingTime != 0 && dryingTime % 20 != 0)
+            dryingTimeString = dryingTimeString.substring(0, dryingTimeString.length()-1);
 //        TranslatableComponent dry_time = new TranslatableComponent("gui.jei.category.dipper.dry_time", dryingTimeString);
 //        minecraft.font.draw(matrixStack, dry_time, 42*1.666f, 42*1.666f, 0xFF808080);
         TranslatableComponent dry_time_1 = new TranslatableComponent("gui.jei.category.dipper.dry_time_1");
         TranslatableComponent dry_time_2 = new TranslatableComponent("gui.jei.category.dipper.dry_time_2");
-        TranslatableComponent dry_time_3 = new TranslatableComponent("gui.jei.category.dipper.result", dryingTimeString);
+        TranslatableComponent dry_time_3 = new TranslatableComponent("gui.jei.category.dipper.resultSeconds", dryingTimeString);
         minecraft.font.draw(matrixStack, dry_time_1, 42*1.666f, 40*1.666f, 0xFF808080);
         minecraft.font.draw(matrixStack, dry_time_2, 42*1.666f, 45*1.666f, 0xFF808080);
         minecraft.font.draw(matrixStack, dry_time_3, 70*1.666f, 43*1.666f, 0xFF808080);

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "SSS"
+
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "S": {
+      "item": "hexerei:sage"
+    }
+  },
+  "result": {
+    "item": "hexerei:sage_bundle",
+    "count": 1
+  }
+}

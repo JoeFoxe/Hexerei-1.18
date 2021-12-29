@@ -42,7 +42,8 @@ public class DipperRecipe implements IDipperRecipe{
 
 
     public DipperRecipe(ResourceLocation id, NonNullList<Ingredient> inputs,
-                        ItemStack output, FluidStack liquid, int fluidLevelsConsumed, int dippingTime, int dryingTime, int numberOfDips) {
+                        ItemStack output, FluidStack liquid, int fluidLevelsConsumed,
+                        int dippingTime, int dryingTime, int numberOfDips) {
         this.id = id;
         this.output = output;
         this.recipeItems = inputs;
@@ -143,8 +144,11 @@ public class DipperRecipe implements IDipperRecipe{
         @Nullable
         @Override
         public DipperRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
-            inputs.set(0, Ingredient.fromNetwork(buffer));
+            NonNullList<Ingredient> inputs = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
+//            inputs.add(Ingredient.fromNetwork(buffer));
+            for (int i = 0; i < inputs.size(); i++) {
+                inputs.set(i, Ingredient.fromNetwork(buffer));
+            }
 
             ItemStack output = buffer.readItem();
             return new DipperRecipe(recipeId, inputs, output,
@@ -153,15 +157,17 @@ public class DipperRecipe implements IDipperRecipe{
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, DipperRecipe recipe) {
-
-            for (Ingredient ing : recipe.getIngredients()) {
+            buffer.writeInt(recipe.getIngredients().size());
+            for (Ingredient ing : recipe.getIngredients())
                 ing.toNetwork(buffer);
-            }
-            buffer.writeItemStack(recipe.getResultItem(), false);
+            buffer.writeItem(recipe.getResultItem());
+
             buffer.writeFluidStack(recipe.getLiquid());
+
             buffer.writeInt(recipe.getFluidLevelsConsumed());
             buffer.writeInt(recipe.getDippingTime());
             buffer.writeInt(recipe.getDryingTime());
+            buffer.writeInt(recipe.getNumberOfDips());
         }
 
         public static FluidStack deserializeFluidStack(JsonObject json) {

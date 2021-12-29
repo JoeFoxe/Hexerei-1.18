@@ -1,6 +1,7 @@
 package net.joefoxe.hexerei.container;
 
 import net.joefoxe.hexerei.Hexerei;
+import net.joefoxe.hexerei.client.renderer.entity.custom.BroomEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
@@ -44,6 +45,27 @@ public class ModContainers {
                 BlockPos pos = data.readBlockPos();
                 Level world = inv.player.getLevel();
                 return new DipperContainer(windowId, world, pos, inv, inv.player);
+            })));
+
+    public static final RegistryObject<MenuType<DipperContainer>> DRYING_RACK_CONTAINER
+            = CONTAINERS.register("drying_rack_container",
+            () -> IForgeMenuType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                Level world = inv.player.getLevel();
+                return new DipperContainer(windowId, world, pos, inv, inv.player);
+            })));
+
+    public static final RegistryObject<MenuType<BroomContainer>> BROOM_CONTAINER
+            = CONTAINERS.register("broom_container",
+            () -> IForgeMenuType.create(((windowId, inv, data) -> {
+
+                Level world = inv.player.getLevel();//new BroomEntity(world, pos.getX(), pos.getY(), pos.getZ())
+                int id = data.readInt();
+                if(world.getEntity(id) != null)
+                    return new BroomContainer(windowId,(BroomEntity)world.getEntity(id), inv, inv.player);
+                else
+                    return new BroomContainer(windowId,new BroomEntity(world, 0, 0, 0), inv, inv.player);
+
             })));
 
     public static void register(IEventBus eventBus) {

@@ -1,10 +1,7 @@
 package net.joefoxe.hexerei.util;
 
 import net.joefoxe.hexerei.Hexerei;
-import net.joefoxe.hexerei.util.message.EmitParticlesPacket;
-import net.joefoxe.hexerei.util.message.IMessage;
-import net.joefoxe.hexerei.util.message.MessageCountUpdate;
-import net.joefoxe.hexerei.util.message.TESyncPacket;
+import net.joefoxe.hexerei.util.message.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -36,10 +33,30 @@ public class HexereiPacketHandler {
                 TESyncPacket::decode,
                 TESyncPacket::consume
         );
+
+        instance.registerMessage(
+                ++ id,
+                BroomSyncPacket.class,
+                BroomSyncPacket::encode,
+                BroomSyncPacket::decode,
+                BroomSyncPacket::consume
+        );
+
+        instance.registerMessage(
+                ++ id,
+                BroomSyncFloatModeToServer.class,
+                BroomSyncFloatModeToServer::encode,
+                BroomSyncFloatModeToServer::decode,
+                BroomSyncFloatModeToServer::consume
+        );
     }
 
     private static <T> void register(Class<T> clazz, IMessage<T> message)
     {
         instance.registerMessage(nextId++, clazz, message::encode, message::decode, message::handle);
+    }
+
+    public static <MSG> void sendToServer(MSG msg) {
+        HexereiPacketHandler.instance.sendToServer(msg);
     }
 }

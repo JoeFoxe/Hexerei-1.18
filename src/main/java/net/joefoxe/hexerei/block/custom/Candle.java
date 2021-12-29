@@ -367,7 +367,7 @@ public class Candle extends BaseEntityBlock implements ITileEntity<CandleTile>, 
 
     }
 
-    public boolean receiveFluid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
+    public boolean placeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
         if (!state.getValue(BlockStateProperties.WATERLOGGED) && fluidStateIn.getType() == Fluids.WATER) {
             CandleTile tile = ((CandleTile)worldIn.getBlockEntity(pos));
             boolean flag = (tile.candleLit1 == 1 || tile.candleLit2 == 1 || tile.candleLit3 == 1 || tile.candleLit4 == 1);

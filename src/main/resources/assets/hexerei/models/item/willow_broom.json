@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "hexerei:entity/broom",
-		"particle": "hexerei:entity/broom"
+		"0": "hexerei:entity/willow_broom",
+		"particle": "hexerei:entity/willow_broom"
 	},
 	"elements": [
 		{
@@ -511,7 +511,7 @@
 		},
 		"ground": {
 			"rotation": [19, 0, 12],
-			"scale": [0.45, 0.45, 0.45]
+			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
 			"rotation": [-69.4, 13.86, 116.39],

@@ -5,13 +5,13 @@
   },
   "ingredients": [
     {
-      "item": "hexerei:blood_bottle"
+      "item": "hexerei:mandrake_root"
     },
     {
-      "item": "hexerei:mahogany_log"
+      "item": "minecraft:wheat"
     },
     {
-      "item": "minecraft:netherite_ingot"
+      "item": "hexerei:mugwort_bush"
     },
     {
       "item": "minecraft:wheat"
@@ -23,18 +23,18 @@
       "item": "minecraft:wheat"
     },
     {
-      "item": "minecraft:netherite_ingot"
+      "item": "hexerei:yellow_dock_bush"
     },
     {
-      "item": "hexerei:mahogany_log"
+      "item": "minecraft:wheat"
     }
   ],
   "output": {
-    "item": "hexerei:broom"
+    "item": "hexerei:wet_broom_brush"
   },
 
   "liquidOutput": {
-    "fluid": "hexerei:blood_fluid"
+    "fluid": "minecraft:water"
   },
-  "fluidLevelsConsumed": 1000
+  "fluidLevelsConsumed": 500
 }

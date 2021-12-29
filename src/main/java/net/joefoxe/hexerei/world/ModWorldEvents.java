@@ -55,6 +55,9 @@ public class ModWorldEvents {
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.SWAMP_FLOWERS);
             event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacements.SELENITE_GEODE);
         }
+        if (event.getCategory() == Biome.BiomeCategory.JUNGLE) {
+            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.MAHOGANY_TREE);
+        }
 
     }
 

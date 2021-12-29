@@ -2,6 +2,7 @@ package net.joefoxe.hexerei.block.custom;
 
 import net.joefoxe.hexerei.block.ITileEntity;
 import net.joefoxe.hexerei.container.CofferContainer;
+import net.joefoxe.hexerei.items.JarHandler;
 import net.joefoxe.hexerei.tileentity.CofferTile;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;
@@ -48,6 +49,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -186,8 +188,19 @@ public class Coffer extends BaseEntityBlock implements ITileEntity<CofferTile>, 
         CompoundTag tag = item.getOrCreateTag();
         CompoundTag inv = tileEntityOptional.map(coffer -> coffer.itemHandler.serializeNBT())
                 .orElse(new CompoundTag());
+        ItemStackHandler empty = tileEntityOptional.map(herb_jar -> herb_jar.itemHandler)
+                .orElse(new ItemStackHandler(36));
 
-        if(!tileEntityOptional.map(RandomizableContainerBlockEntity::isEmpty).orElse(true))
+        boolean flag = false;
+        for(int i = 0; i < 36; i++)
+        {
+            if(!empty.getStackInSlot(i).isEmpty())
+            {
+                flag = true;
+                break;
+            }
+        }
+        if(flag)
             tag.put("Inventory", inv);
 
 

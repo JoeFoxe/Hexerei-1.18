@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "$@$"
+
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "$": {
+      "item": "minecraft:stick"
+    },
+    "@": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "result": {
+    "item": "hexerei:herb_drying_rack",
+    "count": 1
+  }
+}

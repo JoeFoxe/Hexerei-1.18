@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import net.joefoxe.hexerei.client.renderer.entity.custom.BroomEntity;
+import net.joefoxe.hexerei.item.ModItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -13,6 +14,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,14 +23,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nullable;
 
 public class BroomItem extends Item {
     private static final Predicate<Entity> field_219989_a = EntitySelector.NO_SPECTATORS.and(Entity::canBeCollidedWith);
+    private final BroomEntity.Type type;
 
-    public BroomItem(Item.Properties properties) {
+    public BroomItem(BroomEntity.Type broomType, Item.Properties properties) {
         super(properties);
+        this.type = broomType;
     }
 
     /**
@@ -57,11 +62,20 @@ public class BroomItem extends Item {
 
             if (raytraceresult.getType() == HitResult.Type.BLOCK) {
                 BroomEntity boatentity = new BroomEntity(worldIn, raytraceresult.getLocation().x, raytraceresult.getLocation().y, raytraceresult.getLocation().z);
+                boatentity.setBroomType(this.type);
                 boatentity.setYRot(playerIn.getYRot());
+                boatentity.itemHandler.deserializeNBT(itemstack.getOrCreateTag().getCompound("Inventory"));
+                if(!itemstack.getOrCreateTag().contains("floatMode")) {
+                    boatentity.itemHandler.setStackInSlot(2, new ItemStack(ModItems.BROOM_BRUSH.get()));
+                    boatentity.sync();
+                }
+                boatentity.floatMode = (itemstack.getOrCreateTag().getBoolean("floatMode"));
+
                 if (!worldIn.noCollision(boatentity, boatentity.getBoundingBox().inflate(-0.1D))) {
                     return InteractionResultHolder.fail(itemstack);
                 } else {
                     if (!worldIn.isClientSide) {
+
                         worldIn.addFreshEntity(boatentity);
                         if (!playerIn.getAbilities().instabuild) {
                             itemstack.shrink(1);

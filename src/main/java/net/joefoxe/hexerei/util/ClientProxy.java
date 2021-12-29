@@ -1,7 +1,8 @@
 package net.joefoxe.hexerei.util;
 
 import net.joefoxe.hexerei.Hexerei;
-import net.joefoxe.hexerei.client.renderer.entity.model.WitchArmorModel;
+import net.joefoxe.hexerei.client.renderer.entity.model.*;
+import net.joefoxe.hexerei.config.ModKeyBindings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import net.joefoxe.hexerei.client.renderer.entity.ModEntityTypes;
-import net.joefoxe.hexerei.client.renderer.entity.model.BroomModel;
 import net.joefoxe.hexerei.client.renderer.entity.render.BroomRenderer;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;
 import net.joefoxe.hexerei.tileentity.renderer.*;
@@ -54,12 +54,20 @@ public class ClientProxy implements SidedProxy {
         e.registerBlockEntityRenderer(ModTileEntities.BOOK_OF_SHADOWS_ALTAR_TILE.get(), context -> new BookOfShadowsAltarRenderer());
         e.registerBlockEntityRenderer(ModTileEntities.CANDLE_TILE.get(), context -> new CandleRenderer());
         e.registerBlockEntityRenderer(ModTileEntities.CANDLE_DIPPER_TILE.get(), context -> new CandleDipperRenderer());
+        e.registerBlockEntityRenderer(ModTileEntities.DRYING_RACK_TILE.get(), context -> new DryingRackRenderer());
         e.registerEntityRenderer(ModEntityTypes.BROOM.get(), BroomRenderer::new);
     }
 
     @SubscribeEvent
     public static void layerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(BroomModel.LAYER_LOCATION, BroomModel::createBodyLayer);
+        event.registerLayerDefinition(BroomBrushBaseModel.LAYER_LOCATION, BroomBrushBaseModel::createBodyLayer);
+        event.registerLayerDefinition(BroomStickBaseModel.LAYER_LOCATION, BroomStickBaseModel::createBodyLayer);
+        event.registerLayerDefinition(BroomRingsModel.LAYER_LOCATION, BroomRingsModel::createBodyLayer);
+        event.registerLayerDefinition(BroomRingsModel.LAYER_LOCATION, BroomRingsModel::createBodyLayer);
+        event.registerLayerDefinition(BroomSmallSatchelModel.LAYER_LOCATION, BroomSmallSatchelModel::createBodyLayer);
+        event.registerLayerDefinition(BroomMediumSatchelModel.LAYER_LOCATION, BroomMediumSatchelModel::createBodyLayer);
+        event.registerLayerDefinition(BroomLargeSatchelModel.LAYER_LOCATION, BroomLargeSatchelModel::createBodyLayer);
         event.registerLayerDefinition(ClientProxy.WITCH_ARMOR_LAYER, WitchArmorModel::createBodyLayer);
 
     }
