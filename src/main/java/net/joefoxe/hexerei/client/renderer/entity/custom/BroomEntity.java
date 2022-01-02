@@ -12,12 +12,14 @@ import net.joefoxe.hexerei.tileentity.MixingCauldronTile;
 import net.joefoxe.hexerei.util.HexereiPacketHandler;
 import net.joefoxe.hexerei.util.HexereiTags;
 import net.joefoxe.hexerei.util.IPacket;
+import net.joefoxe.hexerei.util.message.BroomAskForSyncPacket;
 import net.joefoxe.hexerei.util.message.BroomSyncFloatModeToServer;
 import net.joefoxe.hexerei.util.message.BroomSyncPacket;
 import net.joefoxe.hexerei.util.message.TESyncPacket;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -356,6 +358,13 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
             sync();
             this.broomSync = true;
         }
+        if(!this.broomSync && this.level instanceof ClientLevel) {
+
+            if (level.isClientSide)
+                HexereiPacketHandler.sendToServer(new BroomAskForSyncPacket(this));
+
+            this.broomSync = true;
+        }
 
         this.previousStatus = this.status;
         this.status = this.getBoatStatus();
@@ -427,8 +436,8 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
                 this.setPaddleState(false, false);
             }
 
-            if(this.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH))
-                floatingOffset = moveTo(floatingOffset, 0.05f + (float)Math.sin((level.getGameTime() + (this.getId() * 1000))/30f) * 0.15f, 0.02f);
+            if(this.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH) && level.isClientSide)
+                floatingOffset = moveTo(floatingOffset, 0.05f + (float)Math.sin((Minecraft.getInstance().level.getDayTime() + (this.getId() * 1000))/30f) * 0.15f, 0.02f);
 
 
             this.updateMotion();
@@ -471,7 +480,8 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         } else {
             this.setDeltaMovement(Vec3.ZERO);
             if(this.floatMode) {
-                floatingOffset = moveTo(floatingOffset, 0.05f + (float) Math.sin((level.getGameTime() + (this.getId() * 1000)) / 30f) * 0.15f, 0.02f);
+                if(level.isClientSide)
+                    floatingOffset = moveTo(floatingOffset, 0.05f + (float) Math.sin((Minecraft.getInstance().level.getDayTime() + (this.getId() * 1000)) / 30f) * 0.15f, 0.02f);
                 Random random = new Random();
                 if(random.nextInt(50)==0) {
                     float rotOffset = random.nextFloat() * 10 - 5;

@@ -1,8 +1,17 @@
 
 {
   "variants": {
-    "": {
-      "model": "hexerei:block/belladonna_flower"
+    "age=0": {
+      "model": "hexerei:block/belladonna_flower_stage0"
+    },
+    "age=1": {
+      "model": "hexerei:block/belladonna_flower_stage1"
+    },
+    "age=2": {
+      "model": "hexerei:block/belladonna_flower_stage2"
+    },
+    "age=3": {
+      "model": "hexerei:block/belladonna_flower_stage3"
     }
   }
 }

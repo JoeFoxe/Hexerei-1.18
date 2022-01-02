@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "hexerei:block/yellow_dock_bush_bottom_stage2",
+    "particle": "hexerei:block/yellow_dock_bush_bottom_stage3"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "type": "hexerei:mixingcauldron",
+  "liquid": {
+    "fluid": "minecraft:water"
+  },
+  "ingredients": [
+    {
+      "item": "hexerei:broom_brush"
+    },
+    {
+      "item": "hexerei:belladonna_flowers"
+    },
+    {
+      "item": "hexerei:belladonna_berries"
+    },
+    {
+      "item": "hexerei:mandrake_root"
+    },
+    {
+      "item": "hexerei:mandrake_flowers"
+    },
+    {
+      "item": "hexerei:mandrake_root"
+    },
+    {
+      "item": "hexerei:mugwort_flowers"
+    },
+    {
+      "item": "hexerei:yellow_dock_flowers"
+    }
+  ],
+  "output": {
+    "item": "hexerei:wet_herb_enhanced_broom_brush"
+  },
+
+  "liquidOutput": {
+    "fluid": "minecraft:water"
+  },
+  "fluidLevelsConsumed": 1500
+}

@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "hexerei:candelabra",
+    "hexerei:crystal_ball",
+    "hexerei:pestle_and_mortar",
+    "hexerei:candle_dipper",
+    "hexerei:mixing_cauldron",
+    "hexerei:selenite_cluster",
+    "hexerei:small_selenite_bud",
+    "hexerei:medium_selenite_bud",
+    "hexerei:large_selenite_bud",
+    "hexerei:selenite_block",
+    "hexerei:budding_selenite"
+  ]
+}

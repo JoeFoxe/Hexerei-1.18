@@ -5,7 +5,10 @@ import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.custom.BroomEntity;
 import net.joefoxe.hexerei.fluid.ModFluids;
 import net.joefoxe.hexerei.item.custom.*;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -14,6 +17,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class ModItems {
 
@@ -46,6 +51,12 @@ public class ModItems {
 
     public static final RegistryObject<Item> BROOM_BRUSH = ITEMS.register("broom_brush",
             () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).durability(100)));
+
+    public static final RegistryObject<Item> WET_HERB_ENHANCED_BROOM_BRUSH = ITEMS.register("wet_herb_enhanced_broom_brush",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> HERB_ENHANCED_BROOM_BRUSH = ITEMS.register("herb_enhanced_broom_brush",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).durability(200)));
 
     public static final RegistryObject<Item> WARHAMMER = ITEMS.register("warhammer",
             () -> new SwordItem(ModItemTier.ARMOR_SCRAP, 3, -2.4F,
@@ -91,9 +102,6 @@ public class ModItems {
     public static final RegistryObject<Item> INFUSED_FABRIC = ITEMS.register("infused_fabric",
             () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
-    public static final RegistryObject<Item> MANDRAKE_ROOT = ITEMS.register("mandrake_root",
-            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
-
     public static final RegistryObject<Item> SELENITE_SHARD = ITEMS.register("selenite_shard",
             () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
@@ -110,6 +118,32 @@ public class ModItems {
 
     public static final RegistryObject<Item> LILY_PAD_ITEM = ITEMS.register("flowering_lily_pad",
             () -> new FloweringLilyPadItem(ModBlocks.LILY_PAD_BLOCK.get(),(new Item.Properties()).tab(ModItemGroup.HEXEREI_GROUP))); // ModBlocks.LILY_PAD_BLOCK.get(),
+
+
+    public static final RegistryObject<FlowerOutputItem> BELLADONNA_FLOWERS = ITEMS.register("belladonna_flowers",
+            () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<FlowerOutputItem> BELLADONNA_BERRIES = ITEMS.register("belladonna_berries",
+            () -> new FlowerOutputItem(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).fast().effect(new MobEffectInstance(MobEffects.POISON, 100, 2) , 100f).build()).tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<FlowerOutputItem> MANDRAKE_FLOWERS = ITEMS.register("mandrake_flowers",
+            () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<FlowerOutputItem> MANDRAKE_ROOT = ITEMS.register("mandrake_root",
+            () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<FlowerOutputItem> MUGWORT_FLOWERS = ITEMS.register("mugwort_flowers",
+            () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<FlowerOutputItem> MUGWORT_LEAVES = ITEMS.register("mugwort_leaves",
+            () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<FlowerOutputItem> YELLOW_DOCK_FLOWERS = ITEMS.register("yellow_dock_flowers",
+            () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<FlowerOutputItem> YELLOW_DOCK_LEAVES = ITEMS.register("yellow_dock_leaves",
+            () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
 
     // EGG ITEMS
 

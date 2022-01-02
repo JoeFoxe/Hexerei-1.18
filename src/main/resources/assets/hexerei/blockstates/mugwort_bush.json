@@ -1,10 +1,30 @@
 {
   "variants": {
-    "half=lower": {
-      "model": "hexerei:block/mugwort_bush_bottom"
+    "half=lower,age=0": {
+      "model": "hexerei:block/mugwort_bush_bottom_stage0"
     },
-    "half=upper": {
-      "model": "hexerei:block/mugwort_bush_top"
+    "half=lower,age=1": {
+      "model": "hexerei:block/mugwort_bush_bottom_stage1"
+    },
+    "half=lower,age=2": {
+      "model": "hexerei:block/mugwort_bush_bottom_stage2"
+    },
+    "half=lower,age=3": {
+      "model": "hexerei:block/mugwort_bush_bottom_stage3"
+    },
+
+    "half=upper,age=0": {
+      "model": "hexerei:block/mugwort_bush_top_stage0"
+    },
+    "half=upper,age=1": {
+      "model": "hexerei:block/mugwort_bush_top_stage1"
+    },
+    "half=upper,age=2": {
+      "model": "hexerei:block/mugwort_bush_top_stage2"
+    },
+    "half=upper,age=3": {
+      "model": "hexerei:block/mugwort_bush_top_stage3"
     }
+
   }
 }

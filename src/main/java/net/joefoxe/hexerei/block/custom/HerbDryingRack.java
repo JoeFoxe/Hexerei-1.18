@@ -120,6 +120,17 @@ public class HerbDryingRack extends Block implements ITileEntity<DryingRackTile>
         if (state.getValue(WATERLOGGED)) {
             world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
+        if(!state.canSurvive(world, pos)){
+            DryingRackTile te = (DryingRackTile) world.getBlockEntity(pos);
+            if (!te.getItems().get(0).isEmpty())
+                te.getLevel().addFreshEntity(new ItemEntity(te.getLevel(), pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItems().get(0)));
+            if (!te.getItems().get(1).isEmpty())
+                te.getLevel().addFreshEntity(new ItemEntity(te.getLevel(), pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItems().get(1)));
+            if (!te.getItems().get(2).isEmpty())
+                te.getLevel().addFreshEntity(new ItemEntity(te.getLevel(), pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, te.getItems().get(2)));
+        }
+
+
         return !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, world, pos, facingPos);
     }
 

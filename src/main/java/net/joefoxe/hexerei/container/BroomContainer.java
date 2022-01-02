@@ -20,6 +20,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 
 public class BroomContainer extends AbstractContainerMenu {
@@ -59,6 +60,11 @@ public class BroomContainer extends AbstractContainerMenu {
                     public int getMaxStackSize() {
                         return 1;
                     }
+
+                    @Override
+                    public boolean mayPlace(@NotNull ItemStack stack) {
+                        return stack.is(HexereiTags.Items.BROOM_MISC);
+                    }
                 });
 
                 //satchel slot
@@ -67,6 +73,11 @@ public class BroomContainer extends AbstractContainerMenu {
                     @Override
                     public int getMaxStackSize() {
                         return 1;
+                    }
+
+                    @Override
+                    public boolean mayPlace(@NotNull ItemStack stack) {
+                        return stack.is(HexereiTags.Items.SMALL_SATCHELS) || stack.is(HexereiTags.Items.MEDIUM_SATCHELS) || stack.is(HexereiTags.Items.LARGE_SATCHELS);
                     }
 
                     @Override
@@ -156,6 +167,11 @@ public class BroomContainer extends AbstractContainerMenu {
                     @Override
                     public int getMaxStackSize() {
                         return 1;
+                    }
+
+                    @Override
+                    public boolean mayPlace(@NotNull ItemStack stack) {
+                        return stack.is(HexereiTags.Items.BROOM_BRUSH);
                     }
                 });
 

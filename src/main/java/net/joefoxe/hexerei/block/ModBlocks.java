@@ -11,6 +11,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -36,10 +38,10 @@ public class ModBlocks {
 //            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(2).setRequiresTool().explosionResistance(5f)));
 
     public static final RegistryObject<MixingCauldron> MIXING_CAULDRON = registerBlock("mixing_cauldron",
-            () -> new MixingCauldron(BlockBehaviour.Properties.of(Material.METAL).explosionResistance(4f).requiresCorrectToolForDrops().strength(2).lightLevel(state -> 12)));
+            () -> new MixingCauldron(BlockBehaviour.Properties.of(Material.METAL).explosionResistance(4f).requiresCorrectToolForDrops().strength(3).lightLevel(state -> 12)));
 
     public static final RegistryObject<CandleDipper> CANDLE_DIPPER = registerBlock("candle_dipper",
-            () -> new CandleDipper(BlockBehaviour.Properties.of(Material.METAL).noCollission().noOcclusion().strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+            () -> new CandleDipper(BlockBehaviour.Properties.of(Material.METAL).noCollission().noOcclusion().strength(3).requiresCorrectToolForDrops().explosionResistance(8f)));
 
     public static final RegistryObject<Coffer> COFFER = registerBlock("coffer",
             () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
@@ -206,17 +208,21 @@ public class ModBlocks {
     public static final RegistryObject<FloweringLilyPadBlock> LILY_PAD_BLOCK = registerBlockNoItem("flowering_lily_pad",
             () -> new FloweringLilyPadBlock(BlockBehaviour.Properties.of(Material.VEGETABLE).instabreak().sound(SoundType.LILY_PAD).noOcclusion()));
 
-    public static final RegistryObject<FlowerBlock> MANDRAKE_FLOWER = registerBlock("mandrake_flower",
-            () -> new FlowerBlock(MobEffects.REGENERATION, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION)));
+    public static final RegistryObject<PickableFlower> MANDRAKE_FLOWER = registerBlock("mandrake_flower",
+            () -> new PickableFlower(MobEffects.REGENERATION, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), ModItems.MANDRAKE_FLOWERS, 2, ModItems.MANDRAKE_ROOT, 1));
 
-    public static final RegistryObject<FlowerBlock> BELLADONNA_FLOWER = registerBlock("belladonna_flower",
-            () -> new FlowerBlock(MobEffects.POISON, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION)));
+    public static final RegistryObject<PickableFlower> BELLADONNA_FLOWER = registerBlock("belladonna_flower",
+            () -> new PickableFlower(MobEffects.POISON, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), ModItems.BELLADONNA_FLOWERS, 2, ModItems.BELLADONNA_BERRIES, 6));
 
-    public static final RegistryObject<TallFlowerBlock> MUGWORT_BUSH = registerBlock("mugwort_bush",
-            () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA)));
+//            () -> new PickableFlower(MobEffects.POISON, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), new ItemStack(ModItems.BELLADONNA_FLOWERS.get(), 4),  new ItemStack(ModItems.BELLADONNA_BERRIES.get(), 5), 5));
 
-    public static final RegistryObject<TallFlowerBlock> YELLOW_DOCK_BUSH = registerBlock("yellow_dock_bush",
-            () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA)));
+    public static final RegistryObject<PickableDoubleFlower> MUGWORT_BUSH = registerBlock("mugwort_bush",
+            () -> new PickableDoubleFlower(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA), ModItems.MUGWORT_LEAVES, 4, ModItems.MUGWORT_FLOWERS, 3));
+
+    public static final RegistryObject<PickableDoubleFlower> YELLOW_DOCK_BUSH = registerBlock("yellow_dock_bush",
+            () -> new PickableDoubleFlower(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA), ModItems.YELLOW_DOCK_LEAVES, 4, ModItems.YELLOW_DOCK_FLOWERS, 3));
+
+
 
 
     public static final RegistryObject<AmethystBlock> SELENITE_BLOCK = registerBlock("selenite_block",

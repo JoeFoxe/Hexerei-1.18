@@ -49,6 +49,14 @@ public class HexereiPacketHandler {
                 BroomSyncFloatModeToServer::decode,
                 BroomSyncFloatModeToServer::consume
         );
+
+        instance.registerMessage(
+                ++ id,
+                BroomAskForSyncPacket.class,
+                BroomAskForSyncPacket::encode,
+                BroomAskForSyncPacket::decode,
+                BroomAskForSyncPacket::consume
+        );
     }
 
     private static <T> void register(Class<T> clazz, IMessage<T> message)

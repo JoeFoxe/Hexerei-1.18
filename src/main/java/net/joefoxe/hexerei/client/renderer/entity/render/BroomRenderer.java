@@ -7,6 +7,7 @@ import com.mojang.math.Quaternion;
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.client.renderer.entity.custom.BroomEntity;
 import net.joefoxe.hexerei.client.renderer.entity.model.*;
+import net.joefoxe.hexerei.item.ModItems;
 import net.joefoxe.hexerei.util.HexereiTags;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -29,6 +30,8 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
             new ResourceLocation(Hexerei.MOD_ID, "textures/entity/broom.png");
     protected static final ResourceLocation WILLOW_TEXTURE =
             new ResourceLocation(Hexerei.MOD_ID, "textures/entity/willow_broom.png");
+    protected static final ResourceLocation HERB_BRUSH_TEXTURE =
+            new ResourceLocation(Hexerei.MOD_ID, "textures/entity/herb_enhanced_brush.png");
     protected static final ResourceLocation SATCHEL_TEXTURE =
             new ResourceLocation(Hexerei.MOD_ID, "textures/entity/broom_satchel.png");
     protected static final ResourceLocation SATCHEL_SMALL_TEXTURE =
@@ -88,19 +91,29 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
         matrixStackIn.translate(0, -2.75, 0);
         BroomModel broomModel = broomResources.getSecond();
         BroomStickBaseModel broomStickModel = broomStickResources.getSecond();
-        BroomBrushBaseModel broomBrushModel = broomBrushResources.getSecond();
         broomModel.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         broomStickModel.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
-        broomBrushModel.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         ResourceLocation loc = TEXTURE;
         if(entityIn.getBroomType() == BroomEntity.Type.WILLOW)
             loc = WILLOW_TEXTURE;
         VertexConsumer ivertexbuilderStick = bufferIn.getBuffer(broomStickModel.renderType(loc));
-        VertexConsumer ivertexbuilderBrush = bufferIn.getBuffer(broomBrushModel.renderType(loc));
         broomStickModel.renderToBuffer(matrixStackIn, ivertexbuilderStick, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
-        if(entityIn.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH))
-            broomBrushModel.renderToBuffer(matrixStackIn, ivertexbuilderBrush, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        if(entityIn.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH)) {
+
+            if(entityIn.itemHandler.getStackInSlot(2).is(ModItems.HERB_ENHANCED_BROOM_BRUSH.get())) {
+                BroomBrushBaseModel broomBrushModel = broomBrushResources.getSecond();
+                broomBrushModel.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
+                VertexConsumer ivertexbuilderBrush = bufferIn.getBuffer(broomBrushModel.renderType(HERB_BRUSH_TEXTURE));
+                broomBrushModel.renderToBuffer(matrixStackIn, ivertexbuilderBrush, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }else {
+                BroomBrushBaseModel broomBrushModel = broomBrushResources.getSecond();
+                broomBrushModel.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
+                VertexConsumer ivertexbuilderBrush = bufferIn.getBuffer(broomBrushModel.renderType(TEXTURE));
+                broomBrushModel.renderToBuffer(matrixStackIn, ivertexbuilderBrush, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
+
+        }
 
         if(entityIn.itemHandler.getStackInSlot(0).is(HexereiTags.Items.BROOM_MISC)) {
             BroomRingsModel broomRingsModel = broomRingsResources.getSecond();

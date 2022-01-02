@@ -2,6 +2,12 @@
   "replace": false,
   "values": [
     "hexerei:willow_log",
-    "hexerei:mahogany_log"
+    "hexerei:mahogany_log",
+    "hexerei:stripped_willow_log",
+    "hexerei:stripped_mahogany_log",
+    "hexerei:willow_wood",
+    "hexerei:mahogany_wood",
+    "hexerei:stripped_willow_wood",
+    "hexerei:stripped_mahogany_wood"
   ]
 }

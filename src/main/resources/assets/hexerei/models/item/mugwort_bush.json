@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "hexerei:block/mugwort_bush_top"
+    "layer0": "hexerei:block/mugwort_bush_top_stage3"
   }
 }
