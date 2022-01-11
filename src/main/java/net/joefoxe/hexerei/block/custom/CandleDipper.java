@@ -185,7 +185,8 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
         if(Screen.hasShiftDown()) {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper_shift"));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper_shift_1"));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper_shift_2"));
         } else {
             tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper"));
         }

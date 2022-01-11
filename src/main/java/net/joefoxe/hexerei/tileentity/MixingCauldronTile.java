@@ -381,6 +381,10 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         return this.items.get(slot).getItem();
     }
 
+    public ItemStack getItemStackInSlot(int slot) {
+        return this.items.get(slot);
+    }
+
     public int getCraftMaxDelay() {
         return this.craftDelayMax;
     }

@@ -3,21 +3,25 @@ package net.joefoxe.hexerei.item;
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.custom.BroomEntity;
+import net.joefoxe.hexerei.config.HexConfig;
 import net.joefoxe.hexerei.fluid.ModFluids;
 import net.joefoxe.hexerei.item.custom.*;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class ModItems {
@@ -31,8 +35,8 @@ public class ModItems {
     public static final RegistryObject<Item> WILLOW_BROOM = ITEMS.register("willow_broom",
             () -> new BroomItem(BroomEntity.Type.WILLOW, new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
-    public static final RegistryObject<Item> FIRE_TABLET = ITEMS.register("fire_tablet",
-            () -> new FireTabletItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+//    public static final RegistryObject<Item> FIRE_TABLET = ITEMS.register("fire_tablet",
+//            () -> new FireTabletItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
     public static final RegistryObject<Item> SMALL_SATCHEL = ITEMS.register("small_satchel",
             () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
@@ -111,10 +115,57 @@ public class ModItems {
     public static final RegistryObject<Item> SAGE_SEED = ITEMS.register("sage_seed",
             () -> new BlockItem(ModBlocks.SAGE.get(), new Item.Properties()
                     //.food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).fastToEat().build())
-                    .tab(ModItemGroup.HEXEREI_GROUP)));
+                    .tab(ModItemGroup.HEXEREI_GROUP)){
+
+                @Override
+                public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
+
+                    tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_seeds"));
+                    super.appendHoverText(stack, world, tooltip, flagIn);
+                }
+            });
 
     public static final RegistryObject<Item> SAGE_BUNDLE = ITEMS.register("sage_bundle",
             () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> DRIED_SAGE_BUNDLE = ITEMS.register("dried_sage_bundle",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).durability(HexConfig.SAGE_BUNDLE_DURATION.get())){
+                @Override
+                public boolean isEnchantable(ItemStack p_41456_) {
+                    return false;
+                }
+
+                @Override
+                public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
+                    if(Screen.hasShiftDown()) {
+                        int duration = stack.getMaxDamage() - stack.getDamageValue();
+                        float percentDamaged = stack.getDamageValue() / (float)stack.getMaxDamage();
+                        int minutes = duration / 60;
+                        int seconds = duration % 60;
+                        char color = 'a';
+
+                        if(percentDamaged > 0.4f)
+                            color = '2';
+                        if(percentDamaged > 0.60f)
+                            color = 'e';
+                        if(percentDamaged > 0.70f)
+                            color = '6';
+                        if(percentDamaged > 0.85f)
+                            color = 'c';
+                        if(percentDamaged > 0.95f)
+                            color = '4';
+                        String string = (minutes > 1 ? "\u00A7" + color + minutes + "\u00A7r" + " minutes" + (seconds >= 1 ? " " : "") : minutes == 1 ? "\u00A7" + color + minutes + "\u00A7r" + " minute" + (seconds >= 1 ? " " : "") : "") + (seconds > 1 ? "\u00A7" + color + seconds + "\u00A7r" + " seconds" : seconds == 1 ? "\u00A7" + color + seconds + "\u00A7r" + " second" : "");
+
+                        tooltip.add(new TranslatableComponent("tooltip.hexerei.dried_sage_bundle_shift_1", string));
+                        tooltip.add(new TranslatableComponent("tooltip.hexerei.dried_sage_bundle_shift_2"));
+                    } else {
+                        tooltip.add(new TranslatableComponent("tooltip.hexerei.dried_sage_bundle"));
+                        tooltip.add(new TranslatableComponent("tooltip.hexerei.shift_for_info"));
+                    }
+
+                    super.appendHoverText(stack, world, tooltip, flagIn);
+                }
+            });
 
     public static final RegistryObject<Item> LILY_PAD_ITEM = ITEMS.register("flowering_lily_pad",
             () -> new FloweringLilyPadItem(ModBlocks.LILY_PAD_BLOCK.get(),(new Item.Properties()).tab(ModItemGroup.HEXEREI_GROUP))); // ModBlocks.LILY_PAD_BLOCK.get(),
@@ -143,6 +194,31 @@ public class ModItems {
 
     public static final RegistryObject<FlowerOutputItem> YELLOW_DOCK_LEAVES = ITEMS.register("yellow_dock_leaves",
             () -> new FlowerOutputItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+
+    public static final RegistryObject<Item> DRIED_SAGE = ITEMS.register("dried_sage",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> DRIED_BELLADONNA_FLOWERS = ITEMS.register("dried_belladonna_flowers",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> DRIED_MANDRAKE_FLOWERS = ITEMS.register("dried_mandrake_flowers",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> DRIED_MUGWORT_FLOWERS = ITEMS.register("dried_mugwort_flowers",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> DRIED_MUGWORT_LEAVES = ITEMS.register("dried_mugwort_leaves",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> DRIED_YELLOW_DOCK_FLOWERS = ITEMS.register("dried_yellow_dock_flowers",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<Item> DRIED_YELLOW_DOCK_LEAVES = ITEMS.register("dried_yellow_dock_leaves",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+
+    public static final RegistryObject<BlendItem> MINDFUL_TRANCE_BLEND = ITEMS.register("mindful_trance_blend",
+            () -> new BlendItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
 
 
     // EGG ITEMS

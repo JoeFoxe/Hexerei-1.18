@@ -3,6 +3,7 @@ package net.joefoxe.hexerei.event;
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.client.renderer.entity.ModEntityTypes;
 import net.joefoxe.hexerei.events.AnimalFatAdditionModifier;
+import net.joefoxe.hexerei.events.SageSeedAdditionModifier;
 import net.joefoxe.hexerei.item.custom.ModSpawnEggItem;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +36,11 @@ public class ModEventBusEvents {
                 new AnimalFatAdditionModifier.Serializer().setRegistryName
                         (new ResourceLocation(Hexerei.MOD_ID,"animal_fat_from_sheep")),
                 new AnimalFatAdditionModifier.Serializer().setRegistryName
-                        (new ResourceLocation(Hexerei.MOD_ID,"animal_fat_from_pig"))
+                        (new ResourceLocation(Hexerei.MOD_ID,"animal_fat_from_pig")),
+                new SageSeedAdditionModifier.Serializer().setRegistryName
+                        (new ResourceLocation(Hexerei.MOD_ID,"sage_seeds_from_grass")),
+                new SageSeedAdditionModifier.Serializer().setRegistryName
+                        (new ResourceLocation(Hexerei.MOD_ID,"sage_seeds_from_tall_grass"))
         );
     }
 }

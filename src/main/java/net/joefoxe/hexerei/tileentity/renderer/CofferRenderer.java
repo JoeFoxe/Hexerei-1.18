@@ -152,334 +152,442 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
 
         // item row 1
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(35), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(1)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(34), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(2)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(33), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(3)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(32), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(4)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(31), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(5)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(30), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(6)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(29), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(7)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(28), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(8)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(27), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 2
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(9)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(26), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(10)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(25), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(11)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(24), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(12)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(23), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(13)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(22), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(14)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(21), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 3
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(15)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(20), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(16)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(19), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(17)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(18), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(18)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(17), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(19)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(16), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(20)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(15), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 4
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(21)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(14), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(22)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(13), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(23)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(12), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(24)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(11), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(25)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(10), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(26)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(9), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 5
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(27)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(8), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(28)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(7), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(29)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(6), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(30)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(5), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(31)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(4), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(32)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(3), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(33)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(34)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
+
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(35)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
     }
@@ -491,407 +599,335 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
 
         // item row 1
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(35), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(1)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(34), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(2)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(33), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(3)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(32), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(4)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(31), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(5)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(30), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(6)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(29), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(7)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(28), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(8)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(27), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 2
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(9)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(26), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(10)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(25), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(11)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(24), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(12)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(23), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(13)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(22), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(14)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(21), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 3
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(15)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(20), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(16)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(19), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(17)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(18), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(18)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(17), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(19)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(16), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(20)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(15), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 4
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(21)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(14), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(22)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(13), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(23)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(12), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(24)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(11), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(25)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(10), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(26)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(9), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 5
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(27)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(8), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(28)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(7), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(29)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(6), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(30)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(5), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(31)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(4), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(32)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(3), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(33)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(34)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
-        matrixStackIn.translate(16D / 16D, 0D / 16D, 16D / 16D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(35)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
     }
@@ -905,100 +941,118 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(35), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(1)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(34), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(2)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(33), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(3)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(32), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(4)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(31), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(5)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(30), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(6)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(29), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(7)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(28), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(8)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(27), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 2
@@ -1006,67 +1060,79 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(9)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(26), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(10)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(25), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(11)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(24), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(12)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(23), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(13)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(22), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(14)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(21), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 3
@@ -1074,67 +1140,79 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(15)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(20), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(16)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(19), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(17)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(18), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(18)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(17), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(19)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(16), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(20)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(15), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 4
@@ -1142,168 +1220,198 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(21)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(14), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(22)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(13), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(23)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(12), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(24)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(11), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(25)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(10), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(26)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(9), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 5
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(27)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(8), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(28)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(7), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(29)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(6), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(30)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(5), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(31)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(4), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(32)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(3), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(33)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(34)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(0D / 16D, 0D / 16D, 16D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(35)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
     }
@@ -1317,100 +1425,118 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(35), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(1)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(34), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(2)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(33), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(3)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(32), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(4)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(31), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(3D / 16D - Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(5)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(30), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(6)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(29), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(7)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(28), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 6.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(8)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(27), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 2
@@ -1418,67 +1544,79 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(9)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(26), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(10)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(25), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(11)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(24), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(12)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(23), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(13)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(22), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 7.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(14)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(21), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 3
@@ -1486,67 +1624,79 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(15)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(20), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(16)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(19), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(17)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(18), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(18)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(17), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(19)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(16), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 8.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(20)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(15), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 4
@@ -1554,168 +1704,198 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(21)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(14), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(22)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(13), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(23)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(12), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(24)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(11), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(25)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(10), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 9.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(26)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(9), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         // item row 5
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(4.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(27)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(8), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(6D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(28)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(7), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(7.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(29)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(6), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 7D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(30)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(5), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 8D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(31)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(4), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(13D / 16D + Math.sin(((sideRotation - 90)/180f)*Math.PI) * 3D/16D, 4D / 16D-(Math.cos(((sideRotation + 90)/180f)*Math.PI) * 3D/16D), 9D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(32)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(3), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(9.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(33)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(11D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(34)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
         matrixStackIn.pushPose();
         matrixStackIn.translate(16D / 16D, 0D / 16D, 0D / 16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
+        matrixStackIn.translate(-1,0,-1);
         matrixStackIn.translate(12.5D/16D-0.5D/16D, 0.15D, 10.5D/16D);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(22.5f));
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(-15f));
-        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(-2.5f));
+        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(15f));
+        matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(2.5f));
         matrixStackIn.scale(0.20f, 0.20f, 0.20f);
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(35)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(tileEntityIn.getItemStackInSlot(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
     }

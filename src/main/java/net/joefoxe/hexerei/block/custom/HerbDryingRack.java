@@ -160,28 +160,6 @@ public class HerbDryingRack extends Block implements ITileEntity<DryingRackTile>
         super.playerWillDestroy(worldIn, pos, state, player);
     }
 
-//    @Override
-//    public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
-//        super.onBlockExploded(state, world, pos, explosion);
-//
-//        if (world instanceof ServerLevel) {
-//
-//            Optional<DryingRackTile> tileEntityOptional = Optional.ofNullable(getBlockEntity(world, pos));
-//
-//            NonNullList<ItemStack> inv = tileEntityOptional.map(dryingRack -> dryingRack.getItems())
-//                    .orElse(NonNullList.withSize(3, ItemStack.EMPTY));
-//            System.out.println(inv);
-//
-//            if(!inv.get(0).isEmpty())
-//                world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, inv.get(0)));
-//            if(!inv.get(1).isEmpty())
-//                world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, inv.get(1)));
-//            if(!inv.get(2).isEmpty())
-//                world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, inv.get(2)));
-//
-//        }
-//    }
-
     @Override
     public Class<DryingRackTile> getTileEntityClass() {
         return DryingRackTile.class;

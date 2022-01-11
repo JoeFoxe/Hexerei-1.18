@@ -1,0 +1,26 @@
+
+{
+  "type": "hexerei:sage_seeds_from_grass",
+  "conditions": [
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.1
+    },
+    {
+      "condition": "minecraft:block_state_property",
+      "block": "minecraft:grass"
+    },
+    {
+      "condition": "minecraft:inverted",
+      "term":  {
+        "condition": "minecraft:match_tool",
+        "predicate": {
+          "items": [
+            "minecraft:shears"
+          ]
+        }
+      }
+    }
+  ],
+  "addition": "hexerei:sage_seed"
+}

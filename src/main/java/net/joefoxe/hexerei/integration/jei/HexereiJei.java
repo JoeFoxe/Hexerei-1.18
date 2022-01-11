@@ -9,10 +9,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.block.custom.CandleDipper;
-import net.joefoxe.hexerei.data.recipes.DipperRecipe;
-import net.joefoxe.hexerei.data.recipes.DryingRackRecipe;
-import net.joefoxe.hexerei.data.recipes.MixingCauldronRecipe;
-import net.joefoxe.hexerei.data.recipes.ModRecipeTypes;
+import net.joefoxe.hexerei.data.recipes.*;
 import net.joefoxe.hexerei.screen.MixingCauldronScreen;
 import net.joefoxe.hexerei.tileentity.CandleDipperTile;
 import net.joefoxe.hexerei.tileentity.DryingRackTile;
@@ -31,6 +28,7 @@ public class HexereiJei implements IModPlugin {
     public static final ResourceLocation MIXING_CAULDRON_UID = new ResourceLocation(Hexerei.MOD_ID, "mixing_cauldron");
     public static final ResourceLocation DIPPER_UID = new ResourceLocation(Hexerei.MOD_ID, "dipper");
     public static final ResourceLocation DRYING_RACK_UID = new ResourceLocation(Hexerei.MOD_ID, "drying_rack");
+    public static final ResourceLocation PESTLE_AND_MORTAR_UID = new ResourceLocation(Hexerei.MOD_ID, "pestle_and_mortar");
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -42,6 +40,7 @@ public class HexereiJei implements IModPlugin {
         registration.addRecipeCategories(
                 new MixingCauldronRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new DipperRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new PestleAndMortarRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new DryingRackRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
@@ -50,6 +49,7 @@ public class HexereiJei implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.MIXING_CAULDRON.get()), MIXING_CAULDRON_UID);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.CANDLE_DIPPER.get()), DIPPER_UID);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.HERB_DRYING_RACK.get()), DRYING_RACK_UID);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.PESTLE_AND_MORTAR.get()), PESTLE_AND_MORTAR_UID);
     }
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
@@ -68,5 +68,8 @@ public class HexereiJei implements IModPlugin {
         registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.DRYING_RACK_RECIPE).stream()
                         .filter(r -> r instanceof DryingRackRecipe).collect(Collectors.toList()),
                 DryingRackRecipeCategory.UID);
+        registration.addRecipes(rm.getAllRecipesFor(ModRecipeTypes.PESTLE_AND_MORTAR_RECIPE).stream()
+                        .filter(r -> r instanceof PestleAndMortarRecipe).collect(Collectors.toList()),
+                PestleAndMortarRecipeCategory.UID);
     }
 }

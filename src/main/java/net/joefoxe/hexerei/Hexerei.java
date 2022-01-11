@@ -10,7 +10,7 @@ import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.ModEntityTypes;
 import net.joefoxe.hexerei.config.HexConfig;
 import net.joefoxe.hexerei.config.ModKeyBindings;
-import net.joefoxe.hexerei.events.SageBundleEvent;
+import net.joefoxe.hexerei.events.SageBurningPlateEvent;
 import net.joefoxe.hexerei.screen.BroomScreen;
 import net.joefoxe.hexerei.world.gen.*;
 import net.joefoxe.hexerei.world.structure.structures.WitchHutStructure;
@@ -353,7 +353,7 @@ public class Hexerei
     }
 
     private void loadComplete(final FMLLoadCompleteEvent event) {
-        MinecraftForge.EVENT_BUS.register(new SageBundleEvent());
+        MinecraftForge.EVENT_BUS.register(new SageBurningPlateEvent());
     }
 
 }

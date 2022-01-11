@@ -55,6 +55,14 @@ public class ModContainers {
                 return new DipperContainer(windowId, world, pos, inv, inv.player);
             })));
 
+    public static final RegistryObject<MenuType<PestleAndMortarContainer>> PESTLE_AND_MORTAR_CONTAINER
+            = CONTAINERS.register("pestle_and_mortar_container",
+            () -> IForgeMenuType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                Level world = inv.player.getLevel();
+                return new PestleAndMortarContainer(windowId, world, pos, inv, inv.player);
+            })));
+
     public static final RegistryObject<MenuType<BroomContainer>> BROOM_CONTAINER
             = CONTAINERS.register("broom_container",
             () -> IForgeMenuType.create(((windowId, inv, data) -> {

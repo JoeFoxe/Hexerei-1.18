@@ -32,6 +32,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.RegistryObject;
+import org.lwjgl.system.CallbackI;
 
 import java.util.Random;
 
@@ -141,10 +142,30 @@ public class PickableDoubleFlower extends DoublePlantBlock implements Bonemealab
             p_57276_.playSound((Player) null, p_57277_, SoundEvents.CAVE_VINES_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + p_57276_.random.nextFloat() * 0.4F);
             if(p_57275_.getValue(HALF) == DoubleBlockHalf.LOWER) {
                 p_57276_.setBlock(p_57277_, p_57275_.setValue(AGE, Integer.valueOf(0)), 2);
-                p_57276_.setBlock(p_57277_.above(), p_57276_.getBlockState(p_57277_.above()).setValue(AGE, Integer.valueOf(0)), 2);
+
+                BlockState blockState = p_57276_.getBlockState(p_57277_.above());
+
+                if(blockState.getBlock() == p_57276_.getBlockState(p_57277_).getBlock())
+                {
+                    p_57276_.setBlock(p_57277_.above(), blockState.setValue(AGE, Integer.valueOf(0)), 2);
+                }
+                else if(blockState.isAir()){
+                    p_57276_.setBlock(p_57277_.above(), p_57276_.getBlockState(p_57277_).setValue(AGE, Integer.valueOf(0)).setValue(HALF, DoubleBlockHalf.UPPER), 2);
+                }
+
             }else {
                 p_57276_.setBlock(p_57277_, p_57275_.setValue(AGE, Integer.valueOf(0)), 2);
-                p_57276_.setBlock(p_57277_.below(), p_57276_.getBlockState(p_57277_.below()).setValue(AGE, Integer.valueOf(0)), 2);
+//                p_57276_.setBlock(p_57277_.below(), p_57276_.getBlockState(p_57277_.below()).setValue(AGE, Integer.valueOf(0)), 2);
+
+                BlockState blockState = p_57276_.getBlockState(p_57277_.below());
+
+                if(blockState.getBlock() == p_57276_.getBlockState(p_57277_).getBlock())
+                {
+                    p_57276_.setBlock(p_57277_.below(), blockState.setValue(AGE, Integer.valueOf(0)), 2);
+                }
+                else if(blockState.isAir()){
+                    p_57276_.setBlock(p_57277_.below(), p_57276_.getBlockState(p_57277_).setValue(AGE, Integer.valueOf(0)).setValue(HALF, DoubleBlockHalf.LOWER), 2);
+                }
             }
 
 

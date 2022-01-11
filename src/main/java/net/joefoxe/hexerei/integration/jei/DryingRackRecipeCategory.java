@@ -27,7 +27,7 @@ public class DryingRackRecipeCategory implements IRecipeCategory<DryingRackRecip
 
 
     public DryingRackRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 132, 45);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 100, 53);
         this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.HERB_DRYING_RACK.get()));
     }
 
@@ -65,8 +65,8 @@ public class DryingRackRecipeCategory implements IRecipeCategory<DryingRackRecip
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, DryingRackRecipe recipe, IIngredients ingredients) {
 
-        recipeLayout.getItemStacks().init(0, true, 5, 15);
-        recipeLayout.getItemStacks().init(1, false, 107, 15);
+        recipeLayout.getItemStacks().init(0, true, 13, 15);
+        recipeLayout.getItemStacks().init(1, false, 69, 15);
 
         recipeLayout.getItemStacks().set(ingredients);
 
@@ -83,12 +83,12 @@ public class DryingRackRecipeCategory implements IRecipeCategory<DryingRackRecip
         if(dryingTimeString.charAt(dryingTimeString.length()-1) == '0' && dryingTime != 0 && dryingTime % 20 != 0)
             dryingTimeString = dryingTimeString.substring(0, dryingTimeString.length()-1);
         TranslatableComponent dip_time_1 = new TranslatableComponent("gui.jei.category.dipper.dry_time_1");
-        TranslatableComponent dip_time_2 = new TranslatableComponent("gui.jei.category.dipper.dry_time_2");
         TranslatableComponent dip_time_3 = new TranslatableComponent("gui.jei.category.dipper.resultSeconds", dryingTimeString);
-        minecraft.font.draw(matrixStack, dip_time_1, 42*1.666f, 19*1.666f, 0xFF808080);
-        minecraft.font.draw(matrixStack, dip_time_2, 42*1.666f, 24*1.666f, 0xFF808080);
-        minecraft.font.draw(matrixStack, dip_time_3, 67*1.666f, 21*1.666f, 0xFF808080);
+        minecraft.font.draw(matrixStack, dip_time_1, 6*1.666f, 41*1.666f, 0xFF808080);
+        minecraft.font.draw(matrixStack, dip_time_3, 55*1.666f, 41*1.666f, 0xFF808080);
 
+        String outputName = recipe.getResultItem().getHoverName().getString();
+        minecraft.font.draw(matrixStack, outputName, 5*1.666f, 4*1.666f, 0xFF404040);
 
     }
 }

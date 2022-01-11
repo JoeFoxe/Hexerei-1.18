@@ -38,6 +38,12 @@ public class ModTileEntities {
     public static final RegistryObject<BlockEntityType<DryingRackTile>> DRYING_RACK_TILE = TILE_ENTITIES.register(
             "drying_rack_entity", () -> BlockEntityType.Builder.of(DryingRackTile::new, ModBlocks.HERB_DRYING_RACK.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<PestleAndMortarTile>> PESTLE_AND_MORTAR_TILE = TILE_ENTITIES.register(
+            "pestle_and_mortar_entity", () -> BlockEntityType.Builder.of(PestleAndMortarTile::new, ModBlocks.PESTLE_AND_MORTAR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<SageBurningPlateTile>> SAGE_BURNING_PLATE_TILE = TILE_ENTITIES.register(
+            "sage_burning_plate_entity", () -> BlockEntityType.Builder.of(SageBurningPlateTile::new, ModBlocks.SAGE_BURNING_PLATE.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);

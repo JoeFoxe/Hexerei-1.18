@@ -1,0 +1,20 @@
+
+{
+  "variants": {
+    "facing=east": {
+      "model": "hexerei:block/sage_burning_plate",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "hexerei:block/sage_burning_plate",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "hexerei:block/sage_burning_plate"
+    },
+    "facing=west": {
+      "model": "hexerei:block/sage_burning_plate",
+      "y": 90
+    }
+  }
+}

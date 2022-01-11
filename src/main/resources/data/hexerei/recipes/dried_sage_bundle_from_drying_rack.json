@@ -1,0 +1,12 @@
+{
+  "type": "hexerei:drying_rack",
+  "ingredients": [
+    {
+      "item": "hexerei:sage_bundle"
+    }
+  ],
+  "output": {
+    "item": "hexerei:dried_sage_bundle"
+  },
+  "dryingTimeInTicks": 4000
+}

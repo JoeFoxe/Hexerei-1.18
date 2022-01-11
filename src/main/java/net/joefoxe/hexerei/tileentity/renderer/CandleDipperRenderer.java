@@ -76,7 +76,7 @@ public class CandleDipperRenderer implements BlockEntityRenderer<CandleDipperTil
                     matrixStackIn.scale(0.4f, 0.4f, 0.4f);
                     matrixStackIn.translate(0, -1.5f/16f, 0);
                 }
-                renderItem(new ItemStack(tileEntityIn.getItems().get(0).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                renderItem(tileEntityIn.getItems().get(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
             }
             matrixStackIn.popPose();
         }
@@ -119,7 +119,7 @@ public class CandleDipperRenderer implements BlockEntityRenderer<CandleDipperTil
                     matrixStackIn.scale(0.4f, 0.4f, 0.4f);
                     matrixStackIn.translate(0, -1.5f/16f, 0);
                 }
-                renderItem(new ItemStack(tileEntityIn.getItems().get(1).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                renderItem(tileEntityIn.getItems().get(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
             }
             matrixStackIn.popPose();
         }
@@ -163,7 +163,7 @@ public class CandleDipperRenderer implements BlockEntityRenderer<CandleDipperTil
                     matrixStackIn.scale(0.4f, 0.4f, 0.4f);
                     matrixStackIn.translate(0, -1.5f/16f, 0);
                 }
-                renderItem(new ItemStack(tileEntityIn.getItems().get(2).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                renderItem(tileEntityIn.getItems().get(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
             }
             matrixStackIn.popPose();
         }

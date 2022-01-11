@@ -61,7 +61,7 @@ public class MixingCauldronRenderer implements BlockEntityRenderer<MixingCauldro
 
         for(int i = 0; i < 8; i++)
         {
-            ItemStack item = new ItemStack(tileEntityIn.getItemInSlot(i));
+            ItemStack item = tileEntityIn.getItemStackInSlot(i);
             if (!item.isEmpty()) {
                 matrixStackIn.pushPose();
                 matrixStackIn.translate(0.5D, height + 1f / 256f, 0.5D);

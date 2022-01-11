@@ -1,0 +1,12 @@
+{
+  "type": "hexerei:drying_rack",
+  "ingredients": [
+    {
+      "item": "hexerei:mandrake_flowers"
+    }
+  ],
+  "output": {
+    "item": "hexerei:dried_mandrake_flowers"
+  },
+  "dryingTimeInTicks": 2000
+}

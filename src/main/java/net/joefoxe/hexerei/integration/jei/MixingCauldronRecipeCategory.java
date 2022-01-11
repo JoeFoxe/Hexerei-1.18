@@ -13,8 +13,10 @@ import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.data.recipes.MixingCauldronRecipe;
 import net.joefoxe.hexerei.fluid.ModFluids;
 import net.joefoxe.hexerei.state.properties.LiquidType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -34,9 +36,9 @@ public class MixingCauldronRecipeCategory implements IRecipeCategory<MixingCauld
 
 
     public MixingCauldronRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 96, 170, 160, 86);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 105);
         this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MIXING_CAULDRON.get()));
-        this.liquid = helper.createDrawable(TEXTURE, 7, 7, 14, 12);
+        this.liquid = helper.createDrawable(TEXTURE, 182, 2, 12, 10);
     }
 
     @Override
@@ -74,15 +76,15 @@ public class MixingCauldronRecipeCategory implements IRecipeCategory<MixingCauld
     public void setRecipe(IRecipeLayout recipeLayout, MixingCauldronRecipe recipe, IIngredients ingredients) {
 
 
-        recipeLayout.getItemStacks().init(0, true, 37 + 34, 3);
-        recipeLayout.getItemStacks().init(1, true, 37 + 56, 12);
-        recipeLayout.getItemStacks().init(2, true, 37 + 65, 34);
-        recipeLayout.getItemStacks().init(3, true, 37 + 56, 56);
-        recipeLayout.getItemStacks().init(4, true, 37 + 34, 65);
-        recipeLayout.getItemStacks().init(5, true, 37 + 12, 56);
-        recipeLayout.getItemStacks().init(6, true, 37 + 3, 34);
-        recipeLayout.getItemStacks().init(7, true, 37 + 12, 12);
-        recipeLayout.getItemStacks().init(8, false, 37 + 96, 33);
+        recipeLayout.getItemStacks().init(0, true, 79, 13);
+        recipeLayout.getItemStacks().init(1, true, 101, 22);
+        recipeLayout.getItemStacks().init(2, true, 110, 44);
+        recipeLayout.getItemStacks().init(3, true, 101, 66);
+        recipeLayout.getItemStacks().init(4, true, 79, 75);
+        recipeLayout.getItemStacks().init(5, true, 57, 66);
+        recipeLayout.getItemStacks().init(6, true, 48, 44);
+        recipeLayout.getItemStacks().init(7, true, 57, 22);
+        recipeLayout.getItemStacks().init(8, false, 141, 36);
 
         recipeLayout.getItemStacks().set(ingredients);
         FluidStack input = recipe.getLiquid();
@@ -102,11 +104,11 @@ public class MixingCauldronRecipeCategory implements IRecipeCategory<MixingCauld
             output.setAmount(2000-recipe.getFluidLevelsConsumed());
 
         if(!input.isEmpty()) {
-            recipeLayout.getFluidStacks().init(9, true, 11, 7, 14, 12, 2000, false, this.liquid);
+            recipeLayout.getFluidStacks().init(9, true, 20, 48, 12, 10, 2000, false, this.liquid);
             recipeLayout.getFluidStacks().set(9, input);
         }
         if(!output.isEmpty()) {
-            recipeLayout.getFluidStacks().init(10, false, 135, 68, 14, 12, 2000, true, this.liquid);
+            recipeLayout.getFluidStacks().init(10, false, 144, 61, 12, 10, 2000, true, this.liquid);
             recipeLayout.getFluidStacks().set(10, output);
         }
     }
@@ -115,6 +117,13 @@ public class MixingCauldronRecipeCategory implements IRecipeCategory<MixingCauld
     public void draw(MixingCauldronRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 
 
+        Minecraft minecraft = Minecraft.getInstance();
+
+        String outputName = recipe.getResultItem().getHoverName().getString();
+        matrixStack.scale(0.6f, 0.6f, 0.6f);
+        minecraft.font.draw(matrixStack, outputName, 43*1.666f, 4*1.666f, 0xFF404040);
+        minecraft.font.draw(matrixStack, new TranslatableComponent("gui.jei.category.mixing_cauldron.fluid"), 19*1.666f, 36*1.666f, 0xFF404040);
+        minecraft.font.draw(matrixStack, new TranslatableComponent("gui.jei.category.mixing_cauldron.output"), 140*1.666f, 24*1.666f, 0xFF404040);
 
     }
 }

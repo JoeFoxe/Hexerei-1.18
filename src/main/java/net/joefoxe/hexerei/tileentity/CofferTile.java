@@ -301,8 +301,8 @@ public class CofferTile extends RandomizableContainerBlockEntity implements Clea
         return super.getCapability(cap);
     }
 
-    public Item getItemInSlot(int slot) {
-        return this.itemHandler.getStackInSlot(slot).getItem();
+    public ItemStack getItemStackInSlot(int slot) {
+        return this.itemHandler.getStackInSlot(slot);
     }
 
     public int getNumberOfItems() {

@@ -1,0 +1,25 @@
+{
+  "type": "hexerei:pestle_and_mortar",
+  "ingredients": [
+    {
+      "item": "hexerei:belladonna_flowers"
+    },
+    {
+      "item": "hexerei:belladonna_berries"
+    },
+    {
+      "item": "hexerei:belladonna_berries"
+    },
+    {
+      "item": "hexerei:belladonna_berries"
+    },
+    {
+      "item": "hexerei:sage"
+    }
+  ],
+  "output": {
+    "item": "hexerei:mindful_trance_blend",
+    "count": 1
+  },
+  "grindingTime": 300
+}

@@ -25,6 +25,7 @@ public class ModParticleUtil {
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM_4.get(), BroomParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM_5.get(), BroomParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM_6.get(), BroomParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ModParticleTypes.FOG.get(), FogParticle.Factory::new);
     }
 
 

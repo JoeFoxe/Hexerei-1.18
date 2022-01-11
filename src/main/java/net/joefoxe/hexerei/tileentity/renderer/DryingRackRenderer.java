@@ -106,7 +106,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                 matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                 matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                 matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                renderItem(new ItemStack(tileEntityIn.getItems().get(0).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                renderItem(tileEntityIn.getItems().get(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                 matrixStackIn.popPose();
                 if(tileEntityIn.getItems().get(0).getCount() >= 2)
                 {
@@ -119,7 +119,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                     matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                     matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                     matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                    renderItem(new ItemStack(tileEntityIn.getItems().get(0).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                    renderItem(tileEntityIn.getItems().get(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                     matrixStackIn.popPose();
                 }
                 if(tileEntityIn.getItems().get(0).getCount() >= 3)
@@ -133,7 +133,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                     matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                     matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                     matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                    renderItem(new ItemStack(tileEntityIn.getItems().get(0).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                    renderItem(tileEntityIn.getItems().get(0), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                     matrixStackIn.popPose();
                 }
             }
@@ -195,7 +195,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                 matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                 matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                 matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                renderItem(new ItemStack(tileEntityIn.getItems().get(1).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                renderItem(tileEntityIn.getItems().get(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                 matrixStackIn.popPose();
                 if(tileEntityIn.getItems().get(1).getCount() >= 2)
                 {
@@ -208,7 +208,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                     matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                     matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                     matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                    renderItem(new ItemStack(tileEntityIn.getItems().get(1).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                    renderItem(tileEntityIn.getItems().get(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                     matrixStackIn.popPose();
                 }
                 if(tileEntityIn.getItems().get(1).getCount() >= 3)
@@ -222,7 +222,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                     matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                     matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                     matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                    renderItem(new ItemStack(tileEntityIn.getItems().get(1).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                    renderItem(tileEntityIn.getItems().get(1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                     matrixStackIn.popPose();
                 }
             }
@@ -284,7 +284,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                 matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                 matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                 matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                renderItem(new ItemStack(tileEntityIn.getItems().get(2).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                renderItem(tileEntityIn.getItems().get(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                 matrixStackIn.popPose();
                 if(tileEntityIn.getItems().get(2).getCount() >= 2)
                 {
@@ -297,7 +297,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                     matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                     matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                     matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                    renderItem(new ItemStack(tileEntityIn.getItems().get(2).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                    renderItem(tileEntityIn.getItems().get(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                     matrixStackIn.popPose();
                 }
                 if(tileEntityIn.getItems().get(2).getCount() >= 3)
@@ -311,7 +311,7 @@ public class DryingRackRenderer implements BlockEntityRenderer<DryingRackTile> {
                     matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(15));
                     matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(180));
                     matrixStackIn.scale(0.45f, 0.45f, 0.45f);
-                    renderItem(new ItemStack(tileEntityIn.getItems().get(2).getItem()), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+                    renderItem(tileEntityIn.getItems().get(2), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
                     matrixStackIn.popPose();
                 }
             }

@@ -121,23 +121,18 @@ public class HerbJarRenderer implements BlockEntityRenderer<HerbJarTile> {
             font.drawInBatch(ireorderingprocessor, f3, 0, i1, false, matrixStackIn.last().pose(), bufferIn, false, 0, combinedLightIn);
         }
 
-
-
-//
-//        }
-
-
     }
 
     private void renderItemsNorth(HerbJarTile tileEntityIn, float partialTicks, PoseStack matrixStackIn,
                                   MultiBufferSource bufferIn, int combinedLightIn)
     {
+
         matrixStackIn.pushPose();
         matrixStackIn.translate(8D/16D, 5D/16D, 12D/16D);
         matrixStackIn.scale(0.30f, 0.30f, 0.30f);
 
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(new ItemStack(tileEntityIn.itemHandler.getContents().get(0).getItem(), 1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
     }
@@ -150,7 +145,7 @@ public class HerbJarRenderer implements BlockEntityRenderer<HerbJarTile> {
         matrixStackIn.translate(8D/16D, 5D/16D, 4D/16D);
         matrixStackIn.scale(0.30f, 0.30f, 0.30f);
 
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(new ItemStack(tileEntityIn.itemHandler.getContents().get(0).getItem(), 1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
 
@@ -160,8 +155,6 @@ public class HerbJarRenderer implements BlockEntityRenderer<HerbJarTile> {
                                  MultiBufferSource bufferIn, int combinedLightIn)
     {
 
-
-
         matrixStackIn.pushPose();
         matrixStackIn.translate(1, 0, 0);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
@@ -169,7 +162,7 @@ public class HerbJarRenderer implements BlockEntityRenderer<HerbJarTile> {
         matrixStackIn.scale(0.30f, 0.30f, 0.30f);
 
 //        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
-            renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+            renderItem(new ItemStack(tileEntityIn.itemHandler.getContents().get(0).getItem(), 1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
 
 
@@ -178,7 +171,6 @@ public class HerbJarRenderer implements BlockEntityRenderer<HerbJarTile> {
     private void renderItemsEast(HerbJarTile tileEntityIn, float partialTicks, PoseStack matrixStackIn,
                                  MultiBufferSource bufferIn, int combinedLightIn)
     {
-
         matrixStackIn.pushPose();
         matrixStackIn.translate(1, 0, 0);
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
@@ -186,7 +178,7 @@ public class HerbJarRenderer implements BlockEntityRenderer<HerbJarTile> {
         matrixStackIn.scale(0.30f, 0.30f, 0.30f);
 
         matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180));
-        renderItem(new ItemStack(tileEntityIn.getItemInSlot(0)), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        renderItem(new ItemStack(tileEntityIn.itemHandler.getContents().get(0).getItem(), 1), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
         matrixStackIn.popPose();
     }
 

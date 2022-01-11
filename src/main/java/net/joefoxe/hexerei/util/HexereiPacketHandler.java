@@ -57,6 +57,8 @@ public class HexereiPacketHandler {
                 BroomAskForSyncPacket::decode,
                 BroomAskForSyncPacket::consume
         );
+
+        instance.registerMessage(++ id, EmitExtinguishParticlesPacket.class, EmitExtinguishParticlesPacket::encode, EmitExtinguishParticlesPacket::decode, EmitExtinguishParticlesPacket::handle);
     }
 
     private static <T> void register(Class<T> clazz, IMessage<T> message)

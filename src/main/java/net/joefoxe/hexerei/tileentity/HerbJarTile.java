@@ -98,6 +98,10 @@ public class HerbJarTile extends RandomizableContainerBlockEntity implements Cle
         return this.items;
     }
 
+    public ItemStack getItemStackInSlot(int slot) {
+        return this.items.get(slot);
+    }
+
     @Override
     protected void setItems(NonNullList<ItemStack> itemsIn) {
         this.items = itemsIn;
