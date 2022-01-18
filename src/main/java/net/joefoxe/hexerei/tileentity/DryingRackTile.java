@@ -602,7 +602,7 @@ public class DryingRackTile extends RandomizableContainerBlockEntity implements 
         }
         else
         {
-            if(!this.items.get(0).isEmpty() && !crafting[0]) {
+            if(!crafting[0]) {
 
                 crafted[0] = false;
                 dryingTime[0] = dryingTimeMax[0];

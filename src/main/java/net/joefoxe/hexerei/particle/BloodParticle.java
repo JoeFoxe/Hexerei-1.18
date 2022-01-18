@@ -3,6 +3,7 @@ package net.joefoxe.hexerei.particle;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.joefoxe.hexerei.Hexerei;
 import net.minecraft.client.Camera;
 import net.minecraft.client.particle.*;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -10,6 +11,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,6 +23,8 @@ import java.util.Random;
 @OnlyIn(Dist.CLIENT)
 public class BloodParticle extends TextureSheetParticle {
 
+    private final ResourceLocation TEXTURE = new ResourceLocation(Hexerei.MOD_ID,
+            "textures/particle/cauldron_boil_particle.png");
     // thanks to understanding simibubi's code from the Create mod for rendering particles I was able to render my own :D
     public static final Vec3[] CUBE = {
             // bottom render
@@ -40,10 +44,10 @@ public class BloodParticle extends TextureSheetParticle {
             new Vec3(-0.25, -0.1, -0.25), // <V
             new Vec3(-0.25, -0.1, -0.5),// <^
             //back
-            new Vec3(0.25, 0.1, 0.5), // >^
-            new Vec3(0.25, 0.1, 0.25),  // >V
-            new Vec3(-0.25, 0.1, 0.25), // <V
-            new Vec3(-0.25, 0.1, 0.5),// <^
+            new Vec3(-0.25, -0.1, 0.5), // >^
+            new Vec3(-0.25, -0.1, 0.25),  // >V
+            new Vec3(0.25, -0.1, 0.25), // <V
+            new Vec3(0.25, -0.1, 0.5),// <^
 
 
             // top render
@@ -62,10 +66,10 @@ public class BloodParticle extends TextureSheetParticle {
             new Vec3(0.25, 0.1, -0.25), // <V
             new Vec3(0.25, 0.1, -0.5),// <^
             //back
-            new Vec3(-0.25, -0.1, 0.5), // >^
-            new Vec3(-0.25, -0.1, 0.25),  // >V
-            new Vec3(0.25, -0.1, 0.25), // <V
-            new Vec3(0.25, -0.1, 0.5),// <^
+            new Vec3(0.25, 0.1, 0.5), // >^
+            new Vec3(0.25, 0.1, 0.25),  // >V
+            new Vec3(-0.25, 0.1, 0.25), // <V
+            new Vec3(-0.25, 0.1, 0.5),// <^
 
 
             // front render
@@ -159,38 +163,22 @@ public class BloodParticle extends TextureSheetParticle {
         public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
             RenderSystem.disableTexture();
 
-
-            // HELPER FOR RENDERING THE PARTICLE CAN CHANGE FOR RENDERING TYPES
-
-            // transparent, additive blending
-//            RenderSystem.depthMask(false);
+            RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
-//            RenderSystem.enableLighting();
-//            RenderSystem.enableColorMaterial();
 
-            // opaque
-			RenderSystem.depthMask(true);
-//			RenderSystem.disableBlend();
-//			RenderSystem.enableLighting();
-
-            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
         }
 
         @Override
         public void end(Tesselator tesselator) {
-
             tesselator.end();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
                     GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-//            RenderSystem.disableLighting();
-            RenderSystem.enableTexture();
         }
-
     };
 
     protected float scale;
-    protected boolean hot;
     protected float rotationDirection;
     protected float rotation;
     protected float rotationOffsetYaw;
@@ -229,10 +217,6 @@ public class BloodParticle extends TextureSheetParticle {
         this.lifetime = (int) (age + (random.nextDouble() * 2D - 1D) * 8);
     }
 
-    public void setHot(boolean hot) {
-        this.hot = hot;
-    }
-
     public void setRotationDirection(float rotationDirection) {
         this.rotationDirection = rotationDirection;
     }
@@ -246,20 +230,52 @@ public class BloodParticle extends TextureSheetParticle {
         super.tick();
     }
 
+//    @Override
+//    public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
+//
+//
+//        Vec3 projectedView = renderInfo.getPosition();
+//        float lerpedX = (float) (Mth.lerp(partialTicks, this.xo, this.x) - projectedView.x());
+//        float lerpedY = (float) (Mth.lerp(partialTicks, this.yo, this.y) - projectedView.y());
+//        float lerpedZ = (float) (Mth.lerp(partialTicks, this.zo, this.z) - projectedView.z());
+//
+//        int light = 15728880;// 15<<20 && 15<<4
+//        double ageMultiplier = 1 - Math.pow(age, 3) / Math.pow(this.lifetime, 3);
+//
+//        for (int i = 0; i < CUBE.length / 4; i++) {
+//            // 10 faces to a blood particle
+//            for (int j = 0; j < 4; j++) {
+//                Vec3 vec = CUBE[i * 4 + j];
+//                vec = vec
+//                        .yRot(this.rotation + this.rotationOffsetYaw)
+//                        .xRot(this.rotation + this.rotationOffsetPitch)
+//                        .zRot(this.rotation + this.rotationOffsetRoll)
+//                        .scale(scale * ageMultiplier)
+//                        //.mul(1, 0.25 + 0.55 * (age/4f), 1) //scale non uniform based off age (maybe)
+//                        .add(lerpedX, lerpedY, lerpedZ);
+//
+//                Vec3 normal = CUBE_NORMALS[i];
+//                buffer.vertex((float) vec.x, (float) vec.y, (float) vec.z, this.rCol + this.colorOffset, this.gCol, this.bCol, this.alpha, 0, 0, 0, light,(float) normal.x, (float) normal.y, (float) normal.z);
+//
+//
+//            }
+//        }
+//
+//    }
+
     @Override
-    public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
-
-
+    public void render(VertexConsumer builder, Camera renderInfo, float p_225606_3_) {
         Vec3 projectedView = renderInfo.getPosition();
-        float lerpedX = (float) (Mth.lerp(partialTicks, this.xo, this.x) - projectedView.x());
-        float lerpedY = (float) (Mth.lerp(partialTicks, this.yo, this.y) - projectedView.y());
-        float lerpedZ = (float) (Mth.lerp(partialTicks, this.zo, this.z) - projectedView.z());
+        float lerpX = (float) (Mth.lerp(p_225606_3_, this.xo, this.x) - projectedView.x());
+        float lerpY = (float) (Mth.lerp(p_225606_3_, this.yo, this.y) - projectedView.y());
+        float lerpZ = (float) (Mth.lerp(p_225606_3_, this.zo, this.z) - projectedView.z());
 
-        int light = 15728880;// 15<<20 && 15<<4
-        double ageMultiplier = 1 - Math.pow(age, 3) / Math.pow(this.lifetime, 3);
+        int light = 15728880;
+        double ageMultiplier = 1 - Math.pow(Mth.clamp(age + p_225606_3_, 0, lifetime), 3) / Math.pow(lifetime, 3);
+
+        RenderSystem._setShaderTexture(0, TEXTURE);
 
         for (int i = 0; i < CUBE.length / 4; i++) {
-            // 10 faces to a blood particle
             for (int j = 0; j < 4; j++) {
                 Vec3 vec = CUBE[i * 4 + j];
                 vec = vec
@@ -267,13 +283,74 @@ public class BloodParticle extends TextureSheetParticle {
                         .xRot(this.rotation + this.rotationOffsetPitch)
                         .zRot(this.rotation + this.rotationOffsetRoll)
                         .scale(scale * ageMultiplier)
-                        //.mul(1, 0.25 + 0.55 * (age/4f), 1) //scale non uniform based off age (maybe)
-                        .add(lerpedX, lerpedY, lerpedZ);
+                        .add(lerpX, lerpY, lerpZ);
 
                 Vec3 normal = CUBE_NORMALS[i];
-                buffer.vertex((float) vec.x, (float) vec.y, (float) vec.z, this.rCol + this.colorOffset, this.gCol, this.bCol, this.alpha, 0, 0, 0, light,(float) normal.x, (float) normal.y, (float) normal.z);
 
-
+                if(i == 0 || i == 1 || i == 2 || i == 3) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(Mth.clamp(rCol * 1.25f, 0, 1.0f), Mth.clamp(gCol * 1.25f, 0, 1.0f), Mth.clamp(bCol * 1.25f, 0, 1.0f), alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else if(i == 4 || i == 5 || i == 6 || i == 7) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 0.55f, gCol * 0.55f, bCol * 0.55f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else if(i == 8) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 0.75f, gCol * 0.95f, bCol * 0.95f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else if(i == 9) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 0.85f, gCol * 0.75f, bCol * 0.75f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else if(i == 10) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 0.95f, gCol * 0.9f, bCol * 0.9f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else if(i == 11) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 1.05f, gCol * 1.05f, bCol * 1.05f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else if(i == 12 || i == 13 || i == 14 || i == 15) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 0.4f, gCol * 0.4f, bCol * 0.4f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else if(i == 17 || i == 16) {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 0.4f, gCol * 0.4f, bCol * 0.4f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }else {
+                    builder.vertex(vec.x, vec.y, vec.z)
+                            .uv(0, 0)
+                            .color(rCol * 0.85f, gCol * 0.85f, bCol * 0.85f, alpha)
+                            .normal((float) normal.x, (float) normal.y, (float) normal.z)
+                            .uv2(light)
+                            .endVertex();
+                }
             }
         }
     }
@@ -300,14 +377,14 @@ public class BloodParticle extends TextureSheetParticle {
             Random random = new Random();
 
             float colorOffset = (random.nextFloat() * 0.20f);
-            cauldronParticle.setColor(0.05f + colorOffset, 0.0f, 0.0f);
+            cauldronParticle.setColor(0.05f + colorOffset, 0.05f, 0.05f);
 
-
-            cauldronParticle.setAlpha(2.0f);
+            cauldronParticle.setAlpha(1.0f);
 
 
             cauldronParticle.pickSprite(this.spriteSet);
             return cauldronParticle;
+
         }
     }
 

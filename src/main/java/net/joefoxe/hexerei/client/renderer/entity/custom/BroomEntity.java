@@ -110,12 +110,12 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
     private double lerpZ;
     private double lerpYaw;
     private double lerpPitch;
-    private boolean leftInputDown;
-    private boolean rightInputDown;
-    private boolean forwardInputDown;
-    private boolean backInputDown;
-    private boolean jumpInputDown;
-    private boolean sneakingInputDown;
+    public boolean leftInputDown;
+    public boolean rightInputDown;
+    public boolean forwardInputDown;
+    public boolean backInputDown;
+    public boolean jumpInputDown;
+    public boolean sneakingInputDown;
     private double waterLevel;
     private float boatGlide;
     private BroomEntity.Status status;
@@ -550,7 +550,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         }
 
 
-        if(level.isClientSide() && this.getDeltaMovement().length() >= 0.01d) {
+        if(level.isClientSide() && this.getDeltaMovement().length() >= 0.01d && this.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH)) {
             Random random = new Random();
             if(random.nextInt(5)==0) {
                 float rotOffset = random.nextFloat() * 10 - 5;

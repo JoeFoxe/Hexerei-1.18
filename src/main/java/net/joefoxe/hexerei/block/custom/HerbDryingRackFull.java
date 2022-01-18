@@ -1,5 +1,7 @@
 package net.joefoxe.hexerei.block.custom;
 
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -68,9 +70,12 @@ public class HerbDryingRackFull extends Block implements SimpleWaterloggedBlock 
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
         if(Screen.hasShiftDown()) {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_drying_rack_full_shift"));
+            tooltip.add(new TranslatableComponent("<%s>", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_drying_rack_full_shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
         } else {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_drying_rack_full"));
+            tooltip.add(new TranslatableComponent("[%s]", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+//            tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_drying_rack_full"));
         }
         super.appendHoverText(stack, world, tooltip, flagIn);
     }

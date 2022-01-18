@@ -1,29 +1,42 @@
 package net.joefoxe.hexerei.block;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.block.custom.*;
 import net.joefoxe.hexerei.block.custom.trees.MahoganyTree;
 import net.joefoxe.hexerei.block.custom.trees.WillowTree;
 import net.joefoxe.hexerei.item.ModItemGroup;
 import net.joefoxe.hexerei.item.ModItems;
+import net.joefoxe.hexerei.tileentity.HerbJarTile;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ModBlocks {
@@ -44,6 +57,51 @@ public class ModBlocks {
             () -> new CandleDipper(BlockBehaviour.Properties.of(Material.METAL).noCollission().noOcclusion().strength(3).requiresCorrectToolForDrops().explosionResistance(8f)));
 
     public static final RegistryObject<Coffer> COFFER = registerBlock("coffer",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_BLACK = registerBlock("coffer_black",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_BLUE = registerBlock("coffer_blue",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_CYAN = registerBlock("coffer_cyan",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_GRAY = registerBlock("coffer_gray",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_GREEN = registerBlock("coffer_green",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_LIGHT_BLUE = registerBlock("coffer_light_blue",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_LIGHT_GRAY = registerBlock("coffer_light_gray",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_LIME = registerBlock("coffer_lime",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_MAGENTA = registerBlock("coffer_magenta",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_ORANGE = registerBlock("coffer_orange",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_PINK = registerBlock("coffer_pink",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_PURPLE = registerBlock("coffer_purple",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_RED = registerBlock("coffer_red",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_WHITE = registerBlock("coffer_white",
+            () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
+
+    public static final RegistryObject<Coffer> COFFER_YELLOW = registerBlock("coffer_yellow",
             () -> new Coffer(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).requiresCorrectToolForDrops().explosionResistance(8f)));
 
     public static final RegistryObject<Altar> BOOK_OF_SHADOWS_ALTAR = registerBlock("book_of_shadows_altar",
@@ -212,18 +270,54 @@ public class ModBlocks {
             () -> new FloweringLilyPadBlock(BlockBehaviour.Properties.of(Material.VEGETABLE).instabreak().sound(SoundType.LILY_PAD).noOcclusion()));
 
     public static final RegistryObject<PickableFlower> MANDRAKE_FLOWER = registerBlock("mandrake_flower",
-            () -> new PickableFlower(MobEffects.REGENERATION, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), ModItems.MANDRAKE_FLOWERS, 2, ModItems.MANDRAKE_ROOT, 1));
+            () -> new PickableFlower(MobEffects.REGENERATION, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), ModItems.MANDRAKE_FLOWERS, 2, ModItems.MANDRAKE_ROOT, 1){
+
+
+                @Override
+                public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
+
+                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    super.appendHoverText(stack, world, tooltip, flagIn);
+                }
+            });
 
     public static final RegistryObject<PickableFlower> BELLADONNA_FLOWER = registerBlock("belladonna_flower",
-            () -> new PickableFlower(MobEffects.POISON, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), ModItems.BELLADONNA_FLOWERS, 2, ModItems.BELLADONNA_BERRIES, 6));
+            () -> new PickableFlower(MobEffects.POISON, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), ModItems.BELLADONNA_FLOWERS, 2, ModItems.BELLADONNA_BERRIES, 6){
+
+
+                @Override
+                public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
+
+                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    super.appendHoverText(stack, world, tooltip, flagIn);
+                }
+            });
 
 //            () -> new PickableFlower(MobEffects.POISON, 3, BlockBehaviour.Properties.copy(Blocks.DANDELION), new ItemStack(ModItems.BELLADONNA_FLOWERS.get(), 4),  new ItemStack(ModItems.BELLADONNA_BERRIES.get(), 5), 5));
 
     public static final RegistryObject<PickableDoubleFlower> MUGWORT_BUSH = registerBlock("mugwort_bush",
-            () -> new PickableDoubleFlower(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA), ModItems.MUGWORT_LEAVES, 4, ModItems.MUGWORT_FLOWERS, 3));
+            () -> new PickableDoubleFlower(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA), ModItems.MUGWORT_LEAVES, 4, ModItems.MUGWORT_FLOWERS, 3){
+
+
+                @Override
+                public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
+
+                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    super.appendHoverText(stack, world, tooltip, flagIn);
+                }
+            });
 
     public static final RegistryObject<PickableDoubleFlower> YELLOW_DOCK_BUSH = registerBlock("yellow_dock_bush",
-            () -> new PickableDoubleFlower(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA), ModItems.YELLOW_DOCK_LEAVES, 4, ModItems.YELLOW_DOCK_FLOWERS, 3));
+            () -> new PickableDoubleFlower(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.AZALEA), ModItems.YELLOW_DOCK_LEAVES, 4, ModItems.YELLOW_DOCK_FLOWERS, 3){
+
+
+                @Override
+                public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
+
+                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    super.appendHoverText(stack, world, tooltip, flagIn);
+                }
+            });
 
 
 
@@ -326,6 +420,51 @@ public class ModBlocks {
     public static final RegistryObject<Block> COFFER_LID = registerBlockNoItem("coffer_lid",
             () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> COFFER_LID_BLACK = registerBlockNoItem("coffer_lid_black",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_BLUE = registerBlockNoItem("coffer_lid_blue",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_CYAN = registerBlockNoItem("coffer_lid_cyan",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_GRAY = registerBlockNoItem("coffer_lid_gray",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_GREEN = registerBlockNoItem("coffer_lid_green",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_LIGHT_BLUE = registerBlockNoItem("coffer_lid_light_blue",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_LIGHT_GRAY = registerBlockNoItem("coffer_lid_light_gray",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_LIME = registerBlockNoItem("coffer_lid_lime",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_MAGENTA = registerBlockNoItem("coffer_lid_magenta",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_ORANGE = registerBlockNoItem("coffer_lid_orange",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_PINK = registerBlockNoItem("coffer_lid_pink",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_PURPLE = registerBlockNoItem("coffer_lid_purple",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_RED = registerBlockNoItem("coffer_lid_red",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_WHITE = registerBlockNoItem("coffer_lid_white",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> COFFER_LID_YELLOW = registerBlockNoItem("coffer_lid_yellow",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
+
     public static final RegistryObject<Block> COFFER_CONTAINER = registerBlockNoItem("coffer_container",
             () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
 
@@ -394,6 +533,43 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> DRIED_SAGE_BUNDLE_PLATE_1_LIT = registerBlockNoItem("dried_sage_bundle_plate_1_lit",
             () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(8f)));
+
+    public static Block registerBlock(String name, CreativeModeTab itemGroup, Block block) {
+        Item.Properties itemProperties = new Item.Properties().tab(itemGroup);
+        BlockItem itemBlock;
+        if (block instanceof HerbJar) {
+            itemBlock = new BlockItem(block, itemProperties) {
+                @Override
+                public void initializeClient(@Nonnull Consumer<IItemRenderProperties> consumer) {
+                    consumer.accept(new IItemRenderProperties() {
+                        final BlockEntityWithoutLevelRenderer myRenderer = new BlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels()) {
+                            private HerbJarTile blockEntity;
+
+                            @Override
+                            public void renderByItem(@Nonnull ItemStack stack, @Nonnull ItemTransforms.TransformType transformType, @Nonnull PoseStack matrix, @Nonnull MultiBufferSource buffer, int x, int y) {
+                                if (blockEntity == null) {
+                                    blockEntity = new HerbJarTile(BlockPos.ZERO, ModBlocks.HERB_JAR.get().defaultBlockState());
+                                }
+                                Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(blockEntity, matrix, buffer, x, y);
+                            }
+                        };
+
+                        @Override
+                        public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                            return myRenderer;
+                        }
+                    });
+                }
+            };
+        } else {
+            itemBlock = new BlockItem(block, itemProperties);
+        }
+        block.setRegistryName(name);
+        itemBlock.setRegistryName(name);
+        ForgeRegistries.BLOCKS.register(block);
+        ForgeRegistries.ITEMS.register(itemBlock);
+        return block;
+    }
 
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block) {

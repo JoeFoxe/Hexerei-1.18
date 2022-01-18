@@ -14,6 +14,7 @@ public class ModParticleTypes {
 
     public static final RegistryObject<SimpleParticleType> CAULDRON = PARTICLES.register("cauldron_particle", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BLOOD = PARTICLES.register("blood_particle", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> BLOOD_BIT = PARTICLES.register("blood_bit_particle", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BROOM = PARTICLES.register("broom_particle_1", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BROOM_2 = PARTICLES.register("broom_particle_2", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BROOM_3 = PARTICLES.register("broom_particle_3", () -> new SimpleParticleType(true));

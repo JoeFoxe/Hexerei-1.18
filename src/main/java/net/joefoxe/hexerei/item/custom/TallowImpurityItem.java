@@ -1,6 +1,8 @@
 package net.joefoxe.hexerei.item.custom;
 
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,11 +48,8 @@ public class TallowImpurityItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
-        if(Screen.hasShiftDown()) {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.tallow_impurity_shift"));
-        } else {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.tallow_impurity"));
-        }
+
+        tooltip.add(new TranslatableComponent("tooltip.hexerei.tallow_impurity_shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
 
 
         super.appendHoverText(stack, world, tooltip, flagIn);

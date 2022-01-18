@@ -3,6 +3,7 @@ package net.joefoxe.hexerei.fluid;
 import net.joefoxe.hexerei.item.ModItems;
 import net.joefoxe.hexerei.particle.ModParticleTypes;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Block;
@@ -140,8 +141,11 @@ public abstract class BloodFluid extends ForgeFlowingFluid {
                 if (random.nextInt(64) == 0) {
                     worldIn.playSound(null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.WATER_AMBIENT, SoundSource.BLOCKS, random.nextFloat() * 0.25F + 0.75F, random.nextFloat() + 0.5F);
                 }
-            } else if (random.nextInt(20) == 0) {
-                worldIn.addParticle(ModParticleTypes.BLOOD.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + (random.nextDouble() * (state.getValue(LEVEL) / 8)), (double)pos.getZ() + random.nextDouble(), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02));
+            } else if (random.nextInt(12) == 0) {
+                if (random.nextInt(3) == 0)
+                    worldIn.addParticle(ModParticleTypes.BLOOD.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + (random.nextDouble() * (state.getValue(LEVEL) / 8)), (double)pos.getZ() + random.nextDouble(), -0.01D+(random.nextDouble()*0.02), -0.02D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02));
+                worldIn.addParticle(ModParticleTypes.BLOOD_BIT.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + (random.nextDouble() * (state.getValue(LEVEL) / 8)), (double)pos.getZ() + random.nextDouble(), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02));
+
             }
             //worldIn.addParticle(ModParticleTypes.BLOOD.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + (random.nextDouble() * (state.getValue(LEVEL) / 8)), (double)pos.getZ() + random.nextDouble(), 0.0D, 0.0D, 0.0D);
         }
@@ -166,8 +170,11 @@ public abstract class BloodFluid extends ForgeFlowingFluid {
                 if (random.nextInt(64) == 0) {
                     worldIn.playSound(null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.WATER_AMBIENT, SoundSource.BLOCKS, random.nextFloat() * 0.25F + 0.75F, random.nextFloat() + 0.5F);
                 }
-            } else if (random.nextInt(10) == 0) {
-                worldIn.addParticle(ModParticleTypes.BLOOD.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + random.nextDouble(), (double)pos.getZ() + random.nextDouble(), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02));
+            } else if (random.nextInt(14) == 0) {
+                if (random.nextInt(2) == 0)
+                    worldIn.addParticle(ModParticleTypes.BLOOD.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + (random.nextDouble()), (double)pos.getZ() + random.nextDouble(), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02));
+                worldIn.addParticle(ModParticleTypes.BLOOD_BIT.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + (random.nextDouble()), (double)pos.getZ() + random.nextDouble(), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02), -0.01D+(random.nextDouble()*0.02));
+
             }
             //worldIn.addParticle(ModParticleTypes.BLOOD.get(), (double)pos.getX() + random.nextDouble(), (double)pos.getY() + random.nextDouble(), (double)pos.getZ() + random.nextDouble(), 0.0D, 0.0D, 0.0D);
         }

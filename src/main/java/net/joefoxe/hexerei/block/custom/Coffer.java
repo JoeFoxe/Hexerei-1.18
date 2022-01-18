@@ -7,6 +7,8 @@ import net.joefoxe.hexerei.tileentity.CofferTile;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.LivingEntity;
@@ -239,13 +241,14 @@ public class Coffer extends BaseEntityBlock implements ITileEntity<CofferTile>, 
         CompoundTag inv = stack.getOrCreateTag().getCompound("Inventory");
         ListTag tagList = inv.getList("Items", Tag.TAG_COMPOUND);
         if(Screen.hasShiftDown()) {
+            tooltip.add(new TranslatableComponent("<%s>", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
 
-            tooltip.add(new TranslatableComponent("\u00A7e--------------\u00A7r"));
             for (int i = 0; i < tagList.size(); i++)
             {
                 CompoundTag itemTags = tagList.getCompound(i);
 
-                TranslatableComponent itemText = new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId());
+                TranslatableComponent itemText2 = (TranslatableComponent) new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
+                TranslatableComponent itemText = (TranslatableComponent) new TranslatableComponent(" - %s", itemText2).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999)));
                 int countText = ItemStack.of(itemTags).getCount();
                 itemText.append(" x" + countText);
 
@@ -253,35 +256,36 @@ public class Coffer extends BaseEntityBlock implements ITileEntity<CofferTile>, 
             }
             if(tagList.size() < 1)
             {
-                tooltip.add(new TranslatableComponent("Can be placed in the world."));
-                tooltip.add(new TranslatableComponent("Can store items and be moved like a shulker box."));
-                tooltip.add(new TranslatableComponent("Can be renamed."));
-                tooltip.add(new TranslatableComponent("Punch the Coffer to pick up directly to your inventory."));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift_2").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift_3").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift_4").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift_5").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
             }
 
         } else {
-//            tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer"));
-            tooltip.add(new TranslatableComponent("\u00A7e--------------\u00A7r"));
+            tooltip.add(new TranslatableComponent("[%s]", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
 
             for (int i = 0; i < Math.min(tagList.size(), 3); i++)
             {
                 CompoundTag itemTags = tagList.getCompound(i);
 
-                TranslatableComponent itemText = new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId());
+                TranslatableComponent itemText2 = (TranslatableComponent) new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
+                TranslatableComponent itemText = (TranslatableComponent) new TranslatableComponent(" - %s", itemText2).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999)));
                 int countText = ItemStack.of(itemTags).getCount();
                 itemText.append(" x" + countText);
 
                 tooltip.add(itemText);
             }
             if(tagList.size() > 3) {
-                tooltip.add(new TranslatableComponent(". . . "));
-                tooltip.add(new TranslatableComponent(""));
-                tooltip.add(new TranslatableComponent("Hold \u00A7eSHIFT\u00A7r to see more"));
+                tooltip.add(new TranslatableComponent(". . . ").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
             }
             else if(tagList.size() < 1)
             {
 
-                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer"));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
             }
         }
         super.appendHoverText(stack, world, tooltip, flagIn);

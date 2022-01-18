@@ -10,13 +10,17 @@ import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.ModEntityTypes;
 import net.joefoxe.hexerei.config.HexConfig;
 import net.joefoxe.hexerei.config.ModKeyBindings;
+import net.joefoxe.hexerei.data.recipes.HexereiDataGenerator;
+import net.joefoxe.hexerei.data.recipes.HexereiRecipeProvider;
 import net.joefoxe.hexerei.events.SageBurningPlateEvent;
 import net.joefoxe.hexerei.screen.BroomScreen;
 import net.joefoxe.hexerei.world.gen.*;
 import net.joefoxe.hexerei.world.structure.structures.WitchHutStructure;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -51,6 +55,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -69,6 +75,8 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -105,7 +113,10 @@ public class Hexerei
         // Register the setup method for modloading
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        eventBus.addListener(this::gatherData);
+//        eventBus.addListener(this::gatherData);
+
+        eventBus.addListener(HexereiDataGenerator::gatherData);
+        eventBus.addGenericListener(RecipeSerializer.class, ModItems::registerRecipeSerializers);
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
         ModFluids.register(eventBus);
@@ -116,6 +127,7 @@ public class Hexerei
         ModFeatures.register(eventBus);
         ModStructures.register(eventBus);
         ModBiomes.register(eventBus);
+
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
@@ -167,15 +179,6 @@ public class Hexerei
         });
     }
 
-
-
-//    public void registerCommands(final RegisterCommandsEvent event) {
-//        PigeonReviveCommand.register(event.getDispatcher());
-//    }
-
-    private void gatherData(final GatherDataEvent event) {
-        DataGenerator gen = event.getGenerator();
-    }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
@@ -235,6 +238,15 @@ public class Hexerei
 
 
     }
+
+//    @SubscribeEvent
+//    public static void recipes(final RegistryEvent.Register<RecipeSerializer<?>> event) {
+//        register(new Serializer2(), "coffer_dyeing", event.getRegistry());
+//    }
+//
+//    private static <T extends IForgeRegistryEntry<T>> void register(T obj, String name, IForgeRegistry<T> registry) {
+//        registry.register(obj.setRegistryName(new ResourceLocation(MOD_ID, name)));
+//    }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
     {

@@ -1,6 +1,7 @@
 package net.joefoxe.hexerei.tileentity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.block.custom.Coffer;
 import net.joefoxe.hexerei.tileentity.CofferTile;
@@ -41,7 +42,38 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
             matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(270));
         }
         matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getValue(Coffer.ANGLE)));
-        renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID.get().defaultBlockState());
+        if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_black"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_BLACK.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_blue"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_BLUE.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_cyan"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_CYAN.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_gray"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_GRAY.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_green"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_GREEN.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_light_blue"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_LIGHT_BLUE.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_light_gray"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_LIGHT_GRAY.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_lime"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_LIME.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_magenta"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_MAGENTA.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_orange"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_ORANGE.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_pink"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_PINK.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_purple"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_PURPLE.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_red"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_RED.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_white"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_WHITE.get().defaultBlockState());
+        else if(tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getBlock().getRegistryName().toString().equals(Hexerei.MOD_ID + ":coffer_yellow"))
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID_YELLOW.get().defaultBlockState());
+        else
+            renderBlock(matrixStackIn, bufferIn, combinedLightIn, ModBlocks.COFFER_LID.get().defaultBlockState());
         matrixStackIn.popPose();
 
         float sideRotation = (((float)tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos()).getValue(Coffer.ANGLE) / (float)tileEntityIn.lidOpenAmount) * 135);

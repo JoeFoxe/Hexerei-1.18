@@ -19,6 +19,7 @@ public class ModParticleUtil {
     public static void registerParticles(ParticleFactoryRegisterEvent event) {
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.CAULDRON.get(), CauldronParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BLOOD.get(), BloodParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ModParticleTypes.BLOOD_BIT.get(), BloodBitParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM.get(), BroomParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM_2.get(), BroomParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM_3.get(), BroomParticle.Factory::new);

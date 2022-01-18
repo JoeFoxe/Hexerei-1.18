@@ -17,7 +17,7 @@ public class ModTileEntities {
             "mixing_cauldron_entity", () -> BlockEntityType.Builder.of(MixingCauldronTile::new, ModBlocks.MIXING_CAULDRON.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<CofferTile>> COFFER_TILE = TILE_ENTITIES.register(
-            "coffer_entity", () -> BlockEntityType.Builder.of(CofferTile::new, ModBlocks.COFFER.get()).build(null));
+            "coffer_entity", () -> BlockEntityType.Builder.of(CofferTile::new, ModBlocks.COFFER.get(), ModBlocks.COFFER_BLACK.get(), ModBlocks.COFFER_BLUE.get(), ModBlocks.COFFER_CYAN.get(), ModBlocks.COFFER_GRAY.get(), ModBlocks.COFFER_GREEN.get(), ModBlocks.COFFER_LIGHT_BLUE.get(), ModBlocks.COFFER_LIGHT_GRAY.get(), ModBlocks.COFFER_LIME.get(), ModBlocks.COFFER_MAGENTA.get(), ModBlocks.COFFER_ORANGE.get(), ModBlocks.COFFER_PINK.get(), ModBlocks.COFFER_PURPLE.get(), ModBlocks.COFFER_RED.get(), ModBlocks.COFFER_WHITE.get(), ModBlocks.COFFER_YELLOW.get()).build(null));
 
 
     public static final RegistryObject<BlockEntityType<HerbJarTile>> HERB_JAR_TILE = TILE_ENTITIES.register(

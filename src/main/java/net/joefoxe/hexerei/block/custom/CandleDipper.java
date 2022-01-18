@@ -4,6 +4,8 @@ import net.joefoxe.hexerei.block.ITileEntity;
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.tileentity.*;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -185,10 +187,11 @@ public class CandleDipper extends BaseEntityBlock implements ITileEntity<CandleD
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
         if(Screen.hasShiftDown()) {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper_shift_1"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper_shift_2"));
+            tooltip.add(new TranslatableComponent("<%s>", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper_shift_1").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper_shift_2").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
         } else {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.candle_dipper"));
+            tooltip.add(new TranslatableComponent("[%s]", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
         }
         super.appendHoverText(stack, world, tooltip, flagIn);
     }

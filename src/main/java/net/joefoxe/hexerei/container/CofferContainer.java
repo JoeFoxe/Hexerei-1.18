@@ -108,7 +108,7 @@ public class CofferContainer extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player playerIn) {
         return stillValid(ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
-                playerIn, ModBlocks.COFFER.get());
+                        playerIn,tileEntity.getBlockState().getBlock());
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "hexerei:gold_rings"
+    "hexerei:gold_rings",
+    "hexerei:broom_keychain"
   ]
 }

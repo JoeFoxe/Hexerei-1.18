@@ -53,6 +53,7 @@ public class DruidArmorItem extends ArmorItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
         if(Screen.hasShiftDown()) {
+
             tooltip.add(new TranslatableComponent("tooltip.hexerei.druid_armor_shift"));
         } else {
             tooltip.add(new TranslatableComponent("tooltip.hexerei.druid_armor"));

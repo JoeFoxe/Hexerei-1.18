@@ -1,6 +1,7 @@
 package net.joefoxe.hexerei.block.custom;
 
 import net.joefoxe.hexerei.block.ITileEntity;
+import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.config.HexConfig;
 import net.joefoxe.hexerei.item.ModItems;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;
@@ -10,6 +11,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -146,16 +149,21 @@ public class SageBurningPlate extends Block implements ITileEntity<SageBurningPl
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
         if(Screen.hasShiftDown()) {
-            String string = "\u00A7e" + HexConfig.SAGE_BURNING_PLATE_RANGE.get() + "\u00A7r";
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_1"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_2"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_3", string));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_4"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_5"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_6"));
+            tooltip.add(new TranslatableComponent("<%s>", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
+            TranslatableComponent string = (TranslatableComponent) new TranslatableComponent(HexConfig.SAGE_BURNING_PLATE_RANGE.get() + "").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)));
+            TranslatableComponent itemText = (TranslatableComponent) new TranslatableComponent(ModItems.DRIED_SAGE_BUNDLE.get().getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
+
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_1", itemText).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_2").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_3", string).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_4").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_5").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate_shift_6").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
         } else {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.shift_for_info"));
+            tooltip.add(new TranslatableComponent("[%s]", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+//            tooltip.add(new TranslatableComponent("tooltip.hexerei.sage_burning_plate").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
         }
         super.appendHoverText(stack, world, tooltip, flagIn);
     }

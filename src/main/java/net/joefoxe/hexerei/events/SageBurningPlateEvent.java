@@ -12,11 +12,14 @@ import net.joefoxe.hexerei.util.HexereiUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Entity.RemovalReason;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -26,6 +29,7 @@ import java.util.List;
 @EventBusSubscriber
 public class SageBurningPlateEvent {
 
+
     @SubscribeEvent
     public void onEntityJoin(LivingSpawnEvent.CheckSpawn e) {
         Level world = e.getWorld().isClientSide() ? null : e.getWorld() instanceof Level ? (Level)e.getWorld() : null;
@@ -33,6 +37,9 @@ public class SageBurningPlateEvent {
         if (world == null) {
             return;
         }
+
+        if(e.getSpawnReason() == MobSpawnType.CHUNK_GENERATION)
+            return;
 
         Entity entity = e.getEntity();
 

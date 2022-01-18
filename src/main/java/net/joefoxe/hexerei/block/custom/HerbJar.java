@@ -9,6 +9,8 @@ import net.joefoxe.hexerei.tileentity.HerbJarTile;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
@@ -232,13 +234,26 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
         CompoundTag inv = stack.getOrCreateTag().getCompound("Inventory");
         ListTag tagList = inv.getList("Items", Tag.TAG_COMPOUND);
         if(Screen.hasShiftDown()) {
-
-            tooltip.add(new TranslatableComponent("\u00A7e---------------\u00A7r"));
+            tooltip.add(new TranslatableComponent("<%s>", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            if(tagList.size() >= 1) {
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_4").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_5").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_6").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            }
             for (int i = 0; i < tagList.size(); i++)
             {
+//                CompoundTag itemTags = tagList.getCompound(i);
+//                itemTags.putInt("Count", 1);
+//                TranslatableComponent itemText = new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId());
+//                int countText = Integer.parseInt(String.valueOf(itemTags.get("ExtendedCount")));
+//                itemText.append(" x" + countText);
+//
+//                tooltip.add(itemText);
+
                 CompoundTag itemTags = tagList.getCompound(i);
                 itemTags.putInt("Count", 1);
-                TranslatableComponent itemText = new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId());
+                TranslatableComponent itemText2 = (TranslatableComponent) new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
+                TranslatableComponent itemText = (TranslatableComponent) new TranslatableComponent(" - %s", itemText2).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999)));
                 int countText = Integer.parseInt(String.valueOf(itemTags.get("ExtendedCount")));
                 itemText.append(" x" + countText);
 
@@ -246,20 +261,28 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
             }
             if(tagList.size() < 1)
             {
-                tooltip.add(new TranslatableComponent("Can be placed in the world."));
-                tooltip.add(new TranslatableComponent("Can store items and be moved like a shulker box."));
-                tooltip.add(new TranslatableComponent("Can be renamed."));
-                tooltip.add(new TranslatableComponent("Only holds one type of item, but can hold up to 1024."));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift_2").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.coffer_shift_3").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_4").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_5").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_6").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_7").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
             }
 
         } else {
-            tooltip.add(new TranslatableComponent("\u00A7e--------------\u00A7r"));
+            tooltip.add(new TranslatableComponent("[%s]", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
+//            tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_4").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+//            tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar_shift_5").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
 
             for (int i = 0; i < Math.min(tagList.size(), 1); i++)
             {
                 CompoundTag itemTags = tagList.getCompound(i);
                 itemTags.putInt("Count", 1);
-                TranslatableComponent itemText = new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId());
+                TranslatableComponent itemText2 = (TranslatableComponent) new TranslatableComponent(ItemStack.of(itemTags).getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
+                TranslatableComponent itemText = (TranslatableComponent) new TranslatableComponent(" - %s", itemText2).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999)));
                 int countText = Integer.parseInt(String.valueOf(itemTags.get("ExtendedCount")));
                 itemText.append(" x" + countText);
 
@@ -271,11 +294,11 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
 //                tooltip.add(new TranslatableComponent("Hold \u00A7eSHIFT\u00A7r to see more"));
 //            }
 //            else
-            if(tagList.size() < 1)
-            {
-
-                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar"));
-            }
+//            if(tagList.size() < 1)
+//            {
+//
+//                tooltip.add(new TranslatableComponent("tooltip.hexerei.herb_jar"));
+//            }
         }
         super.appendHoverText(stack, world, tooltip, flagIn);
     }

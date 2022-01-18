@@ -426,25 +426,23 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
                 if(this.isColliding <= 1 && this.getItemInSlot(9).asItem() == ModItems.BLOOD_SIGIL.get()) {
                     Random random = new Random();
                     entity.hurt(DamageSource.MAGIC, 3.0f);
-                    if(random.nextDouble() > 0.5f)
-                    {
 
-                        if(fluidStack.isEmpty() || (fluidStack.containsFluid(new FluidStack(ModFluids.BLOOD_FLUID.get(), 1)) && this.getFluidStack().getAmount() < this.getTankCapacity(0))) {
+                    if(fluidStack.isEmpty() || (fluidStack.containsFluid(new FluidStack(ModFluids.BLOOD_FLUID.get(), 1)) && this.getFluidStack().getAmount() < this.getTankCapacity(0))) {
 
-                            if(fluidStack.isEmpty())
-                                this.fill(new FluidStack(ModFluids.BLOOD_FLUID.get(),333), IFluidHandler.FluidAction.EXECUTE);
-                            else {
-                                this.getFluidStack().grow(333);
-                                if (this.getFluidStack().getAmount() % 10 == 1)
-                                    this.getFluidStack().shrink(1);
-                                if (this.getFluidStack().getAmount() % 10 == 9)
-                                    this.getFluidStack().grow(1);
-                            }
-                            entity.getLevel().playSound((Player)null, entity.blockPosition(), SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
-                            if(!level.isClientSide)
-                                HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(worldPosition)), new EmitParticlesPacket(worldPosition, 2, true));
-
+                        if(fluidStack.isEmpty())
+                            this.fill(new FluidStack(ModFluids.BLOOD_FLUID.get(),111), IFluidHandler.FluidAction.EXECUTE);
+                        else {
+                            this.getFluidStack().grow(111);
+                            if (this.getFluidStack().getAmount() % 1000 == 1)
+                                this.getFluidStack().shrink(1);
+                            if (this.getFluidStack().getAmount() % 1000 == 999)
+                                this.getFluidStack().grow(1);
+                            sync();
                         }
+                        entity.getLevel().playSound((Player)null, entity.blockPosition(), SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        if(!level.isClientSide)
+                            HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(worldPosition)), new EmitParticlesPacket(worldPosition, 2, true));
+
                     }
                 }
 

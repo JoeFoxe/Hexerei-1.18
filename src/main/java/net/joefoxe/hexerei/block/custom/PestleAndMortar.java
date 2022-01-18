@@ -1,6 +1,7 @@
 package net.joefoxe.hexerei.block.custom;
 
 import net.joefoxe.hexerei.block.ITileEntity;
+import net.joefoxe.hexerei.item.custom.BroomRenderProperties;
 import net.joefoxe.hexerei.tileentity.DryingRackTile;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;
 import net.joefoxe.hexerei.tileentity.PestleAndMortarTile;
@@ -8,6 +9,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -65,6 +68,12 @@ public class PestleAndMortar extends Block implements ITileEntity<PestleAndMorta
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
         return this.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, context.getHorizontalDirection()).setValue(ANGLE, 0).setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
     }
+
+    @Override
+    public Object getRenderPropertiesInternal() {
+        return new BroomRenderProperties();
+    }
+
 
 
     // hitbox REMEMBER TO DO THIS
@@ -149,13 +158,15 @@ public class PestleAndMortar extends Block implements ITileEntity<PestleAndMorta
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
         if(Screen.hasShiftDown()) {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_1"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_2"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_3"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_4"));
+            tooltip.add(new TranslatableComponent("<%s>", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_1").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_2").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_3").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_shift_4").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
         } else {
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_1"));
-            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_2"));
+            tooltip.add(new TranslatableComponent("[%s]", new TranslatableComponent("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+            tooltip.add(new TranslatableComponent("tooltip.hexerei.pestle_and_mortar_1").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
         }
         super.appendHoverText(stack, world, tooltip, flagIn);
     }

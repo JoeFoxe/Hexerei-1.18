@@ -1,0 +1,20 @@
+
+{
+  "variants": {
+    "facing=east": {
+      "model": "hexerei:block/coffer_chest_pink",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "hexerei:block/coffer_chest_pink",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "hexerei:block/coffer_chest_pink"
+    },
+    "facing=west": {
+      "model": "hexerei:block/coffer_chest_pink",
+      "y": 90
+    }
+  }
+}
