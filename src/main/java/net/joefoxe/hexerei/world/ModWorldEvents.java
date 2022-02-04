@@ -46,8 +46,8 @@ public class ModWorldEvents {
     public static void biomeLoadingEvent(final BiomeLoadingEvent event) {
 //        ModOreGeneration.generateOres(event);
 //        ModStructureGeneration.generateStructures(event);
-        ModTreeGeneration.generateTrees(event);
-        ModFlowerGeneration.generateFlowers(event);
+//        ModTreeGeneration.generateTrees(event);
+//        ModFlowerGeneration.generateFlowers(event);
 
         if (event.getCategory() == Biome.BiomeCategory.SWAMP) {
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.WILLOW_TREE);
@@ -57,6 +57,7 @@ public class ModWorldEvents {
         }
         if (event.getCategory() == Biome.BiomeCategory.JUNGLE) {
             event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacements.MAHOGANY_TREE);
+            event.getGeneration().addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacements.SELENITE_GEODE);
         }
 
     }

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
@@ -38,8 +39,12 @@ public class SageBurningPlateEvent {
             return;
         }
 
-        if(e.getSpawnReason() == MobSpawnType.CHUNK_GENERATION)
+        //TODO Add server config check here
+
+        if(e.getSpawnReason() != MobSpawnType.NATURAL)
             return;
+
+        if(HexConfig.SAGE_BURNING_PLATE_RANGE.get()==0)return;
 
         Entity entity = e.getEntity();
 

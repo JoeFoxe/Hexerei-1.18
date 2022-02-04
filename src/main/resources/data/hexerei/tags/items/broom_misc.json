@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "hexerei:gold_rings",
-    "hexerei:broom_keychain"
+    "hexerei:broom_keychain",
+    "hexerei:broom_netherite_tip",
+    "hexerei:broom_waterproof_tip"
   ]
 }

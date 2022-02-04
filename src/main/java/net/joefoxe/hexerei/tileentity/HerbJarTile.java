@@ -133,7 +133,7 @@ public class HerbJarTile extends RandomizableContainerBlockEntity implements Cle
 
 
 
-    @Override
+//    @Override
     public CompoundTag save(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.put("inv", itemHandler.serializeNBT());

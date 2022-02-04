@@ -290,7 +290,7 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
         compound.put("fluid", this.fluidStack.writeToNBT(new CompoundTag()));
     }
 
-    @Override
+//    @Override
     public CompoundTag save(CompoundTag tag) {
         super.saveAdditional(tag);
         ContainerHelper.saveAllItems(tag, this.items);

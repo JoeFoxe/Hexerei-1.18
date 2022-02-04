@@ -7,6 +7,7 @@ import net.joefoxe.hexerei.Hexerei;
 //import net.joefoxe.hexerei.world.structure.structures.GenericJigsawStructure;
 //import net.joefoxe.hexerei.world.structure.structures.MangroveTreeStructure;
 //import net.joefoxe.hexerei.world.structure.structures.WitchHutStructure;
+import net.joefoxe.hexerei.config.HexConfig;
 import net.joefoxe.hexerei.world.structure.structures.DarkCovenStructure;
 import net.joefoxe.hexerei.world.structure.structures.WitchHutStructure;
 import net.minecraft.data.BuiltinRegistries;
@@ -54,13 +55,13 @@ public class ModStructures {
     Make this large and unique. */
     public static void setupStructures() {
         setupMapSpacingAndLand(WITCH_HUT.get(),
-                new StructureFeatureConfiguration(20,8, 1234567890),
+                new StructureFeatureConfiguration(HexConfig.WITCH_HUT_SPACING.get(),HexConfig.WITCH_HUT_SEPARATION.get(), 1234567890), // Spacing and Separation config
                 false);
 //        setupMapSpacingAndLand(MANGROVE_TREE.get(),
 //                new StructureFeatureConfiguration(3,1, 1234567890),
 //                false);
         setupMapSpacingAndLand(DARK_COVEN.get(),
-                new StructureFeatureConfiguration(29,11, 1418987890),
+                new StructureFeatureConfiguration(HexConfig.DARK_COVEN_SPACING.get(),HexConfig.DARK_COVEN_SEPARATION.get(), 1418987890),
                 false);
     }
 

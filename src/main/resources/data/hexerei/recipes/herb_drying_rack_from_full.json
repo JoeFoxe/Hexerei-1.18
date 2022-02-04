@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#"
+
+  ],
+  "key": {
+    "#": {
+      "item": "hexerei:herb_drying_rack_full"
+    }
+  },
+  "result": {
+    "item": "hexerei:herb_drying_rack",
+    "count": 1
+  }
+}

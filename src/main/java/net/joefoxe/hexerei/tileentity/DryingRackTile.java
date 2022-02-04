@@ -347,7 +347,7 @@ public class DryingRackTile extends RandomizableContainerBlockEntity implements 
     }
 
 
-    @Override
+//    @Override
     public CompoundTag save(CompoundTag compound) {
         super.saveAdditional(compound);
 //        compound.put("inv", itemHandler.serializeNBT());

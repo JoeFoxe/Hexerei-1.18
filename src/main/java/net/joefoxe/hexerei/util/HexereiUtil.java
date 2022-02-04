@@ -94,11 +94,14 @@ public class HexereiUtil {
 
         for (int x = chunkPosX - chunkradius; x < chunkPosX + chunkradius; x++) {
             for (int z = chunkPosZ - chunkradius; z < chunkPosZ + chunkradius; z++) {
-                Iterator<BlockEntity> iterator = world.getChunk(x, z).getBlockEntities().values().iterator();
-                while (iterator.hasNext()) {
-                    BlockEntity be = iterator.next();
-                    if (!blockentities.contains(be)) {
-                        blockentities.add(be);
+
+                if(world.hasChunk(x, z)){
+                    Iterator<BlockEntity> iterator = world.getChunk(x, z).getBlockEntities().values().iterator();
+                    while (iterator.hasNext()) {
+                        BlockEntity be = iterator.next();
+                        if (!blockentities.contains(be)) {
+                            blockentities.add(be);
+                        }
                     }
                 }
             }

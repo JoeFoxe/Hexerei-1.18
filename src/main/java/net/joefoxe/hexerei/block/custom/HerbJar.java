@@ -1,10 +1,8 @@
 package net.joefoxe.hexerei.block.custom;
 
 import net.joefoxe.hexerei.block.ITileEntity;
-import net.joefoxe.hexerei.container.CofferContainer;
 import net.joefoxe.hexerei.container.HerbJarContainer;
 import net.joefoxe.hexerei.items.JarHandler;
-import net.joefoxe.hexerei.tileentity.CofferTile;
 import net.joefoxe.hexerei.tileentity.HerbJarTile;
 import net.joefoxe.hexerei.tileentity.ModTileEntities;
 import net.minecraft.core.Direction;
@@ -23,7 +21,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -52,6 +49,8 @@ import net.minecraft.world.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ClientRegistry;
+import net.minecraftforge.client.IBlockRenderProperties;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
@@ -59,6 +58,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBlock, SimpleWaterloggedBlock {
@@ -430,4 +430,9 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new HerbJarTile(ModTileEntities.HERB_JAR_TILE.get(), pos, state);
     }
+
+//    @Override
+//    public void initializeClient(Consumer<IBlockRenderProperties> consumer) {
+//        ClientRegistry.registerISTER(consumer, JarItemRenderer::new);
+//    }
 }

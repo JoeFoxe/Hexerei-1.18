@@ -12,10 +12,7 @@ import net.joefoxe.hexerei.tileentity.MixingCauldronTile;
 import net.joefoxe.hexerei.util.HexereiPacketHandler;
 import net.joefoxe.hexerei.util.HexereiTags;
 import net.joefoxe.hexerei.util.IPacket;
-import net.joefoxe.hexerei.util.message.BroomAskForSyncPacket;
-import net.joefoxe.hexerei.util.message.BroomSyncFloatModeToServer;
-import net.joefoxe.hexerei.util.message.BroomSyncPacket;
-import net.joefoxe.hexerei.util.message.TESyncPacket;
+import net.joefoxe.hexerei.util.message.*;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -81,6 +78,8 @@ import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalField;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -128,6 +127,8 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
     private float prevRockingAngle;
     private int drainTimeMax = 200;
     private int drainTime = drainTimeMax;
+    private int miscDrainTimeMax = 20;
+    private int miscDrainTime = miscDrainTimeMax;
     private boolean broomSync = false;
     public boolean floatMode = false;
 
@@ -348,6 +349,23 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         return this.getDirection().getClockWise();
     }
 
+    public void damageBrush(){
+        this.itemHandler.getStackInSlot(2).hurt(1, new Random(), null);
+        if (this.itemHandler.getStackInSlot(2).getDamageValue() >= this.itemHandler.getStackInSlot(2).getMaxDamage()) {
+            this.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
+            this.level.playSound((Player)null, this, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, random.nextFloat() * 0.4F + 1.0F);
+            sync();
+        }
+    }
+    public void damageMisc(){
+        this.itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
+        if (this.itemHandler.getStackInSlot(0).getDamageValue() >= this.itemHandler.getStackInSlot(0).getMaxDamage()) {
+            this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+            this.level.playSound((Player)null, this, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, random.nextFloat() * 0.4F + 1.0F);
+            sync();
+        }
+    }
+
     /**
      * Called to update the entity's position/logic.
      */
@@ -371,7 +389,9 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         if (this.status != BroomEntity.Status.UNDER_WATER && this.status != BroomEntity.Status.UNDER_FLOWING_WATER) {
             this.outOfControlTicks = 0.0F;
         } else {
-            ++this.outOfControlTicks;
+                ++this.outOfControlTicks;
+            if(this.itemHandler.getStackInSlot(0).is(ModItems.BROOM_WATERPROOF_TIP.get()))
+                this.outOfControlTicks = 0.0F;
         }
 
         if (!this.level.isClientSide && this.outOfControlTicks >= 60.0F) {
@@ -410,18 +430,15 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         }
         else
         {
-            if(!this.level.isClientSide()) {
+            if(this.level.isClientSide()) {
                 if (entityPassenger instanceof LivingEntity && entityPassenger instanceof Player) {
-                    if (Mth.abs(this.momentum) > 0.01d)
+
+                    if (getPaddleState(0) || getPaddleState(1))
                         drainTime--;
                 }
                 if (drainTime <= 0) {
-                    this.itemHandler.getStackInSlot(2).hurt(1, new Random(), null);
-                    if (this.itemHandler.getStackInSlot(2).getDamageValue() >= this.itemHandler.getStackInSlot(2).getMaxDamage()) {
-                        this.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
-                        this.level.playSound((Player)null, this, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, random.nextFloat() * 0.4F + 1.0F);
-                        sync();
-                    }
+
+                    HexereiPacketHandler.sendToServer(new BroomDamageBrushToServer(this));
                     drainTime = drainTimeMax;
                 }
             }
@@ -436,14 +453,19 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
                 this.setPaddleState(false, false);
             }
 
-            if(this.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH) && level.isClientSide)
-                floatingOffset = moveTo(floatingOffset, 0.05f + (float)Math.sin((Minecraft.getInstance().level.getDayTime() + (this.getId() * 1000))/30f) * 0.15f, 0.02f);
+            if(this.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH) && level.isClientSide) {
+                LocalDateTime time = LocalDateTime.now();
+
+                floatingOffset = moveTo(floatingOffset, 0.05f + (float) Math.sin(((time.getSecond() + time.getNano()/1000000000f)*25f + (this.getId() * 1000)) / 30f) * 0.15f, 0.02f);
+            }
 
 
             this.updateMotion();
             if (this.level.isClientSide) {
                 this.controlBoat();
                 this.level.sendPacketToServer(new ServerboundPaddleBoatPacket(this.getPaddleState(0), this.getPaddleState(1)));
+                HexereiPacketHandler.sendToServer(new BroomSyncRotationToServer(this, getRotation()));
+
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -480,8 +502,11 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         } else {
             this.setDeltaMovement(Vec3.ZERO);
             if(this.floatMode) {
-                if(level.isClientSide)
-                    floatingOffset = moveTo(floatingOffset, 0.05f + (float) Math.sin((Minecraft.getInstance().level.getDayTime() + (this.getId() * 1000)) / 30f) * 0.15f, 0.02f);
+                if(level.isClientSide) {
+                    LocalDateTime time = LocalDateTime.now();
+
+                    floatingOffset = moveTo(floatingOffset, 0.05f + (float) Math.sin(((time.getSecond() + time.getNano()/1000000000f)*25f + (this.getId() * 1000)) / 30f) * 0.15f, 0.02f);
+                }
                 Random random = new Random();
                 if(random.nextInt(50)==0) {
                     float rotOffset = random.nextFloat() * 10 - 5;
@@ -551,30 +576,54 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
 
 
         if(level.isClientSide() && this.getDeltaMovement().length() >= 0.01d && this.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH)) {
-            Random random = new Random();
-            if(random.nextInt(5)==0) {
-                float rotOffset = random.nextFloat() * 10 - 5;
-                level.addParticle(ModParticleTypes.BROOM.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+            if(this.itemHandler.getStackInSlot(0).is(ModItems.BROOM_WATERPROOF_TIP.get()) && (this.status == Status.UNDER_WATER || this.status == Status.UNDER_FLOWING_WATER)){
+
+                if(random.nextInt(2)==0){
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ParticleTypes.BUBBLE, getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+                if(random.nextInt(2)==0){
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ParticleTypes.BUBBLE_POP, getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+            }else if(this.itemHandler.getStackInSlot(0).is(ModItems.BROOM_NETHERITE_TIP.get()) && (this.status == Status.UNDER_LAVA || this.status == Status.UNDER_FLOWING_LAVA)){
+
+                if(random.nextInt(2)==0){
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ParticleTypes.SMALL_FLAME, getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+                if(random.nextInt(2)==0){
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ParticleTypes.SMOKE, getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
             }
-            if(random.nextInt(2)==0) {
-                float rotOffset = random.nextFloat() * 10 - 5;
-                level.addParticle(ModParticleTypes.BROOM_2.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
-            }
-            if(random.nextInt(8)==0) {
-                float rotOffset = random.nextFloat() * 10 - 5;
-                    level.addParticle(ModParticleTypes.BROOM_3.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
-            }
-            if(random.nextInt(50)==0) {
-                float rotOffset = random.nextFloat() * 10 - 5;
-                level.addParticle(ModParticleTypes.BROOM_4.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
-            }
-            if(random.nextInt(50)==0) {
-                float rotOffset = random.nextFloat() * 10 - 5;
-                level.addParticle(ModParticleTypes.BROOM_5.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
-            }
-            if(random.nextInt(50)==0) {
-                float rotOffset = random.nextFloat() * 10 - 5;
-                level.addParticle(ModParticleTypes.BROOM_6.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+            else
+            {
+                Random random = new Random();
+                if (random.nextInt(5) == 0) {
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ModParticleTypes.BROOM.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+                if (random.nextInt(2) == 0) {
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ModParticleTypes.BROOM_2.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+                if (random.nextInt(8) == 0) {
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ModParticleTypes.BROOM_3.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+                if (random.nextInt(50) == 0) {
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ModParticleTypes.BROOM_4.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+                if (random.nextInt(50) == 0) {
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ModParticleTypes.BROOM_5.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
+                if (random.nextInt(50) == 0) {
+                    float rotOffset = random.nextFloat() * 10 - 5;
+                    level.addParticle(ModParticleTypes.BROOM_6.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
+                }
             }
         }
 
@@ -662,6 +711,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
 
             this.rockingIntensity = Mth.clamp(this.rockingIntensity, 0.0F, 1.0F);
             this.prevRockingAngle = this.rockingAngle;
+            
             this.rockingAngle = 10.0F * (float)Math.sin((double)(0.5F * (float)this.level.getGameTime())) * this.rockingIntensity;
         } else {
             if (!this.rocking) {
@@ -832,7 +882,13 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         return f / (float)k1;
     }
 
+    @Override
+    public boolean fireImmune() {
+        return this.itemHandler.getStackInSlot(0).is(ModItems.BROOM_NETHERITE_TIP.get());
+    }
+
     private boolean checkInWater() {
+
         AABB axisalignedbb = this.getBoundingBox();
         int i = Mth.floor(axisalignedbb.minX);
         int j = Mth.ceil(axisalignedbb.maxX);
@@ -866,6 +922,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
      */
     @Nullable
     private BroomEntity.Status getUnderwaterStatus() {
+
         AABB axisalignedbb = this.getBoundingBox();
         double d0 = axisalignedbb.maxY + 0.001D;
         int i = Mth.floor(axisalignedbb.minX);
@@ -875,6 +932,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         int i1 = Mth.floor(axisalignedbb.minZ);
         int j1 = Mth.ceil(axisalignedbb.maxZ);
         boolean flag = false;
+        boolean lavaFlag = false;
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 
         for(int k1 = i; k1 < j; ++k1) {
@@ -889,9 +947,19 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
 
                         flag = true;
                     }
+                    else if (fluidstate.is(FluidTags.LAVA) && d0 < (double)((float)blockpos$mutable.getY() + fluidstate.getHeight(this.level, blockpos$mutable))) {
+                        if (!fluidstate.isSource()) {
+                            return BroomEntity.Status.UNDER_FLOWING_LAVA;
+                        }
+
+                        lavaFlag = true;
+                    }
                 }
             }
         }
+
+        if(lavaFlag)
+            return BroomEntity.Status.UNDER_LAVA;
 
         return flag ? BroomEntity.Status.UNDER_WATER : null;
     }
@@ -922,10 +990,52 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
                 this.momentum = 0.9F;
             } else if (this.status == BroomEntity.Status.UNDER_FLOWING_WATER) {
                 d2 = (this.waterLevel - this.getY()) / (double)this.getBbHeight();
-                this.momentum = 0.9F;
+                this.momentum = 0.8F;
+                if(this.level.isClientSide() && this.itemHandler.getStackInSlot(0).is(ModItems.BROOM_WATERPROOF_TIP.get())) {
+
+                    miscDrainTime--;
+                    if (miscDrainTime <= 0) {
+                        HexereiPacketHandler.sendToServer(new BroomDamageMiscToServer(this));
+                        miscDrainTime = miscDrainTimeMax;
+                    }
+                }
             } else if (this.status == BroomEntity.Status.UNDER_WATER) {
                 d2 = (this.waterLevel - this.getY()) / (double)this.getBbHeight();
-                this.momentum = 0.9F;
+                this.momentum = 0.8F;
+                if(this.level.isClientSide() && this.itemHandler.getStackInSlot(0).is(ModItems.BROOM_WATERPROOF_TIP.get())) {
+
+                    miscDrainTime--;
+                    if (miscDrainTime <= 0) {
+                        HexereiPacketHandler.sendToServer(new BroomDamageMiscToServer(this));
+                        miscDrainTime = miscDrainTimeMax;
+                    }
+                }
+            } else if (this.status == BroomEntity.Status.UNDER_FLOWING_LAVA) {
+                d2 = (this.waterLevel - this.getY()) / (double)this.getBbHeight();
+                this.momentum = 0.7F;
+
+                if(this.level.isClientSide()) {
+
+                    miscDrainTime--;
+                    if (miscDrainTime <= 0) {
+                        HexereiPacketHandler.sendToServer(new BroomDamageMiscToServer(this));
+                        miscDrainTime = miscDrainTimeMax;
+                    }
+                }
+
+
+            } else if (this.status == BroomEntity.Status.UNDER_LAVA) {
+                d2 = (this.waterLevel - this.getY()) / (double)this.getBbHeight();
+                this.momentum = 0.7F;
+
+                if(this.level.isClientSide()) {
+
+                    miscDrainTime--;
+                    if (miscDrainTime <= 0) {
+                        HexereiPacketHandler.sendToServer(new BroomDamageMiscToServer(this));
+                        miscDrainTime = miscDrainTimeMax;
+                    }
+                }
             } else if (this.status == BroomEntity.Status.IN_AIR) {
                 this.momentum = 0.9F;
             } else if (this.status == BroomEntity.Status.ON_LAND) {
@@ -1142,14 +1252,15 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
                 NetworkHooks.openGui((ServerPlayer) player, containerProvider, b -> b.writeInt(this.getId()));
 
 //                    throw new IllegalStateException("Our Container provider is missing!");
-
+                return InteractionResult.SUCCESS;
             }
             return InteractionResult.PASS;
         } else if (this.outOfControlTicks < 60.0F) {
             if (!this.level.isClientSide) {
                 if(player.startRiding(this) ) {
                     //this.setDeltaMovement(getDeltaMovement().getX(), getDeltaMovement().getY() - 1, getDeltaMovement().getZ());
-                    this.push(0,0.25,0);
+                    if(this.itemHandler.getStackInSlot(3).is(HexereiTags.Items.BROOM_BRUSH))
+                        this.push(0,0.25,0);
                     return InteractionResult.CONSUME;
                 }
                 else {
@@ -1213,6 +1324,16 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
      */
     public boolean getFloatMode() {
         return this.floatMode;
+    }
+
+    public void setRotation(float rotation) {
+//        this.deltaRotation = deltaRotation;
+        this.setYRot(rotation);
+
+    }
+
+    public float getRotation() {
+        return this.getYRot();
     }
 
 
@@ -1437,6 +1558,8 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         IN_WATER,
         UNDER_WATER,
         UNDER_FLOWING_WATER,
+        UNDER_LAVA,
+        UNDER_FLOWING_LAVA,
         ON_LAND,
         IN_AIR;
     }

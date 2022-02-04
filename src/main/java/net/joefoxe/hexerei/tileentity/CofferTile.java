@@ -193,7 +193,7 @@ public class CofferTile extends RandomizableContainerBlockEntity implements Clea
         return super.serializeNBT();
     }
 
-    @Override
+//    @Override
     public CompoundTag save(CompoundTag tag) {
         super.saveAdditional(tag);
 //        ContainerHelper.saveAllItems(tag, this.items);
