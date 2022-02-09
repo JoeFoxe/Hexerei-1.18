@@ -220,7 +220,7 @@ public class SageBurningPlateTile extends RandomizableContainerBlockEntity imple
     }
 
 
-    @Override
+//    @Override
     public CompoundTag save(CompoundTag compound) {
         super.saveAdditional(compound);
 //        compound.put("inv", itemHandler.serializeNBT());

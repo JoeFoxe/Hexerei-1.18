@@ -1,0 +1,7 @@
+{
+  "processors": [
+    {
+    "processor_type": "hexerei:mangrove_tree_leg_processor"
+    }
+  ]
+}

@@ -16,9 +16,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 public class BottleBloodtem extends Item {
@@ -44,6 +48,7 @@ public class BottleBloodtem extends Item {
                 player.initMenu(player.containerMenu);
             }
         }
+
 
         return super.finishUsingItem(stack, world, entityLiving);
     }

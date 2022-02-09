@@ -27,6 +27,8 @@ public class ModParticleUtil {
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM_5.get(), BroomParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.BROOM_6.get(), BroomParticle.Factory::new);
         Minecraft.getInstance().particleEngine.register(ModParticleTypes.FOG.get(), FogParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ModParticleTypes.DOWSING_ROD_1.get(), DowsingRodParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ModParticleTypes.DOWSING_ROD_2.get(), DowsingRod2Particle.Factory::new);
     }
 
 

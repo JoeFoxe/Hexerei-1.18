@@ -186,7 +186,7 @@ public class CandleTile extends BlockEntity {
 
     }
 
-    @Override
+//    @Override
     public CompoundTag save(CompoundTag tag) {
         super.saveAdditional(tag);
 //        ContainerHelper.saveAllItems(tag, this.items);

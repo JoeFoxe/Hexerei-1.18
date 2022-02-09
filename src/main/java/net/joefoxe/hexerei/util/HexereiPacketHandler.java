@@ -58,6 +58,39 @@ public class HexereiPacketHandler {
                 BroomAskForSyncPacket::consume
         );
 
+        instance.registerMessage(
+                ++ id,
+                BroomSyncRotationToServer.class,
+                BroomSyncRotationToServer::encode,
+                BroomSyncRotationToServer::decode,
+                BroomSyncRotationToServer::consume
+        );
+
+        instance.registerMessage(
+                ++ id,
+                BroomDamageBrushToServer.class,
+                BroomDamageBrushToServer::encode,
+                BroomDamageBrushToServer::decode,
+                BroomDamageBrushToServer::consume
+        );
+
+        instance.registerMessage(
+                ++ id,
+                BroomDamageMiscToServer.class,
+                BroomDamageMiscToServer::encode,
+                BroomDamageMiscToServer::decode,
+                BroomDamageMiscToServer::consume
+        );
+
+        instance.registerMessage(
+                ++ id,
+                DowsingRodUpdatePositionPacket.class,
+                DowsingRodUpdatePositionPacket::encode,
+                DowsingRodUpdatePositionPacket::decode,
+                DowsingRodUpdatePositionPacket::consume
+        );
+
+
         instance.registerMessage(++ id, EmitExtinguishParticlesPacket.class, EmitExtinguishParticlesPacket::encode, EmitExtinguishParticlesPacket::decode, EmitExtinguishParticlesPacket::handle);
     }
 

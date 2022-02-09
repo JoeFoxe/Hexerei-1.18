@@ -2,6 +2,7 @@ package net.joefoxe.hexerei.world.gen;
 
 import net.joefoxe.hexerei.Hexerei;
 import net.joefoxe.hexerei.world.structure.structures.HexereiAbstractTreeFeature;
+import net.joefoxe.hexerei.world.structure.structures.HexereiMahoganyTreeFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
@@ -20,10 +21,11 @@ public class ModFeatures {
     public static final RegistryObject<Feature<TreeConfiguration>> WILLOW_TREE = FEATURES.register("willow_tree",
             () -> new HexereiAbstractTreeFeature(NoneFeatureConfiguration.CODEC));
 
+    public static final RegistryObject<Feature<TreeConfiguration>> MAHOGANY_TREE = FEATURES.register("mahogany_tree",
+            () -> new HexereiMahoganyTreeFeature(NoneFeatureConfiguration.CODEC));
 
     public static void register(IEventBus eventBus) {
         FEATURES.register(eventBus);
     }
-
 
 }

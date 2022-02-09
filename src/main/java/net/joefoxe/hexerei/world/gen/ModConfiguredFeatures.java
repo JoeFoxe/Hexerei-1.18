@@ -54,16 +54,15 @@ public class ModConfiguredFeatures {
                     UniformInt.of(4, 6), UniformInt.of(3, 4), UniformInt.of(1, 2),
                     -16, 16, 0.05D, 1)));
 
-
     public static final ConfiguredFeature<TreeConfiguration, ?> MAHOGANY =
-            register("mahogany", Feature.TREE.configured((
+            register("mahogany_tree", ModFeatures.MAHOGANY_TREE.get().configured((
                     new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(ModBlocks.MAHOGANY_LOG.get().defaultBlockState()),
-                        new FancyTrunkPlacer(6, 8, 1),
-                        BlockStateProvider.simple(ModBlocks.MAHOGANY_LEAVES.get().defaultBlockState()),
-                        new AcaciaFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2)),
-                        new ThreeLayersFeatureSize(2,2, 1, 1,1, OptionalInt.of(2)))).build()));
-
+                            BlockStateProvider.simple(ModBlocks.MAHOGANY_LOG.get().defaultBlockState()),
+                            new StraightTrunkPlacer(6, 4, 0),
+                            BlockStateProvider.simple(ModBlocks.MAHOGANY_LEAVES.get().defaultBlockState()),
+                            new AcaciaFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1)),
+                            new TwoLayersFeatureSize(1, 0, 1)
+                    )).decorators(ImmutableList.of(new CocoaDecorator(0.2F), TrunkVineDecorator.INSTANCE, LeaveVineDecorator.INSTANCE)).ignoreVines().build()));
 
 
     public static final ConfiguredFeature<RandomPatchConfiguration, ?> LILY_PAD_CONFIG = FeatureUtils.register("patch_flower_waterlily", Feature.RANDOM_PATCH.configured(
@@ -106,9 +105,6 @@ public class ModConfiguredFeatures {
                     BlockStateProvider.simple(ModBlocks.WILLOW_LEAVES.get().defaultBlockState()),
                     new AcaciaFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1)),
                     new TwoLayersFeatureSize(1, 0, 1)
-
-
-
             )).decorators(ImmutableList.of(new CocoaDecorator(0.2F), TrunkVineDecorator.INSTANCE, LeaveVineDecorator.INSTANCE)).ignoreVines().build()));
 
 

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " $ ",
+    "$@$",
+    "$ $"
+
+  ],
+  "key": {
+    "$": {
+      "item": "minecraft:stick"
+    },
+    "@": {
+      "tag": "minecraft:leaves"
+    }
+  },
+  "result": {
+    "item": "hexerei:dowsing_rod",
+    "count": 1
+  }
+}

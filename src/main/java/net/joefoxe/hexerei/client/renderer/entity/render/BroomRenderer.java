@@ -48,6 +48,10 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
             new ResourceLocation(Hexerei.MOD_ID, "textures/entity/broom_large_satchel.png");
     protected static final ResourceLocation KEYCHAIN_TEXTURE =
             new ResourceLocation(Hexerei.MOD_ID, "textures/entity/broom_keychain.png");
+    protected static final ResourceLocation NETHERITE_TIP_TEXTURE =
+            new ResourceLocation(Hexerei.MOD_ID, "textures/entity/broom_netherite_tip.png");
+    protected static final ResourceLocation WATERPROOF_TIP_TEXTURE =
+            new ResourceLocation(Hexerei.MOD_ID, "textures/entity/broom_waterproof_tip.png");
     private final Pair<ResourceLocation, BroomModel> broomResources;
     private final Pair<ResourceLocation, BroomStickBaseModel> broomStickResources;
     private final Pair<ResourceLocation, BroomBrushBaseModel> broomBrushResources;
@@ -56,6 +60,8 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
     private final Pair<ResourceLocation, BroomMediumSatchelModel> broomMediumSatchelResources;
     private final Pair<ResourceLocation, BroomLargeSatchelModel> broomLargeSatchelResources;
     private final Pair<ResourceLocation, BroomKeychainModel> broomKeychainResources;
+    private final Pair<ResourceLocation, BroomNetheriteTipModel> broomNetheriteTipResources;
+    private final Pair<ResourceLocation, BroomWaterproofTipModel> broomWaterproofTipResources;
     private final Pair<ResourceLocation, BroomKeychainChainModel> broomKeychainChainResources;
 
     public BroomRenderer(EntityRendererProvider.Context context)
@@ -71,6 +77,8 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
         this.broomBrushResources = Pair.of(TEXTURE, new BroomBrushBaseModel(context.bakeLayer(BroomBrushBaseModel.LAYER_LOCATION)));
         this.broomKeychainResources = Pair.of(KEYCHAIN_TEXTURE, new BroomKeychainModel(context.bakeLayer(BroomKeychainModel.LAYER_LOCATION)));
         this.broomKeychainChainResources = Pair.of(KEYCHAIN_TEXTURE, new BroomKeychainChainModel(context.bakeLayer(BroomKeychainChainModel.LAYER_LOCATION)));
+        this.broomNetheriteTipResources = Pair.of(NETHERITE_TIP_TEXTURE, new BroomNetheriteTipModel(context.bakeLayer(BroomNetheriteTipModel.LAYER_LOCATION)));
+        this.broomWaterproofTipResources = Pair.of(WATERPROOF_TIP_TEXTURE, new BroomWaterproofTipModel(context.bakeLayer(BroomWaterproofTipModel.LAYER_LOCATION)));
 
     }
 
@@ -187,17 +195,61 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
                 broomKeychainChainModel.renderToBuffer(matrixStackIn, ivertexbuilderRings, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
 
-                matrixStackIn.translate(0,  1+10.5/16f, 0);
+                matrixStackIn.translate(0,  1+11.5/16f, 0);
                 matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(180.0F));
                 matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(((float)Mth.length(entityIn.getDeltaMovement().x(), entityIn.getDeltaMovement().z())) * -20f));
-                matrixStackIn.scale(0.2f,0.2f,0.2f);
+                matrixStackIn.scale(0.25f,0.25f,0.25f);
 
-                //TODO set to item held inside of
+
                 NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
                 if(entityIn.itemHandler.getStackInSlot(0).hasTag())
                     ContainerHelper.loadAllItems(entityIn.itemHandler.getStackInSlot(0).getTag(), items);
                 renderItem(items.get(0), partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
+            }
+            else if(entityIn.itemHandler.getStackInSlot(0).is(ModItems.BROOM_NETHERITE_TIP.get()))
+            {
+                int light = (int)(packedLightIn / 15 * (15 - (int)(8 * (((entityIn.itemHandler.getStackInSlot(0).getDamageValue()) / (float)entityIn.itemHandler.getStackInSlot(0).getMaxDamage())))));
+
+                BroomNetheriteTipModel broomNetheriteTipModel = broomNetheriteTipResources.getSecond();
+                broomNetheriteTipModel.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
+                VertexConsumer ivertexbuilderRings = bufferIn.getBuffer(broomNetheriteTipModel.renderType(broomNetheriteTipResources.getFirst()));
+                broomNetheriteTipModel.renderToBuffer(matrixStackIn, ivertexbuilderRings, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
+                matrixStackIn.translate(-22/16f, 0, -0.4f/16f);
+
+                matrixStackIn.translate(0, 2.68, 0);
+                matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+                matrixStackIn.translate(0, 1.3, 0);
+                matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+                matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+                matrixStackIn.scale(0.3f,0.3f,0.3f);
+//                System.out.println(entityIn.itemHandler.getStackInSlot(0).getDamageValue());
+//                System.out.println(entityIn.itemHandler.getStackInSlot(0).getMaxDamage());
+
+                renderItem(new ItemStack(ModItems.SELENITE_SHARD.get()), partialTicks, matrixStackIn, bufferIn, light);
+            }
+            else if(entityIn.itemHandler.getStackInSlot(0).is(ModItems.BROOM_WATERPROOF_TIP.get()))
+            {
+                int light = (int)(packedLightIn / 15 * (15 - (int)(8 * (((entityIn.itemHandler.getStackInSlot(0).getDamageValue()) / (float)entityIn.itemHandler.getStackInSlot(0).getMaxDamage())))));
+
+                BroomWaterproofTipModel broomWaterproofTipModel = broomWaterproofTipResources.getSecond();
+                broomWaterproofTipModel.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
+                VertexConsumer ivertexbuilderRings = bufferIn.getBuffer(broomWaterproofTipModel.renderType(broomWaterproofTipResources.getFirst()));
+                broomWaterproofTipModel.renderToBuffer(matrixStackIn, ivertexbuilderRings, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
+                matrixStackIn.translate(-22/16f, 0, -0.4f/16f);
+
+                matrixStackIn.translate(0, 2.68, 0);
+                matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+                matrixStackIn.translate(0, 1.3, 0);
+                matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+                matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+                matrixStackIn.scale(0.3f,0.3f,0.3f);
+//                System.out.println(entityIn.itemHandler.getStackInSlot(0).getDamageValue());
+//                System.out.println(entityIn.itemHandler.getStackInSlot(0).getMaxDamage());
+
+                renderItem(new ItemStack(Items.CONDUIT), partialTicks, matrixStackIn, bufferIn, light);
             }
             else
             {
@@ -221,26 +273,4 @@ public class BroomRenderer extends EntityRenderer<BroomEntity>
         Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.FIXED, combinedLightIn,
                 OverlayTexture.NO_OVERLAY, matrixStackIn, bufferIn, 1);
     }
-
-
 }
-
-//
-//public class BroomRenderer extends EntityRenderer<BroomEntity> {
-//    private static final ResourceLocation[] BROOM_TEXTURES = new ResourceLocation[]{new ResourceLocation(Hexerei.MOD_ID,"textures/entity/broom.png")};
-//    protected final BroomModel modelBroom = new BroomModel();
-//
-//    public BroomRenderer(EntityRenderDispatcher renderManagerIn) {
-//        super(renderManagerIn);
-//        this.shadowSize = 0.8F;
-//    }
-//
-
-
-//    /**
-//     * Returns the location of an entity's texture.
-//     */
-//    public ResourceLocation getEntityTexture(BroomEntity entity) {
-//        return BROOM_TEXTURES[0];
-//    }
-//}

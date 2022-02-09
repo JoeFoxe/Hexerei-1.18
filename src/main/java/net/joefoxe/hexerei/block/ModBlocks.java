@@ -122,7 +122,7 @@ public class ModBlocks {
     public static final RegistryObject<CrystalBall> CRYSTAL_BALL = registerBlock("crystal_ball",
             () -> new CrystalBall(BlockBehaviour.Properties.of(Material.METAL).strength(2).explosionResistance(2f).lightLevel(state -> 9)));
 
-    public static final RegistryObject<HerbJar> HERB_JAR = registerBlock("herb_jar",
+    public static final RegistryObject<HerbJar> HERB_JAR = registerBlockNoItem("herb_jar",
             () -> new HerbJar(BlockBehaviour.Properties.of(Material.GLASS).strength(1).explosionResistance(0.5f)));
 
     public static final RegistryObject<HerbDryingRackFull> HERB_DRYING_RACK_FULL = registerBlock("herb_drying_rack_full",
@@ -550,7 +550,7 @@ public class ModBlocks {
                                 if (blockEntity == null) {
                                     blockEntity = new HerbJarTile(BlockPos.ZERO, ModBlocks.HERB_JAR.get().defaultBlockState());
                                 }
-                                Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(blockEntity, matrix, buffer, x, y);
+                                Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(blockEntity, matrix, buffer, x-5, y);
                             }
                         };
 
