@@ -2,6 +2,7 @@ package net.joefoxe.hexerei.container;
 
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.tileentity.CofferTile;
+import net.joefoxe.hexerei.util.HexereiTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,6 +19,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.NotNull;
 
 
 public class CofferContainer extends AbstractContainerMenu {
@@ -35,45 +37,23 @@ public class CofferContainer extends AbstractContainerMenu {
 
         layoutPlayerInventorySlots(11, 147);
 
-        //add slots for mixing cauldron
+        //add slots for coffer
         if(tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 15 + (21 * 0), 18));
-                addSlot(new SlotItemHandler(h, 1, 15 + (21 * 1), 18));
-                addSlot(new SlotItemHandler(h, 2, 15 + (21 * 2), 18));
-                addSlot(new SlotItemHandler(h, 3, 15 + (21 * 3), 18));
-                addSlot(new SlotItemHandler(h, 4, 15 + (21 * 4), 18));
-                addSlot(new SlotItemHandler(h, 5, 15 + (21 * 5), 18));
-                addSlot(new SlotItemHandler(h, 6, 15 + (21 * 6), 18));
-                addSlot(new SlotItemHandler(h, 7, 15 + (21 * 7), 18));
-                addSlot(new SlotItemHandler(h, 8, 15 + (21 * 8), 18));
-                addSlot(new SlotItemHandler(h, 9, 15 + (21 * 0), 39));
-                addSlot(new SlotItemHandler(h, 10, 15 + (21 * 1), 39));
-                addSlot(new SlotItemHandler(h, 11, 15 + (21 * 2), 39));
-                addSlot(new SlotItemHandler(h, 12, 15 + (21 * 6), 39));
-                addSlot(new SlotItemHandler(h, 13, 15 + (21 * 7), 39));
-                addSlot(new SlotItemHandler(h, 14, 15 + (21 * 8), 39));
-                addSlot(new SlotItemHandler(h, 15, 15 + (21 * 0), 60));
-                addSlot(new SlotItemHandler(h, 16, 15 + (21 * 1), 60));
-                addSlot(new SlotItemHandler(h, 17, 15 + (21 * 2), 60));
-                addSlot(new SlotItemHandler(h, 18, 15 + (21 * 6), 60));
-                addSlot(new SlotItemHandler(h, 19, 15 + (21 * 7), 60));
-                addSlot(new SlotItemHandler(h, 20, 15 + (21 * 8), 60));
-                addSlot(new SlotItemHandler(h, 21, 15 + (21 * 0), 81));
-                addSlot(new SlotItemHandler(h, 22, 15 + (21 * 1), 81));
-                addSlot(new SlotItemHandler(h, 23, 15 + (21 * 2), 81));
-                addSlot(new SlotItemHandler(h, 24, 15 + (21 * 6), 81));
-                addSlot(new SlotItemHandler(h, 25, 15 + (21 * 7), 81));
-                addSlot(new SlotItemHandler(h, 26, 15 + (21 * 8), 81));
-                addSlot(new SlotItemHandler(h, 27, 15 + (21 * 0), 102));
-                addSlot(new SlotItemHandler(h, 28, 15 + (21 * 1), 102));
-                addSlot(new SlotItemHandler(h, 29, 15 + (21 * 2), 102));
-                addSlot(new SlotItemHandler(h, 30, 15 + (21 * 3), 102));
-                addSlot(new SlotItemHandler(h, 31, 15 + (21 * 4), 102));
-                addSlot(new SlotItemHandler(h, 32, 15 + (21 * 5), 102));
-                addSlot(new SlotItemHandler(h, 33, 15 + (21 * 6), 102));
-                addSlot(new SlotItemHandler(h, 34, 15 + (21 * 7), 102));
-                addSlot(new SlotItemHandler(h, 35, 15 + (21 * 8), 102));
+                int k = 0;  //slot counter
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        if(!((i > 0 && i < 4) && (j > 2 && j < 6))) {
+                            addSlot(new SlotItemHandler(h, k, 15 + (21 * j), 18 + 21 * i) {
+                                @Override
+                                public boolean mayPlace(@NotNull ItemStack stack) {
+                                    return !stack.is(HexereiTags.Items.SHULKER_BOXES);  //prevent shulker boxes to be placed inside
+                                }
+                            });
+                            k++;
+                        }
+                    }
+                }
             });
         }
 

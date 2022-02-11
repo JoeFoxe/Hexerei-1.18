@@ -36,6 +36,8 @@ public class HexereiTags {
         public static final Tags.IOptionalNamedTag<Item> BROOM_BRUSH = createTag("broom_brush");
         public static final Tags.IOptionalNamedTag<Item> HERB_ITEM = createTag("herbs");
         public static final Tags.IOptionalNamedTag<Item> CANDLES = createTag("candles");
+		
+		public static final Tags.IOptionalNamedTag<Item> SHULKER_BOXES = createTag("shulker_boxes");
 
         private static Tags.IOptionalNamedTag<Item> createTag(String name) {
             return ItemTags.createOptional(new ResourceLocation(Hexerei.MOD_ID, name));
