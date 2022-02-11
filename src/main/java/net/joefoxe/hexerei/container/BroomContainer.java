@@ -2,6 +2,7 @@ package net.joefoxe.hexerei.container;
 
 import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.custom.BroomEntity;
+import net.joefoxe.hexerei.item.ModItems;
 import net.joefoxe.hexerei.tileentity.CofferTile;
 import net.joefoxe.hexerei.util.HexereiTags;
 import net.minecraft.core.BlockPos;
@@ -178,7 +179,12 @@ public class BroomContainer extends AbstractContainerMenu {
 
                 for(int i = 0; i < 3; i++)
                     for(int j = 0; j < 9; j++)
-                        addSlot(new SlotItemHandler(h, 3 + (i * 9) + j , 15 + 21 * j, 21 * i + 82));
+                        addSlot(new SlotItemHandler(h, 3 + (i * 9) + j , 15 + 21 * j, 21 * i + 82) {
+                            @Override
+                            public boolean mayPlace(@NotNull ItemStack stack) {
+                                return !(stack.is(ModItems.WILLOW_BROOM.get()) || stack.is(ModItems.MAHOGANY_BROOM.get()));
+                            }
+                        });
 
                 int offset2 = 0;
                 if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.SMALL_SATCHELS)) {
