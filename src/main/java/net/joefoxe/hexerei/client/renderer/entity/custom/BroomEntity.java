@@ -250,7 +250,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         boolean flag = false;
         for(int i = 0; i < 30; i++)
         {
-            if(itemHandler.getStackInSlot(i).isEmpty())
+            if(!itemHandler.getStackInSlot(i).isEmpty())
             {
                 flag = true;
                 break;
