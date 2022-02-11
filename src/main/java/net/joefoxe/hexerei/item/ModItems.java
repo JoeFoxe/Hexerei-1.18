@@ -40,10 +40,10 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, Hexerei.MOD_ID);
 
     public static final RegistryObject<Item> MAHOGANY_BROOM = ITEMS.register("mahogany_broom",
-            () -> new BroomItem(BroomEntity.Type.MAHOGANY, new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).fireResistant()));
+            () -> new BroomItem(BroomEntity.Type.MAHOGANY, new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> WILLOW_BROOM = ITEMS.register("willow_broom",
-            () -> new BroomItem(BroomEntity.Type.WILLOW, new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
+            () -> new BroomItem(BroomEntity.Type.WILLOW, new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP).stacksTo(1)));
 
 //    public static final RegistryObject<Item> FIRE_TABLET = ITEMS.register("fire_tablet",
 //            () -> new FireTabletItem(new Item.Properties().tab(ModItemGroup.HEXEREI_GROUP)));
