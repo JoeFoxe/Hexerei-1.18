@@ -423,6 +423,7 @@ public class Candle extends BaseEntityBlock implements ITileEntity<CandleTile>, 
     }
 
     public static boolean canBeLit(BlockState state, BlockPos pos, Level world) {
+        if !(world.getBlockEntity(pos) instanceOf(CandleTile)) return false;
         return !state.getValue(BlockStateProperties.WATERLOGGED) && (((CandleTile)world.getBlockEntity(pos)).candleLit1 == 0 || (((CandleTile)world.getBlockEntity(pos)).candleLit2 == 0 && ((CandleTile)world.getBlockEntity(pos)).candleType2 != 0) || (((CandleTile)world.getBlockEntity(pos)).candleLit3 == 0 && ((CandleTile)world.getBlockEntity(pos)).candleType3 != 0) || (((CandleTile)world.getBlockEntity(pos)).candleLit4 == 0 && ((CandleTile)world.getBlockEntity(pos)).candleType4 != 0));
     }
 
