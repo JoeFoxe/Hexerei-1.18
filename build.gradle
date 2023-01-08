@@ -146,8 +146,8 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.18.1-39.0.64'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
-     compileOnly fg.deobf("mezz.jei:jei-1.18.1:9.2.1.69:api") // Adds JEI API as a compile dependency
-     runtimeOnly fg.deobf("mezz.jei:jei-1.18.1:9.2.1.69") // Adds the full JEI mod as a runtime dependency
+    compileOnly fg.deobf("mezz.jei:jei-1.18.1:9.4.1.276:api") // Adds JEI API as a compile dependency
+    runtimeOnly fg.deobf("mezz.jei:jei-1.18.1:9.4.1.276") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
     // Examples using mod jars from ./libs
